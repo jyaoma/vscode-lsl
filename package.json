@@ -1,5 +1,5 @@
 {
-	"name": "lsl-fp",
+	"name": "lsl-fp-jyaoma",
 	"displayName": "LSL-FP",
 	"description": "Support for Linden Scripting Language(LSL) with Firestorm Preprocessor and Code Snippeis",
 	"version": "1.2.1",
@@ -45,9 +45,35 @@
 			}
 		]
 	},
+	"capabilities": {
+		"hoverProvider": true
+	},
+	"main": "./out/extension.js",
 	"__metadata": {
 		"id": "d85d6816-c742-4032-b25a-5a88b57bde8c",
 		"publisherDisplayName": "Dal Ghost",
 		"publisherId": "ae23ab04-81a7-43d0-9133-43d399c0432b"
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "vscode-test"
+	},
+	"devDependencies": {
+		"@types/jsdom": "^21.1.6",
+		"@types/mocha": "^10.0.6",
+		"@types/node": "18.x",
+		"@types/vscode": "^1.88.0",
+		"@typescript-eslint/eslint-plugin": "^7.4.0",
+		"@typescript-eslint/parser": "^7.4.0",
+		"@vscode/test-cli": "^0.0.8",
+		"@vscode/test-electron": "^2.3.9",
+		"axios": "^1.6.8",
+		"eslint": "^8.57.0",
+		"jsdom": "^24.0.0",
+		"typescript": "^5.3.3"
 	}
 }
