@@ -1685,7 +1685,7 @@
     "llRemoteLoadScript": {
         "prefix": "llRemoteLoadScript",
         "body": [
-            "llRemoteLoadScript(DEPRACATED, Avoid Using This);$0"
+            "llRemoteLoadScript(DEPRECATED, Avoid Using This);$0"
         ],
         "description": "llRemoteLoadScript(key target, string name, integer running, integer start_param);\n\n 251 Function ID\n 3.0 Forced Delay\n 10.0 Energy\n\nDeprecated\n• key target – prim UUID that is in the same region\n• string name – a script in the inventory of the prim this script is in\n• integer running\n• integer start_param\n"
     },
@@ -1874,7 +1874,7 @@
     "llXorBase64StringsCorrect": {
         "prefix": "llXorBase64StringsCorrect",
         "body": [
-            "llXorBase64StringsCorrect(DEPRACATED, Avoid Use)$0"
+            "llXorBase64StringsCorrect(DEPRECATED, Avoid Use)$0"
         ],
         "description": "string llXorBase64StringsCorrect(string str1, string str2);\n\n 319 Function ID\n 0.0 Forced Delay\n 10.0 Energy\n\nCorrectly performs an exclusive or on two Base 64 strings.Returns a string that is a Base64 XOR of str1 and str2.\n• string str1 – Base64 string\n• string str2 – Base64 string\nstr2 repeats if it is shorter than str1. If the inputs are not Base64 strings the result will be erratic.\n"
     },
@@ -2427,7 +2427,7 @@
     "llMakeFountain": {
         "prefix": "llMakeFountain",
         "body": [
-            "llMakeFountain(DEPRACATED, Please No);$0"
+            "llMakeFountain(DEPRECATED, Please No);$0"
         ],
         "description": "llMakeFountain(integer particles, float scale, float vel, float lifetime, float arc, integer bounce, string texture, vector offset, float bounce_offset);\n\n 101 Function ID\n 0.1 Forced Delay\n 10.0 Energy\n\nMake a fountain of particles\n• integer particles\n• float scale\n• float vel\n• float lifetime\n• float arc\n• integer bounce\n• string texture – a texture in the inventory of the prim this script is in or a UUID of a texture\n• vector offset – offset relative to the prim's position and expressed in local coordinates and is completely ignored.\n• float bounce_offset\n"
     },
@@ -2693,7 +2693,7 @@
     "llMakeSmoke": {
         "prefix": "llMakeSmoke",
         "body": [
-            "llMakeSmoke(DEPRACATED, Avoid Use);$0"
+            "llMakeSmoke(DEPRECATED, Avoid Use);$0"
         ],
         "description": "llMakeSmoke(integer particles, float scale, float vel, float lifetime, float arc, string texture, vector offset);\n\n 102 Function ID\n 0.1 Forced Delay\n 10.0 Energy\n\nMake smoke like particles\n• integer particles\n• float scale\n• float vel\n• float lifetime\n• float arc\n• string texture – a texture in the inventory of the prim this script is in or a UUID of a texture\n• vector offset – offset relative to the prim's position and expressed in local coordinates and is completely ignored.\n"
     },
@@ -2721,7 +2721,7 @@
     "llMakeFire": {
         "prefix": "llMakeFire",
         "body": [
-            "llMakeFire(DEPRACATED, Avoid Use);$0"
+            "llMakeFire(DEPRECATED, Avoid Use);$0"
         ],
         "description": "llMakeFire(integer particles, float scale, float vel, float lifetime, float arc, string texture, vector offset);\n\n 103 Function ID\n 0.1 Forced Delay\n 10.0 Energy\n\nMake fire like particles\n• integer particles\n• float scale\n• float vel\n• float lifetime\n• float arc\n• string texture – a texture in the inventory of the prim this script is in or a UUID of a texture\n• vector offset – offset relative to the prim's position and expressed in local coordinates and is completely ignored.\n"
     },
