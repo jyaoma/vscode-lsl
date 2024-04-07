@@ -41,7 +41,7 @@ default
 {
     state_entry()
     {
-        integer x = ACTIVE;
+        llRezObject(string inventory, vector pos, vector vel, rotation rot, integer param);
         menuToucher = NULL_KEY;
         menuOpen = FALSE;
 
