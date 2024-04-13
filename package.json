@@ -1,79 +1,65 @@
 {
-	"name": "lsl-fp-jyaoma",
-	"displayName": "LSL-FP",
-	"description": "Support for Linden Scripting Language(LSL) with Firestorm Preprocessor and Code Snippeis",
-	"version": "1.2.1",
-	"publisher": "DalGhost",
-	"homepage": "https://github.com/dalghost/vscode-lsl-fp",
+	"name": "lsp-sample",
+	"description": "A language server example",
+	"author": "Microsoft Corporation",
+	"license": "MIT",
+	"version": "1.0.0",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/dalghost/vscode-lsl-fp.git"
+		"url": "https://github.com/Microsoft/vscode-extension-samples"
 	},
-	"engines": {
-		"vscode": "^1.33.0"
-	},
-	"icon": "icon.png",
-	"categories": [
-		"Programming Languages",
-		"Snippets"
+	"publisher": "vscode-samples",
+	"categories": [],
+	"keywords": [
+		"multi-root ready"
 	],
+	"engines": {
+		"vscode": "^1.75.0"
+	},
+	"activationEvents": [
+		"onLanguage:plaintext"
+	],
+	"main": "./client/out/extension",
 	"contributes": {
-		"languages": [
-			{
-				"id": "lsl",
-				"aliases": [
-					"LSL",
-					"lsl"
-				],
-				"extensions": [
-					".lsl"
-				],
-				"configuration": "./language-configuration.json"
+		"configuration": {
+			"type": "object",
+			"title": "Example configuration",
+			"properties": {
+				"languageServerExample.maxNumberOfProblems": {
+					"scope": "resource",
+					"type": "number",
+					"default": 100,
+					"description": "Controls the maximum number of problems produced by the server."
+				},
+				"languageServerExample.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				}
 			}
-		],
-		"grammars": [
-			{
-				"language": "lsl",
-				"scopeName": "source.lsl",
-				"path": "./syntaxes/lsl.tmLanguage.json"
-			}
-		],
-		"snippets": [
-			{
-				"language": "lsl",
-				"path": "./snippets/snippets.json"
-			}
-		]
-	},
-	"capabilities": {
-		"hoverProvider": true
-	},
-	"main": "./out/extension.js",
-	"__metadata": {
-		"id": "d85d6816-c742-4032-b25a-5a88b57bde8c",
-		"publisherDisplayName": "Dal Ghost",
-		"publisherId": "ae23ab04-81a7-43d0-9133-43d399c0432b"
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"lint": "eslint src --ext ts",
-		"test": "vscode-test"
+		"compile": "tsc -b",
+		"watch": "tsc -b -w",
+		"lint": "eslint ./client/src ./server/src --ext .ts,.tsx",
+		"postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+		"test": "sh ./scripts/e2e.sh"
 	},
 	"devDependencies": {
-		"@types/jsdom": "^21.1.6",
 		"@types/mocha": "^10.0.6",
-		"@types/node": "18.x",
-		"@types/vscode": "^1.88.0",
-		"@typescript-eslint/eslint-plugin": "^7.4.0",
-		"@typescript-eslint/parser": "^7.4.0",
-		"@vscode/test-cli": "^0.0.8",
-		"@vscode/test-electron": "^2.3.9",
-		"axios": "^1.6.8",
+		"@types/node": "^18.14.6",
+		"@typescript-eslint/eslint-plugin": "^7.1.0",
+		"@typescript-eslint/parser": "^7.1.0",
 		"eslint": "^8.57.0",
-		"jsdom": "^24.0.0",
+		"mocha": "^10.3.0",
 		"typescript": "^5.3.3"
 	}
 }

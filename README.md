@@ -1,73 +1,37 @@
-# LSL-FP
+# LSP Example
 
-This extension adds syntaxes Highlighting and Code Snippets for Firestorm LSL Preprocessor
+Heavily documented sample code for https://code.visualstudio.com/api/language-extensions/language-server-extension-guide
 
-## Features
+## Functionality
 
-Support for Firestorm LSL Preprocessor syntaxes Highlighting and Code Snippets
+This Language Server works for plain text file. It has the following language features:
+- Completions
+- Diagnostics regenerated on each file change or configuration change
 
-Image Sample:
+It also includes an End-to-End test.
 
-![sample](images/sample.png)
+## Structure
 
+```
+.
+├── client // Language Client
+│   ├── src
+│   │   ├── test // End to End tests for Language Client / Server
+│   │   └── extension.ts // Language Client entry point
+├── package.json // The extension manifest.
+└── server // Language Server
+    └── src
+        └── server.ts // Language Server entry point
+```
 
-## Requirements
+## Running the Sample
 
-1. install LSL-FP in VSCode (Visual Studio Code)
-2. Install Firestorm Viewer
-3. Enable LSL Preprocessor in Firestorm Viewer
-4. Enable '#includes from local disk' in Firestorm Viewer
-5. Open 'External Script Editor' in Firestorm Viewer
-6. Enjoy Scripting
-
-
-## Known Issues
-
-- Code Snippets for LSL All Constants Description.
-
-
-## Release Notes
-
-
-### 1.2.1 (2019-04-29)
-- Fixed switch scope in Code Snippets
-
-### 1.2.0 (2019-04-29)
-- Added Code Snippets for "pragma once" implement
-
-### 1.1.3 (2019-04-19)
-- Added Code Snippets for Missing Constants
-
-### 1.1.2 (2019-04-19)
-- Fixed listen parameter in Code Snippets
-
-### 1.1.1 (2019-04-10)
-- Added Syntax Highlight for 'state' keyword
-- Remove Syntax Highlight for junk keywords
-
-### 1.1.0 (2019-04-10)
-- Added Code Snippets for LSL Event
-- Added Code Snippets for XP Constants
-- Added Code Snippets for llTransfer* Function Error Tag Constants
-
-### 1.0.0 (2019-04-10)
-
-- Initial release
-- Added syntax Highlighting for LSL Flow Control.
-- Added syntax Highlighting for LSL Types.
-- Added syntax Highlighting for Firestorm LSL Preprocesser.
-- Added Code Snippets for LSL Flow Control.
-- Added Code Snippets for switch of Firestorm LSL Preprocesser.
-- Added Code Snippets for LSL All Function.
-- Added Code Snippets for LSL All Constants except Description.
-
------------------------------------------------------------------------------------------------------------
-
-### For more information
-
-* [Firestorm Viewer](https://www.firestormviewer.org/)
-* [Firestorm LSL Preprocessor Reference](https://wiki.phoenixviewer.com/fs_preprocessor)
-* [LSL Potal](http://wiki.secondlife.com/wiki/LSL_Portal)
-* [Github Repository](https://github.com/dalghost/vscode-lsl-fp)
-
-**Enjoy Scripting!**
+- Run `npm install` in this folder. This installs all necessary npm modules in both the client and server folder
+- Open VS Code on this folder.
+- Press Ctrl+Shift+B to start compiling the client and server in [watch mode](https://code.visualstudio.com/docs/editor/tasks#:~:text=The%20first%20entry%20executes,the%20HelloWorld.js%20file.).
+- Switch to the Run and Debug View in the Sidebar (Ctrl+Shift+D).
+- Select `Launch Client` from the drop down (if it is not already).
+- Press ▷ to run the launch config (F5).
+- In the [Extension Development Host](https://code.visualstudio.com/api/get-started/your-first-extension#:~:text=Then%2C%20inside%20the%20editor%2C%20press%20F5.%20This%20will%20compile%20and%20run%20the%20extension%20in%20a%20new%20Extension%20Development%20Host%20window.) instance of VSCode, open a document in 'plain text' language mode.
+  - Type `j` or `t` to see `Javascript` and `TypeScript` completion.
+  - Enter text content such as `AAA aaa BBB`. The extension will emit diagnostics for all words in all-uppercase.
