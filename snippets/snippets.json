@@ -2483,7 +2483,7 @@
     "llGetLinkKey": {
         "prefix": "llGetLinkKey",
         "body": [
-            "llGetLinkKey(${1:integer link})$0"
+            "llGetLinkKey(${1:integer link|LINK_ROOT|LINK_THIS})$0"
         ],
         "description": "key llGetLinkKey(integer link);\n\n 144 Function ID\n 0.0 Forced Delay\n 10.0 Energy\n\nReturns the key of the linked prim link\n• integer link – Link number (0: unlinked, 1: root prim, >1: child prims and seated avatars) or a LINK_* flag \n"
     },
@@ -4019,6 +4019,132 @@
             "llTargetedEmail(${1:integer target}, ${2:string subject}, ${3:string message});$0"
         ],
         "description": "llTargetedEmail(integer target, string subject, string message);\n\n119 Function ID\n20.0 Forced Delay\n10.0 Energy\n\nSends an email to the owner or creator (selected by target) of an object with subject and message.\n• integer target\n• string subject\n• string message\nThe entire message (including the address, subject and other miscellaneous fields) can't be longer than 4096 bytes combined.\n"
+    },
+    "llAdjustDamage": {
+        "prefix": "llAdjustDamage",
+        "body": [
+            "llAdjustDamage(${1:integer number}, ${2:float new_damage});$0"
+        ],
+        "description": "The llAdjustDamage modifies the amount of damage that will be applied by the current on_damage event after it has completed processing.\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• integer number\n• float new_damage"
+    },
+    "llDamage": {
+        "prefix": "llDamage",
+        "body": [
+            "llDamage(${1:key target}, ${2:float damage}, ${3:integer damage_type});$0"
+        ],
+        "description": "This function delivers damage to tasks and agent in the same region.\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• key target\n• float damage\n• integer damage_type"
+    },
+    "llComputeHash": {
+        "prefix": "llComputeHash",
+        "body": [
+            "llComputeHash(${1:string message}, ${2:string algorithm});$0"
+        ],
+        "description": "Returns a string hex-encded hash digest of message using crypographic algorithm\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• string message\n• string algorithm"
+    },
+    "llDetectedDamage": {
+        "prefix": "llDetectedDamage",
+        "body": [
+            "llDetectedDamage(${1:integer number});$0"
+        ],
+        "description": "Returns the list containing pending damage information.\n\n33 Function ID\n0.0 Forced Delay\n10.0 Energy\n• integer number"
+    },
+    "llDetectedRezzer": {
+        "prefix": "llDetectedRezzer",
+        "body": [
+            "llDetectedRezzer(${1:integer number});$0"
+        ],
+        "description": "Returns a key that is the UUID of the object or avatar that rezzed the detected object number.\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• integer number"
+    },
+    "llGetCameraAspect": {
+        "prefix": "llGetCameraAspect",
+        "body": [
+            "llGetCameraAspect();$0"
+        ],
+        "description": "Returns a float value for the current camera's aspect ratio (e.g. width/height) of the agent for which the task has permissions.\nTo run this function the script must request the PERMISSION_TRACK_CAMERA permission with llRequestPermissions.\n\n545 Function ID\n0.0 Forced Delay\n10.0 Energy"
+    },
+    "llGetCameraFOV": {
+        "prefix": "llGetCameraFOV",
+        "body": [
+            "llGetCameraFOV();$0"
+        ],
+        "description": "Returns a float value for the current camera's field of view (FOV), in radians, of the agent for which the task has permissions.\nTo run this function the script must request the PERMISSION_TRACK_CAMERA permission with llRequestPermissions.\n\n546 Function ID\n0.0 Forced Delay\n10.0 Energy"
+    },
+    "llGetHealth": {
+        "prefix": "llGetHealth",
+        "body": [
+            "llGetHealth(${1:key agent_id});$0"
+        ],
+        "description": "Returns the current health of an avatar.\nReturns a float\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• key agent_id"
+    },
+    "llGetNotecardLineSync": {
+        "prefix": "llGetNotecardLineSync",
+        "body": [
+            "llGetNotecardLineSync(${1:string name}, ${2:integer line});$0"
+        ],
+        "description": "Gets the line of the notecard name from the region's notecard cache immediately without raising a dataserver event.\nReturns the string containing the text of the requested line from the notecard.\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• string name\n• integer line"
+    },
+    "llGetObjectLinkKey": {
+        "prefix": "llGetObjectLinkKey",
+        "body": [
+            "llGetObjectLinkKey(${1:key object_id}, ${2:integer link|LINK_ROOT|LINK_THIS});$0"
+        ],
+        "description": "Returns the key of the linked prim link in the linkset identified by object_id\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• key object_id\n• integer link"
+    },
+    "llIsFriend": {
+        "prefix": "llIsFriend",
+        "body": [
+            "llIsFriend(${1:key agent_id});$0"
+        ],
+        "description": "Returns a boolean (an integer) that is TRUE if agent_id and the owner of the prim the script is in are friends, otherwise FALSE.\n\n0 Function ID\n0.0 Forced Delay\n10.0 Energy\n• key agent_id"
+    },
+    "llList2ListSlice": {
+        "prefix": "llList2ListSlice",
+        "body": [
+            "llList2ListSlice(${1:list src}, ${2:integer start}, ${3:integer end}, ${4:integer stride}, ${5:integer slice_index});$0"
+        ],
+        "description": "Returns a list of the slice_index'th element of every stride in strided list whose index is a multiple of stride in the range start to end.\n\n198 Function ID\n0.0 Forced Delay\n10.0 Energy\n• list src\n• integer start\n• integer end\n• integer stride\n• integer slice_index"
+    },
+    "llListFindListNext": {
+        "prefix": "llListFindListNext",
+        "body": [
+            "llListFindListNext(${1:list src}, ${2:list test}, ${3:integer instance});$0"
+        ],
+        "description": "Returns the integer index of the nth instance of test in src.\n\n201 Function ID\n0.0 Forced Delay\n10.0 Energy\n• list src\n• list test\n• integer instance"
+    },
+    "llListFindStrided": {
+        "prefix": "llListFindStrided",
+        "body": [
+            "llListFindStrided(${1:list src}, ${2:list test}, ${3:integer start}, ${4:integer end}, ${5:integer stride});$0"
+        ],
+        "description": "Returns the integer index of the first instance of test in src.\n\n201 Function ID\n0.0 Forced Delay\n10.0 Energy\n• list src\n• list test\n• integer start\n• integer end\n• integer stride"
+    },
+    "llListSortStrided": {
+        "prefix": "llListSortStrided",
+        "body": [
+            "llListSortStrided(${1:list src}, ${2:integer stride}, ${3:integer stride_index}, ${4:integer ascending});$0"
+        ],
+        "description": "llListSortStrided is llListSort with the added parameter of stride_index, adding the flexibility to sort by any item in the stride. These routines use the same underlying code and have the same computational complexity.\nReturns a list that is src sorted by the stride_index item in every stride.\n\n184 Function ID\n0.0 Forced Delay\n10.0 Energy\n• list src\n• integer stride\n• integer stride_index\n• integer ascending"
+    },
+    "llReplaceSubString": {
+        "prefix": "llReplaceSubString",
+        "body": [
+            "llReplaceSubString(${1:string src}, ${2:string pattern}, ${3:string replacement_pattern}, ${4:integer count})$0"
+        ],
+        "description": "Returns a string that is the result of replacing the first count matching instances pattern in src with replacement_pattern.\n\n? Function ID\n0.0 Forced Delay\n10.0 Energy\n• string src\n• string pattern\n• string replacement_pattern\n• integer count"
+    },
+    "llRezObjectWithParams": {
+        "prefix": "llRezObjectWithParams",
+        "body": [
+            "llRezObjectWithParams(${1:string inventory}, ${2:list params})$0"
+        ],
+        "description": "Instantiate inventory object at pos with an initial set of parameters specified in params.\npos will default to the position of the object containing the script, unless REZ_POS is specified.\nReturns a key which will be the key of the object when it is successfully rezzed in the world.\n\n? Function ID\n0.1 Forced Delay\n200.0 Energy\n• string inventory\n• list params"
+    },
+    "llWorldPosToHUD": {
+        "prefix": "llWorldPosToHUD",
+        "body": [
+            "llWorldPosToHUD(${1:vector world_pos})$0"
+        ],
+        "description": "Returns a vector position in HUD frame that would place the center of the HUD object directly over world_pos as viewed by the current camera.\n\n547 Function ID\n0.0 Forced Delay\n10.0 Energy\n• vector world_pos"
     },
     "ACTIVE": {
         "prefix": "ACTIVE",

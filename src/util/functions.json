@@ -1,0 +1,2512 @@
+{
+    "llGetSunRotation": {
+        "declaration": "rotation llGetSunRotation(  );",
+        "meaning": "Return the rotation applied to the sun for the parcel at the location of the object containing the script.  These function are altitude aware and so will pick up the sun for their current track. llGetRegionSunRotation returns the rotation applied at the region level, llGetSunRotation does the same for the parcel.  If there is no custom environment applied to parcel llGetSunRotation returns the same value as llGetRegionSunRotation.Returns a rotation ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetSunRotation"
+    },
+    "llAvatarOnSitTarget": {
+        "declaration": "key llAvatarOnSitTarget(  );",
+        "meaning": "Returns a key that is the UUID of the user seated on the prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAvatarOnSitTarget"
+    },
+    "llWater": {
+        "declaration": "float llWater( vector offset );",
+        "meaning": "Returns a float that is the water height below the prim's position + offset",
+        "wiki": "https://wiki.secondlife.com/wiki/llWater"
+    },
+    "llGetInventoryCreator": {
+        "declaration": "key llGetInventoryCreator( string item );",
+        "meaning": "Returns a key of the creator of the inventory item.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryCreator"
+    },
+    "llGroundRepel": {
+        "declaration": "llGroundRepel( float height, integer water, float tau );",
+        "meaning": "Critically damps to height if within height * 0.5 of ground or water level (which ever is higher).",
+        "wiki": "https://wiki.secondlife.com/wiki/llGroundRepel"
+    },
+    "llHash": {
+        "declaration": "integer llHash( string val );",
+        "meaning": "Returns a 32bit hash for the provided string.  Returns 0 if the input string is empty.Returns an integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llHash"
+    },
+    "llCloseRemoteDataChannel": {
+        "declaration": "llCloseRemoteDataChannel( key channel );",
+        "meaning": "Closes XML-RPC channel.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCloseRemoteDataChannel"
+    },
+    "llBreakAllLinks": {
+        "declaration": "llBreakAllLinks(  );",
+        "meaning": "Delinks all prims in the link set.",
+        "wiki": "https://wiki.secondlife.com/wiki/llBreakAllLinks"
+    },
+    "llAxisAngle2Rot": {
+        "declaration": "rotation llAxisAngle2Rot( vector axis, float angle );",
+        "meaning": "Returns a rotation that is a generated angle about axis",
+        "wiki": "https://wiki.secondlife.com/wiki/llAxisAngle2Rot"
+    },
+    "llGetExperienceDetails": {
+        "declaration": "list llGetExperienceDetails( key experience_id );",
+        "meaning": "Returns a list of details about the experience. This list has 6 components: [string experience_name, key owner_id, key experience_id, integer state, string state_message, key group_id]",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetExperienceDetails"
+    },
+    "llChar": {
+        "declaration": "string llChar( integer val );",
+        "meaning": "Construct a single character string from the supplied Unicode value.Returns a string ",
+        "wiki": "https://wiki.secondlife.com/wiki/llChar"
+    },
+    "llGetForce": {
+        "declaration": "vector llGetForce(  );",
+        "meaning": "Returns a vector that is the force (if the script is physical)",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetForce"
+    },
+    "llGetGeometricCenter": {
+        "declaration": "vector llGetGeometricCenter(  );",
+        "meaning": "Returns the vector that is the geometric center of the object relative to the root prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetGeometricCenter"
+    },
+    "llClearCameraParams": {
+        "declaration": "llClearCameraParams(  );",
+        "meaning": "Resets all camera parameters to default values and turns off scripted camera control.",
+        "wiki": "https://wiki.secondlife.com/wiki/llClearCameraParams"
+    },
+    "llGetScriptName": {
+        "declaration": "string llGetScriptName(  );",
+        "meaning": "Returns a string that is the name of the script that called this function.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetScriptName"
+    },
+    "llScriptDanger": {
+        "declaration": "integer llScriptDanger( vector pos );",
+        "meaning": "Returns a boolean (an integer) that is TRUE if pos is over public land, sandbox land, land that doesn't allow everyone to edit and build, or land that doesn't allow outside scripts.",
+        "wiki": "https://wiki.secondlife.com/wiki/llScriptDanger"
+    },
+    "llGetObjectMass": {
+        "declaration": "float llGetObjectMass( key id );",
+        "meaning": "Returns a float that is the mass of id",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectMass"
+    },
+    "llGetRootRotation": {
+        "declaration": "rotation llGetRootRotation(  );",
+        "meaning": "Returns a rotation that is the region rotation of the root prim of the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRootRotation"
+    },
+    "llGetInventoryAcquireTime": {
+        "declaration": "string llGetInventoryAcquireTime( string item );",
+        "meaning": "Returns a string with the timestamp that the item was added to the prim's inventory.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryAcquireTime"
+    },
+    "llGetFreeMemory": {
+        "declaration": "integer llGetFreeMemory(  );",
+        "meaning": "Returns the integer of the number of free bytes of memory the script can use.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetFreeMemory"
+    },
+    "llGetLinkNumber": {
+        "declaration": "integer llGetLinkNumber(  );",
+        "meaning": "Returns an integer that is the link number of the prim containing the script.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLinkNumber"
+    },
+    "llGetAgentSize": {
+        "declaration": "vector llGetAgentSize( key avatar );",
+        "meaning": "Returns a vector that is an estimated size of the requested avatar.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAgentSize"
+    },
+    "llGetGMTclock": {
+        "declaration": "float llGetGMTclock(  );",
+        "meaning": "Returns a float that is the time in seconds since midnight GMT.  Value appears to be truncated to the second.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetGMTclock"
+    },
+    "llGetLinkNumberOfSides": {
+        "declaration": "integer llGetLinkNumberOfSides( integer link );",
+        "meaning": "Returns an integer that is the number of faces (or sides) of the prim link.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLinkNumberOfSides"
+    },
+    "llTriggerSoundLimited": {
+        "declaration": "llTriggerSoundLimited( string sound, float volume, vector top_north_east, vector bottom_south_west );",
+        "meaning": "Plays sound at volume, centered at but not attached to the object, limited to the box defined by vectors top_north_east and bottom_south_west",
+        "wiki": "https://wiki.secondlife.com/wiki/llTriggerSoundLimited"
+    },
+    "llGetScriptState": {
+        "declaration": "integer llGetScriptState( string script );",
+        "meaning": "Returns a boolean (an integer) that is TRUE if the script is running.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetScriptState"
+    },
+    "llGetInventoryType": {
+        "declaration": "integer llGetInventoryType( string name );",
+        "meaning": "Returns an integer that is the type of the inventory item name",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryType"
+    },
+    "llUpdateCharacter": {
+        "declaration": "llUpdateCharacter( list options );",
+        "meaning": "Updates settings for a character",
+        "wiki": "https://wiki.secondlife.com/wiki/llUpdateCharacter"
+    },
+    "llSetObjectDesc": {
+        "declaration": "",
+        "meaning": "llSetObjectDesc",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetObjectDesc"
+    },
+    "llSetColor": {
+        "declaration": "llSetColor( vector color, integer face );",
+        "meaning": "Sets the Blinn-Phong color on face of the prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetColor"
+    },
+    "llTextBox": {
+        "declaration": "llTextBox( key avatar, string message, integer channel );",
+        "meaning": "Shows a dialog box on avatar's screen with the text message. It contains a text box for input, any text that is entered is said by avatar on channel when the \"Submit\" button is clicked.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTextBox"
+    },
+    "llGetAgentList": {
+        "declaration": "list llGetAgentList( integer scope, list options );",
+        "meaning": "Requests a list of agents currently in the region, limited by the scope parameter.Returns a list [key id0, key id1, ..., key idn] or [string error_msg] -  returns avatar keys for all agents in the region limited to the area(s) specified by scope",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAgentList"
+    },
+    "llDetectedDamage": {
+        "declaration": "list llDetectedDamage( integer number );",
+        "meaning": "Returns the list containing pending damage information.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedDamage"
+    },
+    "llStopAnimation": {
+        "declaration": "",
+        "meaning": "llStopAnimation",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopAnimation"
+    },
+    "llGetLinkKey": {
+        "declaration": "key llGetLinkKey( integer link );",
+        "meaning": "Returns the key of the linked prim link",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLinkKey"
+    },
+    "llApplyImpulse": {
+        "declaration": "llApplyImpulse( vector momentum, integer local );",
+        "meaning": "Applies impulse to object",
+        "wiki": "https://wiki.secondlife.com/wiki/llApplyImpulse"
+    },
+    "llGetInventoryPermMask": {
+        "declaration": "integer llGetInventoryPermMask( string item, integer category );",
+        "meaning": "Returns a bit field (an integer) of the requested permission category for the inventory item",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryPermMask"
+    },
+    "llGetInventoryKey": {
+        "declaration": "",
+        "meaning": "key",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryKey"
+    },
+    "llGetSimulatorHostname": {
+        "declaration": "string llGetSimulatorHostname(  );",
+        "meaning": "Returns a string that is the hostname of the machine the script is running on (same as string in viewer Help dialog)",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetSimulatorHostname"
+    },
+    "llGetScale": {
+        "declaration": "vector llGetScale(  );",
+        "meaning": "Returns a vector that is the scale of the prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetScale"
+    },
+    "llResetScript": {
+        "declaration": "llResetScript(  );",
+        "meaning": "Resets the script.",
+        "wiki": "https://wiki.secondlife.com/wiki/llResetScript"
+    },
+    "llVecMag": {
+        "declaration": "float llVecMag( vector vec );",
+        "meaning": "Returns a float that is the magnitude of the vector (the undirected non-negative distance from vec to <0.0, 0.0, 0.0>).",
+        "wiki": "https://wiki.secondlife.com/wiki/llVecMag"
+    },
+    "llList2CSV": {
+        "declaration": "string llList2CSV( list src );",
+        "meaning": "Returns a string of comma separated values taken in order from src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2CSV"
+    },
+    "llSetLinkTexture": {
+        "declaration": "",
+        "meaning": "llSetLinkTexture",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLinkTexture"
+    },
+    "llGetStaticPath": {
+        "declaration": "list llGetStaticPath( vector start, vector end, float radius, list params );",
+        "meaning": "Returns a list of position vectors indicating pathfinding waypoints between positions at start and end, for a character of a given radius. The waypoints this function returns are for the 'static' nav mesh, meaning that objects set to \"movable obstacle\" or \"movable phantom\" are ignored.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetStaticPath"
+    },
+    "llTeleportAgent": {
+        "declaration": "llTeleportAgent( key agent, string landmark, vector position, vector look_at );",
+        "meaning": "Teleports an agent to a landmark stored in the object's inventory.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTeleportAgent"
+    },
+    "llGetLinkMedia": {
+        "declaration": "list llGetLinkMedia( integer link, integer face, list params );",
+        "meaning": "Get the media params for a particular face on a linked prim, given the desired list of named params.Returns a parameter list (a list) of values in the order requested.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLinkMedia"
+    },
+    "llLinkPlaySound": {
+        "declaration": "llLinkPlaySound( integer link, string sound, float volume, integer flags );",
+        "meaning": "Plays attached sound once at volume",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinkPlaySound"
+    },
+    "llClearPrimMedia": {
+        "declaration": "integer llClearPrimMedia( integer face );",
+        "meaning": "Clears (deletes) the media and all params from the given face.Returns a status (an integer) that is a STATUS_* flag which details the success/failure of the operation.",
+        "wiki": "https://wiki.secondlife.com/wiki/llClearPrimMedia"
+    },
+    "llStartObjectAnimation": {
+        "declaration": "llStartObjectAnimation( string anim );",
+        "meaning": "Start animation for the current object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llStartObjectAnimation"
+    },
+    "llList2Integer": {
+        "declaration": "integer llList2Integer( list src, integer index );",
+        "meaning": "Returns an integer that is at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2Integer"
+    },
+    "llGetHTTPHeader": {
+        "declaration": "string llGetHTTPHeader( key request_id, string header );",
+        "meaning": "Returns a string that is the value for header for request_id.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetHTTPHeader"
+    },
+    "llDeleteKeyValue": {
+        "declaration": "key llDeleteKeyValue( string k );",
+        "meaning": "Start an asynchronous transaction to delete a key-value pair associated with the script's Experience with the given key (k).Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed and the results.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDeleteKeyValue"
+    },
+    "llJsonSetValue": {
+        "declaration": "string llJsonSetValue( string json, list specifiers, string value );",
+        "meaning": "Returns, if successful, a new JSON text string which is json with the value indicated by the specifiers list set to value.",
+        "wiki": "https://wiki.secondlife.com/wiki/llJsonSetValue"
+    },
+    "llGetEnvironment": {
+        "declaration": "",
+        "meaning": "list",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetEnvironment"
+    },
+    "llSetCameraParams": {
+        "declaration": "llSetCameraParams( list rules );",
+        "meaning": "Sets multiple camera parameters at once.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetCameraParams"
+    },
+    "llClearLinkMedia": {
+        "declaration": "integer llClearLinkMedia( integer link, integer face );",
+        "meaning": "Clears (deletes) the media and all params from the given face on the linked prim(s).Returns a status (an integer) that is a STATUS_* flag which details the success/failure of the operation.",
+        "wiki": "https://wiki.secondlife.com/wiki/llClearLinkMedia"
+    },
+    "llGetTexture": {
+        "declaration": "string llGetTexture( integer face );",
+        "meaning": "Returns a string that is the Blinn-Phong diffuse texture on face",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTexture"
+    },
+    "llGetAttachedList": {
+        "declaration": "list llGetAttachedList( key avatar );",
+        "meaning": "Returns a list of object keys corresponding to public attachments worn by an avatar.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAttachedList"
+    },
+    "llAsin": {
+        "declaration": "float llAsin( float val );",
+        "meaning": "Returns a float that is the arcsine in radians of val",
+        "wiki": "https://wiki.secondlife.com/wiki/llAsin"
+    },
+    "llLinksetDataAvailable": {
+        "declaration": "integer llLinksetDataAvailable(  );",
+        "meaning": "The llLinksetDataAvailable returns the number of bytes available in the linkset's datastore.Returns an integer number of bytes available in the linkset store.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataAvailable"
+    },
+    "llBase64ToInteger": {
+        "declaration": "integer llBase64ToInteger( string str );",
+        "meaning": "Returns an integer that is str Base64 decoded as a big endian integer.",
+        "wiki": "https://wiki.secondlife.com/wiki/llBase64ToInteger"
+    },
+    "llAbs": {
+        "declaration": "integer llAbs( integer val );",
+        "meaning": "Returns an integer that is the positive version of val.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAbs"
+    },
+    "llApplyRotationalImpulse": {
+        "declaration": "llApplyRotationalImpulse( vector force, integer local );",
+        "meaning": "Applies rotational impulse to object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llApplyRotationalImpulse"
+    },
+    "llHTTPRequest": {
+        "declaration": "key llHTTPRequest( string url, list parameters, string body );",
+        "meaning": "Sends an HTTP request to the specified URL with the body of the request and parameters. When the response is received, a http_response event is raised.Returns a handle (a key) identifying the HTTP request made.",
+        "wiki": "https://wiki.secondlife.com/wiki/llHTTPRequest"
+    },
+    "llList2Key": {
+        "declaration": "key llList2Key( list src, integer index );",
+        "meaning": "Returns a key that is at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2Key"
+    },
+    "llSound": {
+        "declaration": "llSound( string sound, float volume, integer queue, integer loop );",
+        "meaning": "Plays sound at volume and whether it should loop or not.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSound"
+    },
+    "llAgentInExperience": {
+        "declaration": "integer llAgentInExperience( key agent );",
+        "meaning": "Determines whether or not the specified agent is in the script's experience.Returns a boolean (an integer) that is TRUE if the agent is in the experience and the experience can run in the current region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAgentInExperience"
+    },
+    "llCeil": {
+        "declaration": "integer llCeil( float val );",
+        "meaning": "Returns an integer that is the integer value of val rounded towards positive infinity (return >= val).",
+        "wiki": "https://wiki.secondlife.com/wiki/llCeil"
+    },
+    "llAtan2": {
+        "declaration": "float llAtan2( float y, float x );",
+        "meaning": "Returns a float that is the  arctangent2 of y, x.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAtan2"
+    },
+    "llGetStatus": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetStatus"
+    },
+    "llSetRot": {
+        "declaration": "llSetRot( rotation rot );",
+        "meaning": "Sets the rotation of the prim to rot.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetRot"
+    },
+    "llAdjustDamage": {
+        "declaration": "llAdjustDamage( integer number, float new_damage );",
+        "meaning": "The llAdjustDamage modifies the amount of damage that will be applied by the current on_damage event after it has completed processing.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAdjustDamage"
+    },
+    "llFrand": {
+        "declaration": "float llFrand( float mag );",
+        "meaning": "Returns a float that is pseudo random in the range [0.0, mag) or (mag, 0.0].[1] This means that the returned value can be any value in the range 0.0 to mag including 0.0, but not including the value of mag itself. The sign of mag matches the return.",
+        "wiki": "https://wiki.secondlife.com/wiki/llFrand"
+    },
+    "llBreakLink": {
+        "declaration": "",
+        "meaning": "llBreakLink",
+        "wiki": "https://wiki.secondlife.com/wiki/llBreakLink"
+    },
+    "llGetKey": {
+        "declaration": "key llGetKey(  );",
+        "meaning": "Returns the key of the prim the script is in.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetKey"
+    },
+    "llAttachToAvatar": {
+        "declaration": "",
+        "meaning": "llAttachToAvatar",
+        "wiki": "https://wiki.secondlife.com/wiki/llAttachToAvatar"
+    },
+    "llGetLandOwnerAt": {
+        "declaration": "key llGetLandOwnerAt( vector pos );",
+        "meaning": "Returns a key that is the land owner at pos.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLandOwnerAt"
+    },
+    "llCloud": {
+        "declaration": "float llCloud( vector offset );",
+        "meaning": "Returns a float that is the cloud density at the prim position + offset",
+        "wiki": "https://wiki.secondlife.com/wiki/llCloud"
+    },
+    "llBase64ToString": {
+        "declaration": "string llBase64ToString( string str );",
+        "meaning": "Returns a string that is the Base64 str decoded into a conventional string, interpreting the Base64-encoded bytes as UTF-8 character sequence.",
+        "wiki": "https://wiki.secondlife.com/wiki/llBase64ToString"
+    },
+    "llAttachToAvatarTemp": {
+        "declaration": "",
+        "meaning": "llAttachToAvatarTemp",
+        "wiki": "https://wiki.secondlife.com/wiki/llAttachToAvatarTemp"
+    },
+    "llDetachFromAvatar": {
+        "declaration": "",
+        "meaning": "llDetachFromAvatar",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetachFromAvatar"
+    },
+    "llAddToLandBanList": {
+        "declaration": "",
+        "meaning": "llAddToLandBanList",
+        "wiki": "https://wiki.secondlife.com/wiki/llAddToLandBanList"
+    },
+    "llGetFreeURLs": {
+        "declaration": "integer llGetFreeURLs(  );",
+        "meaning": "Returns an integer that is the number of available URLs. If attached, return the URLs remaining for the owner. Otherwise, return the available URLs for the region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetFreeURLs"
+    },
+    "llAddToLandPassList": {
+        "declaration": "llAddToLandPassList( key avatar, float hours );",
+        "meaning": "Add avatar to the land pass list for hours, or indefinitely if hours is zero.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAddToLandPassList"
+    },
+    "llGetAgentInfo": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAgentInfo"
+    },
+    "llDeleteSubList": {
+        "declaration": "list llDeleteSubList( list src, integer start, integer end );",
+        "meaning": "Returns a list that is a copy of src but with the slice from start to end removed.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDeleteSubList"
+    },
+    "llDeleteSubString": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llDeleteSubString"
+    },
+    "llAcos": {
+        "declaration": "float llAcos( float val );",
+        "meaning": "Returns a float that is the arccosine in radians of val",
+        "wiki": "https://wiki.secondlife.com/wiki/llAcos"
+    },
+    "llEuler2Rot": {
+        "declaration": "rotation llEuler2Rot( vector v );",
+        "meaning": "Returns a rotation representation of the  Euler Angles v.",
+        "wiki": "https://wiki.secondlife.com/wiki/llEuler2Rot"
+    },
+    "llTriggerSound": {
+        "declaration": "llTriggerSound( string sound, float volume );",
+        "meaning": "Plays sound at volume, centered at but not attached to object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTriggerSound"
+    },
+    "llStopObjectAnimation": {
+        "declaration": "llStopObjectAnimation( string anim );",
+        "meaning": "Stop an animation for the current object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopObjectAnimation"
+    },
+    "llGetSPMaxMemory": {
+        "declaration": "integer llGetSPMaxMemory(  );",
+        "meaning": "Returns the integer of the most bytes used while LlScriptProfiler was last active.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetSPMaxMemory"
+    },
+    "llMoveToTarget": {
+        "declaration": "",
+        "meaning": "llMoveToTarget",
+        "wiki": "https://wiki.secondlife.com/wiki/llMoveToTarget"
+    },
+    "llKeyCountKeyValue": {
+        "declaration": "key llKeyCountKeyValue(  );",
+        "meaning": "Start an asynchronous transaction to request the number of keys with the script's Experience.Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed and the results.",
+        "wiki": "https://wiki.secondlife.com/wiki/llKeyCountKeyValue"
+    },
+    "llAvatarOnLinkSitTarget": {
+        "declaration": "key llAvatarOnLinkSitTarget( integer link );",
+        "meaning": "Returns a key that is the UUID of the user seated on the prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAvatarOnLinkSitTarget"
+    },
+    "llAxes2Rot": {
+        "declaration": "rotation llAxes2Rot( vector fwd, vector left, vector up );",
+        "meaning": "Returns a rotation that is defined by the 3 coordinate axes",
+        "wiki": "https://wiki.secondlife.com/wiki/llAxes2Rot"
+    },
+    "llSqrt": {
+        "declaration": "float llSqrt( float val );",
+        "meaning": "Returns a float that is the square root of val.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSqrt"
+    },
+    "llOffsetTexture": {
+        "declaration": "llOffsetTexture( float u, float v, integer face );",
+        "meaning": "Sets the texture u & v offsets for the chosen face.",
+        "wiki": "https://wiki.secondlife.com/wiki/llOffsetTexture"
+    },
+    "llSetRemoteScriptAccessPin": {
+        "declaration": "llSetRemoteScriptAccessPin( integer pin );",
+        "meaning": "Allows a prim to have scripts remotely loaded via llRemoteLoadScriptPin when it is passed the correct pin and the prim is set mod.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetRemoteScriptAccessPin"
+    },
+    "llGetSunDirection": {
+        "declaration": "vector llGetSunDirection(  );",
+        "meaning": "Returns a normalized vector to the current sun position at the location of object containing the script.  llGetSunDirection is the vector to the parcel's sun, llGetRegionSunDirection is the vector to region's sun. If there is no custom environment set for the current parcel llGetSunDirection returns the direction to the region's sun. These functions are altitude aware.Returns a vector ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetSunDirection"
+    },
+    "llSetLocalRot": {
+        "declaration": "llSetLocalRot( rotation rot );",
+        "meaning": "Sets the rotation of a child prim relative to the root prim",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLocalRot"
+    },
+    "llGetNumberOfPrims": {
+        "declaration": "integer llGetNumberOfPrims(  );",
+        "meaning": "Returns an integer that is the number of prims in a link set the script is attached to.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetNumberOfPrims"
+    },
+    "llSetForce": {
+        "declaration": "llSetForce( vector force, integer local );",
+        "meaning": "Applies force to the object (if the object is physical)",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetForce"
+    },
+    "llGetTextureOffset": {
+        "declaration": "vector llGetTextureOffset( integer face );",
+        "meaning": "Returns a vector that is the texture offset of face in the x (\"U\", horizontal) and y (\"V\", vertical) components. The z component is unused.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTextureOffset"
+    },
+    "llGetAlpha": {
+        "declaration": "float llGetAlpha( integer face );",
+        "meaning": "Returns a float that is the Blinn-Phong alpha of face.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAlpha"
+    },
+    "llUnescapeURL": {
+        "declaration": "string llUnescapeURL( string url );",
+        "meaning": "Returns a string that is an unescaped/unencoded version of url, replacing \"%20\" with spaces etc.",
+        "wiki": "https://wiki.secondlife.com/wiki/llUnescapeURL"
+    },
+    "llGetPhysicsMaterial": {
+        "declaration": "list llGetPhysicsMaterial(  );",
+        "meaning": "Used to get the physical characteristics of an object.Returns a list in the form [ float gravity_multiplier, float restitution, float friction, float density ]",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPhysicsMaterial"
+    },
+    "llRegionSay": {
+        "declaration": "llRegionSay( integer channel, string msg );",
+        "meaning": "Says the string msg on channel number channel that can be heard anywhere in the region by a script listening on channel.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRegionSay"
+    },
+    "llList2List": {
+        "declaration": "list llList2List( list src, integer start, integer end );",
+        "meaning": "Returns a list that is a slice of src from start to end.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2List"
+    },
+    "llRequestURL": {
+        "declaration": "",
+        "meaning": "key",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestURL"
+    },
+    "llNavigateTo": {
+        "declaration": "llNavigateTo( vector pos, list options );",
+        "meaning": "Directs an object to travel to a defined position in the region or adjacent regions.",
+        "wiki": "https://wiki.secondlife.com/wiki/llNavigateTo"
+    },
+    "llTargetOmega": {
+        "declaration": "llTargetOmega( vector axis, float spinrate, float gain );",
+        "meaning": "Rotates the object/prim around axis at a rate of spinrate * llVecMag(axis) in radians per second with strength gain.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTargetOmega"
+    },
+    "llGetAgentLanguage": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAgentLanguage"
+    },
+    "llJsonValueType": {
+        "declaration": "string llJsonValueType( string json, list specifiers );",
+        "meaning": "Gets the JSON type for the value in json at the location specifiers.Returns the string specifying the type of the value at specifiers in json.",
+        "wiki": "https://wiki.secondlife.com/wiki/llJsonValueType"
+    },
+    "llList2Json": {
+        "declaration": "string llList2Json( string type, list values );",
+        "meaning": "This function takes a list and returns a JSON string of that list as either a json object or json array.Returns a string that is either values serialized as a JSON type, or if an error was encountered JSON_INVALID.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2Json"
+    },
+    "llGetObjectName": {
+        "declaration": "string llGetObjectName(  );",
+        "meaning": "Returns a string that is the name of the prim the script is attached to.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectName"
+    },
+    "llGetAndResetTime": {
+        "declaration": "float llGetAndResetTime(  );",
+        "meaning": "Returns a float that is script time in seconds and then resets the script time to zero.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAndResetTime"
+    },
+    "llGetTextureScale": {
+        "declaration": "vector llGetTextureScale( integer face );",
+        "meaning": "Returns a vector that is the texture scale on face (only the x and y components are used).",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTextureScale"
+    },
+    "llOpenFloater": {
+        "declaration": "integer llOpenFloater( string floater_name, string url, list params );",
+        "meaning": "Returns an integer Error code, or 0 if no error.",
+        "wiki": "https://wiki.secondlife.com/wiki/llOpenFloater"
+    },
+    "llSetDamage": {
+        "declaration": "llSetDamage( float damage );",
+        "meaning": "Sets the amount of damage that will be done when this object hits an avatar.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetDamage"
+    },
+    "llSetForceAndTorque": {
+        "declaration": "llSetForceAndTorque( vector force, vector torque, integer local );",
+        "meaning": "Sets the force and torque of object (if the script is physical)",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetForceAndTorque"
+    },
+    "llSetParcelMusicURL": {
+        "declaration": "llSetParcelMusicURL( string url );",
+        "meaning": "Sets the streaming audio URL for the parcel object is on",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetParcelMusicURL"
+    },
+    "llCastRay": {
+        "declaration": "list llCastRay( vector start, vector end, list options );",
+        "meaning": "Cast a line from start to end and report collision data for intersections with objects.Returns a list of strided values on a successful hit, with an additional integer status_code at the end.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCastRay"
+    },
+    "llSetPayPrice": {
+        "declaration": "",
+        "meaning": "llSetPayPrice",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetPayPrice"
+    },
+    "llGetSubString": {
+        "declaration": "string llGetSubString( string src, integer start, integer end );",
+        "meaning": "Returns a string that is the substring of src from start to end, leaving the original string intact.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetSubString"
+    },
+    "llSetPhysicsMaterial": {
+        "declaration": "llSetPhysicsMaterial( integer mask, float gravity_multiplier, float restitution, float friction, float density );",
+        "meaning": "Used to set the physical characteristics of an object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetPhysicsMaterial"
+    },
+    "llList2ListStrided": {
+        "declaration": "list llList2ListStrided( list src, integer start, integer end, integer stride );",
+        "meaning": "Returns a list of all the entries in the strided list whose index is a multiple of stride in the range start to end.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2ListStrided"
+    },
+    "llResetLandBanList": {
+        "declaration": "llResetLandBanList(  );",
+        "meaning": "Removes all residents from the land ban list.",
+        "wiki": "https://wiki.secondlife.com/wiki/llResetLandBanList"
+    },
+    "llSetContentType": {
+        "declaration": "llSetContentType( key request_id, integer content_type );",
+        "meaning": "Sets the  Internet media type \"Content-Type\" header of any subsequent LSL HTTP server response via llHTTPResponse.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetContentType"
+    },
+    "llGetInventoryName": {
+        "declaration": "string llGetInventoryName( integer type, integer number );",
+        "meaning": "Returns a string that is the name of the inventory item number of type. Returns an empty string if no item of the specified type is found in the prim's inventory (or there are less than or equal to number items of the type).",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryName"
+    },
+    "llGetLinkName": {
+        "declaration": "string llGetLinkName( integer link );",
+        "meaning": "Returns a string that is the name of link in link set",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLinkName"
+    },
+    "llSetCameraEyeOffset": {
+        "declaration": "llSetCameraEyeOffset( vector offset );",
+        "meaning": "Sets the camera eye offset for avatars that sit on the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetCameraEyeOffset"
+    },
+    "llHMAC": {
+        "declaration": "string llHMAC( string private_key, string msg, string algorithm );",
+        "meaning": "Returns a string that is the  Base64-encoded  HMAC hash of msg when using hash algorithm algorithm and secret key private_key.",
+        "wiki": "https://wiki.secondlife.com/wiki/llHMAC"
+    },
+    "llSetScale": {
+        "declaration": "llSetScale( vector size );",
+        "meaning": "Sets the size of the prim according to size",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetScale"
+    },
+    "llFabs": {
+        "declaration": "",
+        "meaning": "float",
+        "wiki": "https://wiki.secondlife.com/wiki/llFabs"
+    },
+    "llName2Key": {
+        "declaration": "key llName2Key( string name );",
+        "meaning": "Returns a key the Agent ID for the named agent in the region. If there is no agent with the specified name currently signed onto the region, this function returns the value NULL_KEY. Names are always provided in the form \"First[ Last]\" or \"first[.last]\" (first name with an optional last name.) If the last name is omitted a last name of \"Resident\" is assumed. Case is not considered when resolving agent names.",
+        "wiki": "https://wiki.secondlife.com/wiki/llName2Key"
+    },
+    "llRemoteLoadScript": {
+        "declaration": "llRemoteLoadScript( key target, string name, integer running, integer start_param );",
+        "meaning": "Deprecated",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoteLoadScript"
+    },
+    "llGetRegionCorner": {
+        "declaration": "vector llGetRegionCorner(  );",
+        "meaning": "Returns a vector in meters that is the global location of the south-west corner of the region the object is in. The z component is 0.0",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionCorner"
+    },
+    "llRotateTexture": {
+        "declaration": "llRotateTexture( float angle, integer face );",
+        "meaning": "Sets the texture rotation of the chosen face to angle.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRotateTexture"
+    },
+    "llAllowInventoryDrop": {
+        "declaration": "",
+        "meaning": "llAllowInventoryDrop",
+        "wiki": "https://wiki.secondlife.com/wiki/llAllowInventoryDrop"
+    },
+    "llSetLinkAlpha": {
+        "declaration": "llSetLinkAlpha( integer link, float alpha, integer face );",
+        "meaning": "If a prim exists in the link set at link, set the Blinn-Phong alpha on face of that prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLinkAlpha"
+    },
+    "llSetRegionPos": {
+        "declaration": "integer llSetRegionPos( vector position );",
+        "meaning": "Tries to move the entire object so that the root prim is within 0.1m of position.Returns an integer boolean, TRUE if the object is successfully placed within 0.1 m of position, FALSE otherwise. See #Specification for details.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetRegionPos"
+    },
+    "llListFindList": {
+        "declaration": "integer llListFindList( list src, list test );",
+        "meaning": "Returns the integer index of the first instance of test in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListFindList"
+    },
+    "llGetAnimationList": {
+        "declaration": "",
+        "meaning": "list",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAnimationList"
+    },
+    "llGetCameraPos": {
+        "declaration": "vector llGetCameraPos(  );",
+        "meaning": "Returns a vector that is the current camera position for the agent the task has permissions for.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetCameraPos"
+    },
+    "llMapDestination": {
+        "declaration": "",
+        "meaning": "llMapDestination",
+        "wiki": "https://wiki.secondlife.com/wiki/llMapDestination"
+    },
+    "llStartAnimation": {
+        "declaration": "llStartAnimation( string anim );",
+        "meaning": "Start animation anim for agent that granted PERMISSION_TRIGGER_ANIMATION if the permission has not been revoked.",
+        "wiki": "https://wiki.secondlife.com/wiki/llStartAnimation"
+    },
+    "llDetectedName": {
+        "declaration": "string llDetectedName( integer item );",
+        "meaning": "Returns a string that is the name of the detected item.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedName"
+    },
+    "llDumpList2String": {
+        "declaration": "string llDumpList2String( list src, string separator );",
+        "meaning": "Returns a string that is the list src converted to a string with separator between the entries.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDumpList2String"
+    },
+    "llGetRot": {
+        "declaration": "rotation llGetRot(  );",
+        "meaning": "Returns a rotation that is the prim's rotation relative to the region's axes.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRot"
+    },
+    "llSetObjectName": {
+        "declaration": "llSetObjectName( string name );",
+        "meaning": "Sets the prim's name according to the name parameter.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetObjectName"
+    },
+    "llTakeCamera": {
+        "declaration": "llTakeCamera( key avatar );",
+        "meaning": "This function is recognized by the compiler, but was never implemented in Second Life.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTakeCamera"
+    },
+    "llStopHover": {
+        "declaration": "llStopHover(  );",
+        "meaning": "Stop hovering to a height",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopHover"
+    },
+    "llTargetRemove": {
+        "declaration": "llTargetRemove( integer handle );",
+        "meaning": "Removes positional target handle registered with llTarget",
+        "wiki": "https://wiki.secondlife.com/wiki/llTargetRemove"
+    },
+    "llGetAccel": {
+        "declaration": "vector llGetAccel(  );",
+        "meaning": "Returns a vector that is the acceleration of the object in the region frame of reference.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAccel"
+    },
+    "llDetectedRezzer": {
+        "declaration": "key llDetectedRezzer( integer number );",
+        "meaning": "Returns a key that is the UUID of the object or avatar that rezzed the detected object number.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedRezzer"
+    },
+    "llListRandomize": {
+        "declaration": "list llListRandomize( list src, integer stride );",
+        "meaning": "Returns a list which is a randomized permutation of src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListRandomize"
+    },
+    "llGetRegionMoonRotation": {
+        "declaration": "rotation llGetRegionMoonRotation(  );",
+        "meaning": "Return the rotation applied to the moon for the region at the location of the object containing the script.  These function are altitude aware and so will pick up the moon for their current track. llGetRegionMoonRotation returns the rotation applied at the region level, llGetMoonRotation does the same for the parcel.  If there is no custom environment applied to parcel llGetMoonRotation returns the same value as llGetRegionMoonRotation.Returns a rotation ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionMoonRotation"
+    },
+    "llRequestUserKey": {
+        "declaration": "key llRequestUserKey( string username );",
+        "meaning": "Requests the Agent ID for the agent identified by name from the dataserver. The name given may be either the current name of an avatar or a historical name that has been used in the past. If no agent can be found with the supplied name this function returns the value NULL_KEY. ",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestUserKey"
+    },
+    "llLinksetDataReset": {
+        "declaration": "llLinksetDataReset(  );",
+        "meaning": "The llLinksetDataReset function erases all name:value pairs stored in the linkset's datastore.  When this function is called the linkset_data event is triggered in all scripts running in the linkset with an action of LINKSETDATA_RESET.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataReset"
+    },
+    "llTan": {
+        "declaration": "float llTan( float theta );",
+        "meaning": "Returns a float that is the tangent of theta.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTan"
+    },
+    "llRemoveVehicleFlags": {
+        "declaration": "llRemoveVehicleFlags( integer flags );",
+        "meaning": "Disable the specified vehicle flags",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoveVehicleFlags"
+    },
+    "llMD5String": {
+        "declaration": "string llMD5String( string src, integer nonce );",
+        "meaning": "Returns a string of 32 hex characters that is the  MD5 checksum of src with a  salt of \":\"+nonce.",
+        "wiki": "https://wiki.secondlife.com/wiki/llMD5String"
+    },
+    "llUpdateKeyValue": {
+        "declaration": "key llUpdateKeyValue( string k, string v, integer checked, string original_value );",
+        "meaning": "Start an asynchronous transaction to update a key-value pair associated with the script's Experience with the given key (k) and value (v).Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed and the results.",
+        "wiki": "https://wiki.secondlife.com/wiki/llUpdateKeyValue"
+    },
+    "llListFindStrided": {
+        "declaration": "integer llListFindStrided( list src, list test, integer start, integer end, integer stride );",
+        "meaning": "Returns the integer index of the first instance of test in src matching conditions.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListFindStrided"
+    },
+    "llDie": {
+        "declaration": "llDie(  );",
+        "meaning": "Deletes the object. The object does not go to the owners Inventory:Trash.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDie"
+    },
+    "llList2Rot": {
+        "declaration": "rotation llList2Rot( list src, integer index );",
+        "meaning": "Returns a rotation that is at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2Rot"
+    },
+    "llScriptProfiler": {
+        "declaration": "llScriptProfiler( integer flags );",
+        "meaning": "Enables or disables the scripts profiling state.",
+        "wiki": "https://wiki.secondlife.com/wiki/llScriptProfiler"
+    },
+    "llReadKeyValue": {
+        "declaration": "key llReadKeyValue( string k );",
+        "meaning": "Start an asynchronous transaction to read the value associated with the specified key (k) and the script's Experience.Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed and the results.",
+        "wiki": "https://wiki.secondlife.com/wiki/llReadKeyValue"
+    },
+    "llTransferLindenDollars": {
+        "declaration": "",
+        "meaning": "key",
+        "wiki": "https://wiki.secondlife.com/wiki/llTransferLindenDollars"
+    },
+    "llDetectedTouchPos": {
+        "declaration": "",
+        "meaning": "vector",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedTouchPos"
+    },
+    "llGetInventoryNumber": {
+        "declaration": "integer llGetInventoryNumber( integer type );",
+        "meaning": "Returns an integer that is the number of items of a given type in the prims inventory.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetInventoryNumber"
+    },
+    "llSetLinkCamera": {
+        "declaration": "llSetLinkCamera( integer link, vector eye, vector at );",
+        "meaning": "Sets the camera eye offset, and the offset that camera is looking at, for avatars that sit on the linked prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLinkCamera"
+    },
+    "llRequestUsername": {
+        "declaration": "",
+        "meaning": "key",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestUsername"
+    },
+    "llDetectedTouchFace": {
+        "declaration": "integer llDetectedTouchFace( integer index );",
+        "meaning": "Returns an integer that is the index of the face the avatar clicked on.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedTouchFace"
+    },
+    "llDetectedType": {
+        "declaration": "integer llDetectedType( integer number );",
+        "meaning": "Returns an integer mask that is the types of detected object or avatar.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedType"
+    },
+    "llSetLinkColor": {
+        "declaration": "llSetLinkColor( integer link, vector color, integer face );",
+        "meaning": "If a prim exists in the link set at link, set the Blinn-Phong color on face of that prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLinkColor"
+    },
+    "llSetHoverHeight": {
+        "declaration": "llSetHoverHeight( float height, integer water, float tau );",
+        "meaning": "Critically damps to a height above the ground (or water) in tau seconds.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetHoverHeight"
+    },
+    "llLinksetDataCountFound": {
+        "declaration": "integer llLinksetDataCountFound( string pattern );",
+        "meaning": "The llLinksetDataCountFound function returns the number of keys in the linkset datastore that match the pattern supplied in the pattern.Returns an integer Count of the keys in the datastore that match the supplied pattern.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataCountFound"
+    },
+    "llExecCharacterCmd": {
+        "declaration": "llExecCharacterCmd( integer command, list options );",
+        "meaning": "Send a command to the pathing system.",
+        "wiki": "https://wiki.secondlife.com/wiki/llExecCharacterCmd"
+    },
+    "llToUpper": {
+        "declaration": "string llToUpper( string src );",
+        "meaning": "Returns a string that is src with all upper-case characters.",
+        "wiki": "https://wiki.secondlife.com/wiki/llToUpper"
+    },
+    "llForceMouselook": {
+        "declaration": "llForceMouselook( integer mouselook );",
+        "meaning": "Sets if a sitting avatar should be forced into mouselook when they sit on this prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llForceMouselook"
+    },
+    "llStopPointAt": {
+        "declaration": "llStopPointAt(  );",
+        "meaning": "Stop agent that owns object pointing",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopPointAt"
+    },
+    "llSetAlpha": {
+        "declaration": "llSetAlpha( float alpha, integer face );",
+        "meaning": "Sets the Blinn-Phong alpha on face",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetAlpha"
+    },
+    "llGetUsedMemory": {
+        "declaration": "integer llGetUsedMemory(  );",
+        "meaning": "Returns the integer of the number of bytes of memory currently in use by the script.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetUsedMemory"
+    },
+    "llSetLinkMedia": {
+        "declaration": "integer llSetLinkMedia( integer link, integer face, list params );",
+        "meaning": "Set the media params for a particular face on the linked prim(s) without a delay.Returns a status (an integer) that is a STATUS_* flag which details the success/failure of the operation(s).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLinkMedia"
+    },
+    "llSubStringIndex": {
+        "declaration": "integer llSubStringIndex( string source, string pattern );",
+        "meaning": "Returns an integer that is the index of the first instance of pattern in source.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSubStringIndex"
+    },
+    "llSetClickAction": {
+        "declaration": "llSetClickAction( integer action );",
+        "meaning": "Sets the action performed when a prim is clicked upon (aka click action).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetClickAction"
+    },
+    "llGetAttached": {
+        "declaration": "integer llGetAttached(  );",
+        "meaning": "Returns the attach_point (an integer) the object is attached to or zero if it is either not attached or is pending detachment.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAttached"
+    },
+    "llList2ListSlice": {
+        "declaration": "list llList2ListSlice( list src, integer start, integer end, integer stride, integer slice_index );",
+        "meaning": "Returns a list of the slice_index'th element of every stride in strided list whose index is a multiple of stride in the range start to end.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2ListSlice"
+    },
+    "llDetectedGroup": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedGroup"
+    },
+    "llSetEnvironment": {
+        "declaration": "integer llSetEnvironment( vector position, list params );",
+        "meaning": "This function overrides the environmental settings for a region or a parcel. The owner of the script must have permission to modify the environment on the parcel or be an estate manager to change the entire region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetEnvironment"
+    },
+    "llSetAnimationOverride": {
+        "declaration": "llSetAnimationOverride( string anim_state, string anim );",
+        "meaning": "Set the animation (anim) that will play for the given animation state (anim_state).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetAnimationOverride"
+    },
+    "llDetectedVel": {
+        "declaration": "",
+        "meaning": "vector",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedVel"
+    },
+    "llSin": {
+        "declaration": "float llSin( float theta );",
+        "meaning": "Returns a float that is the sine of theta.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSin"
+    },
+    "llShout": {
+        "declaration": "llShout( integer channel, string msg );",
+        "meaning": "Shouts the text supplied in string msg on channel supplied in integer channel.",
+        "wiki": "https://wiki.secondlife.com/wiki/llShout"
+    },
+    "llGetHealth": {
+        "declaration": "float llGetHealth( key agent_id );",
+        "meaning": "Returns the current health of an avatar.Returns a float ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetHealth"
+    },
+    "llRot2Fwd": {
+        "declaration": "vector llRot2Fwd( rotation q );",
+        "meaning": "Computes the orientation of the local x-axis relative to the parent (i.e. the root prim or the world).Returns a vector that is the forward vector defined by q, i.e. a unit vector pointing in the local positive X direction.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRot2Fwd"
+    },
+    "llsRGB2Linear": {
+        "declaration": "vector llsRGB2Linear( vector srgb );",
+        "meaning": "Returns a vector Transforms a color specified in the sRGB colorspace to the linear RGB colorspace.",
+        "wiki": "https://wiki.secondlife.com/wiki/llsRGB2Linear"
+    },
+    "llSetCameraAtOffset": {
+        "declaration": "llSetCameraAtOffset( vector offset );",
+        "meaning": "Sets the point the camera is looking at to offset for avatars that sit on the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetCameraAtOffset"
+    },
+    "llEdgeOfWorld": {
+        "declaration": "integer llEdgeOfWorld( vector pos, vector dir );",
+        "meaning": "Checks to see whether the border hit by dir from pos is the edge of the world (has no neighboring simulator).Returns a boolean (an integer) value. FALSE indicating there is a simulator in the direction indicated.",
+        "wiki": "https://wiki.secondlife.com/wiki/llEdgeOfWorld"
+    },
+    "llTargetedEmail": {
+        "declaration": "llTargetedEmail( integer target, string subject, string message );",
+        "meaning": "Sends an email to the owner (selected by target) of an object with subject and message.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTargetedEmail"
+    },
+    "llGetTextureRot": {
+        "declaration": "float llGetTextureRot( integer face );",
+        "meaning": "Returns a float that is the texture rotation, expressed as an angle, on face",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTextureRot"
+    },
+    "llGetCameraFOV": {
+        "declaration": "float llGetCameraFOV(  );",
+        "meaning": "Returns a float value for the current camera's field of view (FOV), in radians, of the agent for which the task has permissions.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetCameraFOV"
+    },
+    "llGetOwnerKey": {
+        "declaration": "key llGetOwnerKey( key id );",
+        "meaning": "Returns a key that is the owner of prim id",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetOwnerKey"
+    },
+    "llTeleportAgentHome": {
+        "declaration": "llTeleportAgentHome( key avatar );",
+        "meaning": "Teleports avatar on owner's land to their home location without any warning, similar to a God Summons or dying.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTeleportAgentHome"
+    },
+    "llGenerateKey": {
+        "declaration": "key llGenerateKey(  );",
+        "meaning": "Generates a key using Version 5 (SHA-1 hash) UUID generation to create a unique key.Returns the key generated.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGenerateKey"
+    },
+    "llGetMaxScaleFactor": {
+        "declaration": "float llGetMaxScaleFactor(  );",
+        "meaning": "Returns a float that is the largest scaling factor that can be used with llScaleByFactor to resize the object.  This maximum is determined by the Linkability Rules and prim scale limits.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMaxScaleFactor"
+    },
+    "llGetCreator": {
+        "declaration": "key llGetCreator(  );",
+        "meaning": "Returns a key for the creator of the prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetCreator"
+    },
+    "llMinEventDelay": {
+        "declaration": "llMinEventDelay( float delay );",
+        "meaning": "Set the minimum time between events being handled.",
+        "wiki": "https://wiki.secondlife.com/wiki/llMinEventDelay"
+    },
+    "llGetLocalPos": {
+        "declaration": "vector llGetLocalPos(  );",
+        "meaning": "Returns a vector that is the position relative (local) to the root.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLocalPos"
+    },
+    "llIntegerToBase64": {
+        "declaration": "string llIntegerToBase64( integer number );",
+        "meaning": "Returns a string that is a Base64 big endian encode of number",
+        "wiki": "https://wiki.secondlife.com/wiki/llIntegerToBase64"
+    },
+    "llTeleportAgentGlobalCoords": {
+        "declaration": "llTeleportAgentGlobalCoords( key agent, vector global_coordinates, vector region_coordinates, vector look_at );",
+        "meaning": "Teleports an agent to region_coordinates within a region specified by global_coordinates.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTeleportAgentGlobalCoords"
+    },
+    "llXorBase64": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llXorBase64"
+    },
+    "llListSort": {
+        "declaration": "list llListSort( list src, integer stride, integer ascending );",
+        "meaning": "Returns a list that is src sorted by stride.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListSort"
+    },
+    "llSetAgentEnvironment": {
+        "declaration": "llSetAgentEnvironment( key agent_id, float transition, list params );",
+        "meaning": "This function sets environment values for an individual agent in an experience.  The changes to the environment persist until the agent moves to a new region or llSetAgentEnvironment is called for an agent with an empty list. Passing an empty list in params will strip all environmental settings applied to this agent as part of the experience",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetAgentEnvironment"
+    },
+    "llKey2Name": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llKey2Name"
+    },
+    "llOrd": {
+        "declaration": "integer llOrd( string val, integer index );",
+        "meaning": "Calculate the ordinal value for a character in a string.Returns an integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llOrd"
+    },
+    "llLinkSitTarget": {
+        "declaration": "llLinkSitTarget( integer link, vector offset, rotation rot );",
+        "meaning": "Set the sit location for the linked prim(s). The sit location is relative to the prim's position and rotation.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinkSitTarget"
+    },
+    "llDamage": {
+        "declaration": "llDamage( key target, float damage, integer damage_type );",
+        "meaning": "This function delivers damage to tasks and agent in the same region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDamage"
+    },
+    "llGetAnimation": {
+        "declaration": "string llGetAnimation( key id );",
+        "meaning": "Returns a string that is the name of the currently playing locomotion animation for avatar id. See the table below.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAnimation"
+    },
+    "llGetParcelPrimOwners": {
+        "declaration": "list llGetParcelPrimOwners( vector pos );",
+        "meaning": "Returns a list of all residents and groups who own objects on the parcel at pos and with individual land impact used. The list is formatted as [ key ownerKey1, integer agentImpact1, key ownerKey2, integer agentImpact2, ... ], and sorted by agent/group key with a maximum of 100 strides.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetParcelPrimOwners"
+    },
+    "llUnSit": {
+        "declaration": "llUnSit( key id );",
+        "meaning": "The agent identified by id is forced to stand up if any of the following apply:",
+        "wiki": "https://wiki.secondlife.com/wiki/llUnSit"
+    },
+    "llListReplaceList": {
+        "declaration": "list llListReplaceList( list dest, list src, integer start, integer end );",
+        "meaning": "Returns a list that is a copy of dest with start through end removed and src inserted at start.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListReplaceList"
+    },
+    "llParseString2List": {
+        "declaration": "list llParseString2List( string src, list separators, list spacers );",
+        "meaning": "Returns a list that is src broken into a list of strings, discarding separators, keeping spacers, discards any null (empty string) values generated.",
+        "wiki": "https://wiki.secondlife.com/wiki/llParseString2List"
+    },
+    "llAngleBetween": {
+        "declaration": "",
+        "meaning": "float",
+        "wiki": "https://wiki.secondlife.com/wiki/llAngleBetween"
+    },
+    "llCreateLink": {
+        "declaration": "llCreateLink( key target, integer parent );",
+        "meaning": "Attempt to link the script's object with target.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCreateLink"
+    },
+    "llGetCameraAspect": {
+        "declaration": "float llGetCameraAspect(  );",
+        "meaning": "Returns a float value for the current camera's aspect ratio (e.g. width/height) of the agent for which the task has permissions.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetCameraAspect"
+    },
+    "llGetMoonRotation": {
+        "declaration": "rotation llGetMoonRotation(  );",
+        "meaning": "Return the rotation applied to the moon for the parcel at the location of the object containing the script.  These function are altitude aware and so will pick up the moon for their current track. llGetRegionMoonRotation returns the rotation applied at the region level, llGetMoonRotation does the same for the parcel.  If there is no custom environment applied to parcel llGetMoonRotation returns the same value as llGetRegionMoonRotation.Returns a rotation ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMoonRotation"
+    },
+    "llCos": {
+        "declaration": "float llCos( float theta );",
+        "meaning": "Returns a float that is the cosine of theta.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCos"
+    },
+    "llFloor": {
+        "declaration": "integer llFloor( float val );",
+        "meaning": "Returns an integer that is the integer value of val rounded towards negative infinity (return <= val).",
+        "wiki": "https://wiki.secondlife.com/wiki/llFloor"
+    },
+    "llDetectedKey": {
+        "declaration": "key llDetectedKey( integer number );",
+        "meaning": "Returns a key that is the UUID of the detected object or avatar number.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedKey"
+    },
+    "llListenRemove": {
+        "declaration": "llListenRemove( integer handle );",
+        "meaning": "Removes listen event callback handle",
+        "wiki": "https://wiki.secondlife.com/wiki/llListenRemove"
+    },
+    "llVecNorm": {
+        "declaration": "",
+        "meaning": "vector",
+        "wiki": "https://wiki.secondlife.com/wiki/llVecNorm"
+    },
+    "llToLower": {
+        "declaration": "string llToLower( string src );",
+        "meaning": "Returns a string that is src with all lower-case letters",
+        "wiki": "https://wiki.secondlife.com/wiki/llToLower"
+    },
+    "llSetMemoryLimit": {
+        "declaration": "integer llSetMemoryLimit( integer limit );",
+        "meaning": "Request limit bytes to be reserved for this script.Returns the boolean (an integer) TRUE if the memory limit was successfully set (or FALSE if not).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetMemoryLimit"
+    },
+    "llDeleteCharacter": {
+        "declaration": "llDeleteCharacter(  );",
+        "meaning": "Convert the object back to a standard object, removing all pathfinding properties.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDeleteCharacter"
+    },
+    "llLinksetDataCountKeys": {
+        "declaration": "integer llLinksetDataCountKeys(  );",
+        "meaning": "The llLinksetDataCountKeys returns the number of unique keys that have been stored in the linkset's datastore.Returns an integer number of keys used in the linkset store.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataCountKeys"
+    },
+    "llScaleTexture": {
+        "declaration": "llScaleTexture( float u, float v, integer face );",
+        "meaning": "Sets the texture u & v scales for the chosen face.",
+        "wiki": "https://wiki.secondlife.com/wiki/llScaleTexture"
+    },
+    "llGetObjectDesc": {
+        "declaration": "string llGetObjectDesc(  );",
+        "meaning": "Returns a string containing the description of the prim the script is attached to.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectDesc"
+    },
+    "llJson2List": {
+        "declaration": "list llJson2List( string src );",
+        "meaning": "This function takes a string representing JSON, and returns a list of the top level.Returns a list made by parsing src, a string representing json.",
+        "wiki": "https://wiki.secondlife.com/wiki/llJson2List"
+    },
+    "llSoundPreload": {
+        "declaration": "llSoundPreload( string sound );",
+        "meaning": "Preloads sound on viewers within range.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSoundPreload"
+    },
+    "llGetParcelMaxPrims": {
+        "declaration": "integer llGetParcelMaxPrims( vector pos, integer sim_wide );",
+        "meaning": "Returns an integer that is the maximum combined land impact allowed for objects on the parcel at pos.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetParcelMaxPrims"
+    },
+    "llGetOmega": {
+        "declaration": "vector llGetOmega(  );",
+        "meaning": "Returns a vector that is the rotation velocity of the object in radians per second.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetOmega"
+    },
+    "llGetNextEmail": {
+        "declaration": "llGetNextEmail( string address, string subject );",
+        "meaning": "Get the next queued email that comes from address, with specified subject.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetNextEmail"
+    },
+    "llGetCenterOfMass": {
+        "declaration": "vector llGetCenterOfMass(  );",
+        "meaning": "Returns the vector position of the object's center of mass in region coordinates.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetCenterOfMass"
+    },
+    "llGetMassMKS": {
+        "declaration": "float llGetMassMKS(  );",
+        "meaning": "Returns a float that is the mass (in Kilograms) of object that script is attached to. Functionally identical to llGetMass except for the unit used in the return value.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMassMKS"
+    },
+    "llGetDayOffset": {
+        "declaration": "integer llGetDayOffset(  );",
+        "meaning": "Return the number of seconds added to the current time before calculating the current environmental time for the parcel.  llGetDayOffset  returns the value for the current parcel, llGetRegionDayOffset produces the same value for the entire region.Returns an integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetDayOffset"
+    },
+    "llSetSitText": {
+        "declaration": "",
+        "meaning": "llSetSitText",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetSitText"
+    },
+    "llSHA1String": {
+        "declaration": "string llSHA1String( string src );",
+        "meaning": "Returns a string of 40 hex characters that is the  SHA-1 security hash of src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSHA1String"
+    },
+    "llCollisionSound": {
+        "declaration": "llCollisionSound( string impact_sound, float impact_volume );",
+        "meaning": "Suppress default collision sounds, replace default impact sounds with impact_sound at the volume impact_volume",
+        "wiki": "https://wiki.secondlife.com/wiki/llCollisionSound"
+    },
+    "llMessageLinked": {
+        "declaration": "llMessageLinked( integer link, integer num, string str, key id );",
+        "meaning": "The purpose of this function is to allow scripts in the same object to communicate. It triggers a link_message event with the same parameters num, str, and id in all scripts in the prim(s) described by link.",
+        "wiki": "https://wiki.secondlife.com/wiki/llMessageLinked"
+    },
+    "llGetBoundingBox": {
+        "declaration": "list llGetBoundingBox( key object );",
+        "meaning": "Returns a list that is the bounding box of object relative to its root prim, in local coordinates.Format: [ (vector) min_corner, (vector) max_corner ]",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetBoundingBox"
+    },
+    "llManageEstateAccess": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llManageEstateAccess"
+    },
+    "llLinksetDataDeleteFound": {
+        "declaration": "list llLinksetDataDeleteFound( string pattern, string pass );",
+        "meaning": "The llLinksetDataDeleteFound function finds and attempts to delete all keys in the data store that match pattern. This function will delete protected key-value pairs only if the matching pass phrase is passed in the pass parameter. The function returns a list, the first entry in the list is the number of keys deleted, the second entry in the list is the number of keys that could not be deleted due to a non-matching pass phrase. \nIf this function successfully deletes any keys from the datastore it will trigger a linkset_data event with the type of LINKSET_DATA_MULTIDELETE, the key name will consist of a comma separated list of the key names removed from the datastore.Returns a list of the number of keys deleted or skipped.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataDeleteFound"
+    },
+    "llDataSizeKeyValue": {
+        "declaration": "key llDataSizeKeyValue(  );",
+        "meaning": "Start an asynchronous transaction to request the used and total amount of data allocated for the Experience.Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed and the results.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDataSizeKeyValue"
+    },
+    "llDetectedTouchUV": {
+        "declaration": "vector llDetectedTouchUV( integer index );",
+        "meaning": "Returns a vector that is the texture coordinates for where the prim was touched. The x & y vector positions contain the horizontal (u) & vertical (v) texture coordinates respectively (<u, v, 0.0>). Like llDetectedTouchST, the interval of each component will be [0.0, 1.0] unless the texture repeats are set to a non-default value. Increasing or decreasing the texture repeats of the face will change this interval accordingly. Additionally,  unlike with llDetectedTouchST, changing a texture's rotation will change the results of this function.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedTouchUV"
+    },
+    "llCreateKeyValue": {
+        "declaration": "key llCreateKeyValue( string k, string v );",
+        "meaning": "Start an asynchronous transaction to create a key-value pair associated with the script's Experience using the given key (k) and value (v).Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCreateKeyValue"
+    },
+    "llDetectedTouchBinormal": {
+        "declaration": "vector llDetectedTouchBinormal( integer index );",
+        "meaning": "Returns a vector that is the surface binormal (tangent to the surface, pointing along the positive T (V) direction of tangent space) where the touch event was triggered.  Along with llDetectedTouchNormal, this information can be used to find the tangent space at the touch location.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedTouchBinormal"
+    },
+    "llReleaseURL": {
+        "declaration": "llReleaseURL( string url );",
+        "meaning": "Releases the specified URL, it will no longer be usable.",
+        "wiki": "https://wiki.secondlife.com/wiki/llReleaseURL"
+    },
+    "llCollisionFilter": {
+        "declaration": "",
+        "meaning": "llCollisionFilter",
+        "wiki": "https://wiki.secondlife.com/wiki/llCollisionFilter"
+    },
+    "llDetectedPos": {
+        "declaration": "vector llDetectedPos( integer number );",
+        "meaning": "Returns a vector that is the position (in region coordinates) of detected object number.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedPos"
+    },
+    "llPlaySoundSlave": {
+        "declaration": "",
+        "meaning": "llPlaySoundSlave",
+        "wiki": "https://wiki.secondlife.com/wiki/llPlaySoundSlave"
+    },
+    "llDetectedTouchST": {
+        "declaration": "vector llDetectedTouchST( integer index );",
+        "meaning": "Returns a vector that is the surface coordinates for where the prim was touched. The x & y vector positions contain the horizontal (s) & vertical (t) face coordinates respectively (<s, t, 0.0>). Each component is usually in the interval [0.0, 1.0] with the origin in the bottom left corner.[1] With some mesh objects, values of less than 0.0 and higher than 1.0 have been observed.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedTouchST"
+    },
+    "llSay": {
+        "declaration": "llSay( integer channel, string msg );",
+        "meaning": "Says the text supplied in string msg on channel supplied in integer channel. The message can be heard 20m away, usually (see caveats)",
+        "wiki": "https://wiki.secondlife.com/wiki/llSay"
+    },
+    "llVerifyRSA": {
+        "declaration": "integer llVerifyRSA( string public_key, string msg, string signature, string algorithm );",
+        "meaning": "Returns an integer indicating whether the  RSA signature is valid for msg when using hash algorithm algorithm and public RSA key public_key.  Returns TRUE if the signature is verified, and FALSE otherwise.  Can be paired with llSignRSA to validate the authenticity of messages from other LSL scripts.",
+        "wiki": "https://wiki.secondlife.com/wiki/llVerifyRSA"
+    },
+    "llResetAnimationOverride": {
+        "declaration": "llResetAnimationOverride( string anim_state );",
+        "meaning": "Resets the animation override of the specified animation state (anim_state) to the corresponding default value.",
+        "wiki": "https://wiki.secondlife.com/wiki/llResetAnimationOverride"
+    },
+    "llList2String": {
+        "declaration": "string llList2String( list src, integer index );",
+        "meaning": "Returns a string that is at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2String"
+    },
+    "llParseStringKeepNulls": {
+        "declaration": "list llParseStringKeepNulls( string src, list separators, list spacers );",
+        "meaning": "Returns a list that is src broken into a list, discarding separators, keeping spacers, keeping any null values generated.",
+        "wiki": "https://wiki.secondlife.com/wiki/llParseStringKeepNulls"
+    },
+    "llTarget": {
+        "declaration": "integer llTarget( vector position, float range );",
+        "meaning": "This function is to have the script know when it has reached a position.It registers a position with a range that triggers at_target and not_at_target events continuously until unregistered.Returns a handle (an integer) to unregister the target with llTargetRemove.",
+        "wiki": "https://wiki.secondlife.com/wiki/llTarget"
+    },
+    "llFleeFrom": {
+        "declaration": "llFleeFrom( vector position, float distance, list options );",
+        "meaning": "Directs a character to keep a specific distance from a specific position in the region or adjacent regions.",
+        "wiki": "https://wiki.secondlife.com/wiki/llFleeFrom"
+    },
+    "llDetectedGrab": {
+        "declaration": "vector llDetectedGrab( integer number );",
+        "meaning": "Returns a vector that is the grab offset of the user touching the object; only works in the touch event.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedGrab"
+    },
+    "llResetLandPassList": {
+        "declaration": "llResetLandPassList(  );",
+        "meaning": "Removes all residents from the land access/pass list.",
+        "wiki": "https://wiki.secondlife.com/wiki/llResetLandPassList"
+    },
+    "llGetOwner": {
+        "declaration": "key llGetOwner(  );",
+        "meaning": "Returns a key that is the object owner's UUID.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetOwner"
+    },
+    "llEjectFromLand": {
+        "declaration": "",
+        "meaning": "llEjectFromLand",
+        "wiki": "https://wiki.secondlife.com/wiki/llEjectFromLand"
+    },
+    "llCollisionSprite": {
+        "declaration": "",
+        "meaning": "llCollisionSprite",
+        "wiki": "https://wiki.secondlife.com/wiki/llCollisionSprite"
+    },
+    "llGetParcelDetails": {
+        "declaration": "list llGetParcelDetails( vector pos, list params );",
+        "meaning": "Returns a list that is the parcel details specified in params (in the same order) for the parcel at pos.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetParcelDetails"
+    },
+    "llEscapeURL": {
+        "declaration": "string llEscapeURL( string url );",
+        "meaning": "Returns a string that is the escaped/encoded version of url, replacing spaces with \"%20\" etc. The function will escape any character not in [a-zA-Z0-9] to \"%xx\" where \"xx\" is the  hexadecimal value of the character in  UTF-8  byte form.",
+        "wiki": "https://wiki.secondlife.com/wiki/llEscapeURL"
+    },
+    "llCSV2List": {
+        "declaration": "list llCSV2List( string src );",
+        "meaning": "This function takes a string of values separated by commas, and turns it into a list.Returns a list made by parsing src, a string of comma separated values.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCSV2List"
+    },
+    "llDetectedTouchNormal": {
+        "declaration": "vector llDetectedTouchNormal( integer index );",
+        "meaning": "Returns a vector that is the surface normal (perpendicular to the surface) where the touch event was triggered.  Along with llDetectedTouchBinormal, this information can be used to find the tangent space at the touch location.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedTouchNormal"
+    },
+    "llCreateCharacter": {
+        "declaration": "llCreateCharacter( list options );",
+        "meaning": "Creates a pathfinding entity, known as a \"character\", from the object containing the script.  Required to activate use of pathfinding functions.",
+        "wiki": "https://wiki.secondlife.com/wiki/llCreateCharacter"
+    },
+    "llDetectedOwner": {
+        "declaration": "key llDetectedOwner( integer number );",
+        "meaning": "Returns the key (UUID) of the owner of the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedOwner"
+    },
+    "llDetectedRot": {
+        "declaration": "rotation llDetectedRot( integer number );",
+        "meaning": "Returns the rotation of detected object number.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedRot"
+    },
+    "llMakeExplosion": {
+        "declaration": "llMakeExplosion( integer particles, float scale, float vel, float lifetime, float arc, string texture, vector offset );",
+        "meaning": "Make a round explosion of particles",
+        "wiki": "https://wiki.secondlife.com/wiki/llMakeExplosion"
+    },
+    "llGetDate": {
+        "declaration": "string llGetDate(  );",
+        "meaning": "Returns a string that is the current date in the UTC time zone in the format \"YYYY-MM-DD\".",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetDate"
+    },
+    "llSitOnLink": {
+        "declaration": "integer llSitOnLink( key agent_id, integer link );",
+        "meaning": "The avatar specified by agent_id is forced to sit on the sit target of the prim indicated by the link parameter.  If the specified link is already occupied, the simulator searches down the chain of prims in the link set looking for an available sit target.Returns an Integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llSitOnLink"
+    },
+    "llSetTimerEvent": {
+        "declaration": "llSetTimerEvent( float sec );",
+        "meaning": "Cause the timer event to be triggered a maximum of once every sec seconds. Passing in 0.0 stops further timer events.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetTimerEvent"
+    },
+    "llRequestSecureURL": {
+        "declaration": "key llRequestSecureURL(  );",
+        "meaning": "Requests one HTTPS:// ( SSL)  URL for use by this object. The http_request event is triggered with result of the request. HTTPS-in uses port 12043.Returns a handle (a key) used for identifying the result of the request in the http_request event.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestSecureURL"
+    },
+    "llGetPermissions": {
+        "declaration": "integer llGetPermissions(  );",
+        "meaning": "Returns an integer bitfield with the script permissions granted",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPermissions"
+    },
+    "llStringLength": {
+        "declaration": "integer llStringLength( string str );",
+        "meaning": "Returns an integer that is the number of characters in str.",
+        "wiki": "https://wiki.secondlife.com/wiki/llStringLength"
+    },
+    "llSetTexture": {
+        "declaration": "llSetTexture( string texture, integer face );",
+        "meaning": "Sets the Blinn-Phong diffuse texture of this prim's face.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetTexture"
+    },
+    "llRound": {
+        "declaration": "integer llRound( float val );",
+        "meaning": "Returns the integer that val is closest to.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRound"
+    },
+    "llSetVehicleFlags": {
+        "declaration": "llSetVehicleFlags( integer flags );",
+        "meaning": "Enabled the specified vehicle flags",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetVehicleFlags"
+    },
+    "llSHA256String": {
+        "declaration": "string llSHA256String( string src );",
+        "meaning": "Returns a string of 64 hex characters that is the  SHA-256 security hash of src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSHA256String"
+    },
+    "llSetKeyframedMotion": {
+        "declaration": "llSetKeyframedMotion( list keyframes, list options );",
+        "meaning": "Specify a list of positions, orientations, and timings to be followed by an object. The object will be smoothly moved between those keyframes by the simulator.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetKeyframedMotion"
+    },
+    "llEmail": {
+        "declaration": "",
+        "meaning": "llEmail",
+        "wiki": "https://wiki.secondlife.com/wiki/llEmail"
+    },
+    "llListen": {
+        "declaration": "integer llListen( integer channel, string name, key id, string msg );",
+        "meaning": "Sets a handle for msg on channel from name and id.Returns a handle (an integer) that can be used to deactivate or remove the listen.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListen"
+    },
+    "llListSortStrided": {
+        "declaration": "list llListSortStrided( list src, integer stride, integer stride_index, integer ascending );",
+        "meaning": "llListSortStrided is llListSort with the added parameter of stride_index, adding the flexibility to sort by any item in the stride.  These routines use the same underlying code and have the same computational complexity.Returns a list that is src sorted by the stride_index item in every stride.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListSortStrided"
+    },
+    "llDetectedLinkNumber": {
+        "declaration": "integer llDetectedLinkNumber( integer number );",
+        "meaning": "Returns the link_number (an integer) of the triggered event. If not supported by the event, returns zero.",
+        "wiki": "https://wiki.secondlife.com/wiki/llDetectedLinkNumber"
+    },
+    "llRotTarget": {
+        "declaration": "integer llRotTarget( rotation rot, float error );",
+        "meaning": "This function is to have the script know when it has reached a rotation.It registers a rot with a error that triggers at_rot_target and not_at_rot_target events continuously until unregistered.Returns a handle (an integer) to unregister the target with llRotTargetRemove",
+        "wiki": "https://wiki.secondlife.com/wiki/llRotTarget"
+    },
+    "llGetObjectAnimationNames": {
+        "declaration": "list llGetObjectAnimationNames(  );",
+        "meaning": "Returns a list of names of animations playing in the current object",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectAnimationNames"
+    },
+    "llGetRegionFlags": {
+        "declaration": "integer llGetRegionFlags(  );",
+        "meaning": "Returns an integer that is the region flags (REGION_FLAG_*) for the region the object is in.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionFlags"
+    },
+    "llRotLookAt": {
+        "declaration": "llRotLookAt( rotation target_direction, float strength, float damping );",
+        "meaning": "Causes an object to smoothly rotate to target_direction with strength resistance at damping force.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRotLookAt"
+    },
+    "llPushObject": {
+        "declaration": "llPushObject( key target, vector impulse, vector ang_impulse, integer local );",
+        "meaning": "Applies impulse and ang_impulse to object target",
+        "wiki": "https://wiki.secondlife.com/wiki/llPushObject"
+    },
+    "llGetColor": {
+        "declaration": "vector llGetColor( integer face );",
+        "meaning": "Returns a vector that is the Blinn-Phong color on face.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetColor"
+    },
+    "llGetRegionAgentCount": {
+        "declaration": "integer llGetRegionAgentCount(  );",
+        "meaning": "Returns an integer that is the number of avatars in the region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionAgentCount"
+    },
+    "llListenControl": {
+        "declaration": "llListenControl( integer handle, integer active );",
+        "meaning": "Makes listen event callback handle active or inactive",
+        "wiki": "https://wiki.secondlife.com/wiki/llListenControl"
+    },
+    "llLoadURL": {
+        "declaration": "llLoadURL( key avatar, string message, string url );",
+        "meaning": "Shows dialog to avatar offering to load web page at url with message.If user clicks yes, launches the page in their web browser, starting the browser if required.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLoadURL"
+    },
+    "llSetVelocity": {
+        "declaration": "llSetVelocity( vector velocity, integer local );",
+        "meaning": "Applies velocity to object",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetVelocity"
+    },
+    "llEvade": {
+        "declaration": "llEvade( key target, list options );",
+        "meaning": "Characters will (roughly) try to hide from their pursuers if there is a good hiding spot along their fleeing path. Hiding means no direct line of sight from the head of the character (center of the top of its physics bounding box) to the head of its pursuer and no direct path between the two on the navmesh.",
+        "wiki": "https://wiki.secondlife.com/wiki/llEvade"
+    },
+    "llStringToBase64": {
+        "declaration": "string llStringToBase64( string str );",
+        "meaning": "Returns the string Base64 representation of the str interpreted as an UTF-8 byte sequence",
+        "wiki": "https://wiki.secondlife.com/wiki/llStringToBase64"
+    },
+    "llRotTargetRemove": {
+        "declaration": "llRotTargetRemove( integer handle );",
+        "meaning": "Removes rotational target handle registered with llRotTarget",
+        "wiki": "https://wiki.secondlife.com/wiki/llRotTargetRemove"
+    },
+    "llStopMoveToTarget": {
+        "declaration": "llStopMoveToTarget(  );",
+        "meaning": "Stops critically damped motion",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopMoveToTarget"
+    },
+    "llWhisper": {
+        "declaration": "llWhisper( integer channel, string msg );",
+        "meaning": "Whispers the text supplied in string msg on channel supplied in integer channel.",
+        "wiki": "https://wiki.secondlife.com/wiki/llWhisper"
+    },
+    "llStopLookAt": {
+        "declaration": "llStopLookAt(  );",
+        "meaning": "Stop causing object to point at a target",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopLookAt"
+    },
+    "llSetBuoyancy": {
+        "declaration": "llSetBuoyancy( float buoyancy );",
+        "meaning": "Sets the buoyancy of the task or object. Requires physics to be enabled.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetBuoyancy"
+    },
+    "llWanderWithin": {
+        "declaration": "llWanderWithin( vector origin, vector dist, list options );",
+        "meaning": "Sets a character to wander about a central spot within a specified radius.",
+        "wiki": "https://wiki.secondlife.com/wiki/llWanderWithin"
+    },
+    "llSetPrimURL": {
+        "declaration": "llSetPrimURL( string url );",
+        "meaning": "Updates the URL for the web page shown on the sides of the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetPrimURL"
+    },
+    "llSensorRemove": {
+        "declaration": "llSensorRemove(  );",
+        "meaning": "Removes the sensor setup by llSensorRepeat.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSensorRemove"
+    },
+    "llSetVehicleRotationParam": {
+        "declaration": "llSetVehicleRotationParam( integer param, rotation rot );",
+        "meaning": "Sets the vehicle rotation parameter param to rot.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetVehicleRotationParam"
+    },
+    "llLog10": {
+        "declaration": "float llLog10( float val );",
+        "meaning": "Returns a float that is the base 10  logarithm of val.If val <= 0 return zero instead.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLog10"
+    },
+    "llRot2Left": {
+        "declaration": "vector llRot2Left( rotation q );",
+        "meaning": "Computes the orientation of the local y-axis relative to the parent (i.e. relative to the root prim or the world).Returns a vector that is the left vector defined by q, i.e. a unit vector pointing in the local positive Y direction",
+        "wiki": "https://wiki.secondlife.com/wiki/llRot2Left"
+    },
+    "llSetText": {
+        "declaration": "llSetText( string text, vector color, float alpha );",
+        "meaning": "Displays text that hovers over the prim with specific color and translucency (specified with alpha).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetText"
+    },
+    "llSetPrimMediaParams": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetPrimMediaParams"
+    },
+    "llGetListEntryType": {
+        "declaration": "integer llGetListEntryType( list src, integer index );",
+        "meaning": "Returns the type (an integer) of the entry at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetListEntryType"
+    },
+    "llSetTouchText": {
+        "declaration": "",
+        "meaning": "llSetTouchText",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetTouchText"
+    },
+    "llModifyLand": {
+        "declaration": "",
+        "meaning": "llModifyLand",
+        "wiki": "https://wiki.secondlife.com/wiki/llModifyLand"
+    },
+    "llGetDisplayName": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetDisplayName"
+    },
+    "llMakeFountain": {
+        "declaration": "llMakeFountain( integer particles, float scale, float vel, float lifetime, float arc, integer bounce, string texture, vector offset, float bounce_offset );",
+        "meaning": "Make a fountain of particles",
+        "wiki": "https://wiki.secondlife.com/wiki/llMakeFountain"
+    },
+    "llWorldPosToHUD": {
+        "declaration": "vector llWorldPosToHUD( vector world_pos );",
+        "meaning": "Returns a vector position in HUD frame that would place the center of the HUD object directly over world_pos as viewed by the current camera.",
+        "wiki": "https://wiki.secondlife.com/wiki/llWorldPosToHUD"
+    },
+    "llListFindListNext": {
+        "declaration": "integer llListFindListNext( list src, list test, integer instance );",
+        "meaning": "Returns the integer index of the nth instance of test in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListFindListNext"
+    },
+    "llGetPrimMediaParams": {
+        "declaration": "list llGetPrimMediaParams( integer face, list params );",
+        "meaning": "Get the media params for a particular face on an object, given the desired list of names.Returns a parameter list (a list) of values in the order requested.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPrimMediaParams"
+    },
+    "llPlaySound": {
+        "declaration": "",
+        "meaning": "llPlaySound",
+        "wiki": "https://wiki.secondlife.com/wiki/llPlaySound"
+    },
+    "llGetClosestNavPoint": {
+        "declaration": "list llGetClosestNavPoint( vector point, list options );",
+        "meaning": "Used to get a point on the navmesh that is the closest point to point.Returns a list containing a single vector which is the closest point on the navmesh to the point provided or an empty list.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetClosestNavPoint"
+    },
+    "llLookAt": {
+        "declaration": "llLookAt( vector target, float strength, float damping );",
+        "meaning": "Cause object to point its up axis (positive z) towards target, while keeping its forward axis (positive x) below the horizon.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLookAt"
+    },
+    "llGetAnimationOverride": {
+        "declaration": "string llGetAnimationOverride( string anim_state );",
+        "meaning": "Returns a string that is the name of the animation that is being used for the specified animation state (anim_state).",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetAnimationOverride"
+    },
+    "llReturnObjectsByID": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llReturnObjectsByID"
+    },
+    "llPassTouches": {
+        "declaration": "llPassTouches( integer pass );",
+        "meaning": "Sets the pass-touches prim attribute.",
+        "wiki": "https://wiki.secondlife.com/wiki/llPassTouches"
+    },
+    "llSetPos": {
+        "declaration": "",
+        "meaning": "llSetPos",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetPos"
+    },
+    "llTakeControls": {
+        "declaration": "",
+        "meaning": "llTakeControls",
+        "wiki": "https://wiki.secondlife.com/wiki/llTakeControls"
+    },
+    "llGetParcelFlags": {
+        "declaration": "integer llGetParcelFlags( vector pos );",
+        "meaning": "Returns a bit field (an integer) of parcel flags (PARCEL_FLAG_*) for the parcel that includes the point pos.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetParcelFlags"
+    },
+    "llInstantMessage": {
+        "declaration": "llInstantMessage( key user, string message );",
+        "meaning": "Sends an Instant Message specified in the string message to the user specified by user.",
+        "wiki": "https://wiki.secondlife.com/wiki/llInstantMessage"
+    },
+    "llListInsertList": {
+        "declaration": "list llListInsertList( list dest, list src, integer start );",
+        "meaning": "Returns a list that contains all the elements from dest but with the elements from src inserted at position start.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListInsertList"
+    },
+    "llStringTrim": {
+        "declaration": "string llStringTrim( string src, integer type );",
+        "meaning": "Returns a string that is src with leading and/or trailing white space (spaces, tabs, and line feeds) trimmed from it.",
+        "wiki": "https://wiki.secondlife.com/wiki/llStringTrim"
+    },
+    "llMakeFire": {
+        "declaration": "llMakeFire( integer particles, float scale, float vel, float lifetime, float arc, string texture, vector offset );",
+        "meaning": "Make fire like particles",
+        "wiki": "https://wiki.secondlife.com/wiki/llMakeFire"
+    },
+    "llKeysKeyValue": {
+        "declaration": "key llKeysKeyValue( integer first, integer count );",
+        "meaning": "Start an asynchronous transaction to request a number of keys from the script's Experience.Returns a handle (a key) that can be used to identify the corresponding dataserver event to determine if this command succeeded or failed.",
+        "wiki": "https://wiki.secondlife.com/wiki/llKeysKeyValue"
+    },
+    "llGetMass": {
+        "declaration": "float llGetMass(  );",
+        "meaning": "Returns a float that is the mass of object (in lindograms) that script is attached to.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMass"
+    },
+    "llXorBase64Strings": {
+        "declaration": "string llXorBase64Strings( string str1, string str2 );",
+        "meaning": "Returns a string that is a Base64 string of s1 xor'ed with s2.",
+        "wiki": "https://wiki.secondlife.com/wiki/llXorBase64Strings"
+    },
+    "llGetRegionFPS": {
+        "declaration": "float llGetRegionFPS(  );",
+        "meaning": "Returns a float that is the mean region frames per second.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionFPS"
+    },
+    "llGetNumberOfSides": {
+        "declaration": "integer llGetNumberOfSides(  );",
+        "meaning": "Returns an integer that is the number of faces (or sides) of the prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetNumberOfSides"
+    },
+    "llGetTimeOfDay": {
+        "declaration": "float llGetTimeOfDay(  );",
+        "meaning": "Returns a float that is the time in seconds with subsecond precision since Second Life midnight (per the parcel-scoped day cycle settings) or region up-time (time since when the region was brought online/rebooted); whichever is smaller. If the parcel is configured so the sun stays in a constant position, then the returned value is the region up-time.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTimeOfDay"
+    },
+    "llGetDayLength": {
+        "declaration": "integer llGetDayLength(  );",
+        "meaning": "Return the number of seconds in the day cycle applied to the current parcel. llGetDayLength returns the number of seconds for the current parcel, llGetRegionDayLength is the number of seconds in the day cycle applied to the entire region.Returns an integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetDayLength"
+    },
+    "llGetObjectPrimCount": {
+        "declaration": "integer llGetObjectPrimCount( key prim );",
+        "meaning": "Returns an integer that is the total number of prims in the object that contains prim.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectPrimCount"
+    },
+    "llGround": {
+        "declaration": "float llGround( vector offset );",
+        "meaning": "Returns a float that is the ground height directly below the prim position + offset",
+        "wiki": "https://wiki.secondlife.com/wiki/llGround"
+    },
+    "llGetRegionTimeDilation": {
+        "declaration": "float llGetRegionTimeDilation(  );",
+        "meaning": "Returns a float that is the current time dilation, the value range is [0.0, 1.0], 0.0 (full dilation) and 1.0 (no dilation).[1]",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionTimeDilation"
+    },
+    "llGetRegionDayOffset": {
+        "declaration": "integer llGetRegionDayOffset(  );",
+        "meaning": "Return the number of seconds added to the current time before calculating the current environmental time for the region.  llGetDayOffset  returns the value for the current parcel, llGetRegionDayOffset produces the same value for the entire region.Returns an integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionDayOffset"
+    },
+    "llGetMoonDirection": {
+        "declaration": "vector llGetMoonDirection(  );",
+        "meaning": "Returns a normalized vector to the current moon position at the location of object containing the script.  llGetMoonDirection is the vector to the parcel's moon, llGetRegionMoonDirection is the vector to region's moon. If there is no custom environment set for the current parcel llGetMoonDirection returns the direction to the region's moon. These functions are altitude aware.Returns a vector ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMoonDirection"
+    },
+    "llVecDist": {
+        "declaration": "float llVecDist( vector vec_a, vector vec_b );",
+        "meaning": "Returns a float that is the undirected nonnegative distance between vec_a and vec_b.",
+        "wiki": "https://wiki.secondlife.com/wiki/llVecDist"
+    },
+    "llGroundSlope": {
+        "declaration": "vector llGroundSlope( vector offset );",
+        "meaning": "Returns a vector that is the ground slope below the object position + offset",
+        "wiki": "https://wiki.secondlife.com/wiki/llGroundSlope"
+    },
+    "llSetVehicleType": {
+        "declaration": "llSetVehicleType( integer type );",
+        "meaning": "Sets the vehicle type to one of the default types.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetVehicleType"
+    },
+    "llSetTorque": {
+        "declaration": "llSetTorque( vector torque, integer local );",
+        "meaning": "Sets the torque of object (if the script is physical)",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetTorque"
+    },
+    "llGetPos": {
+        "declaration": "vector llGetPos(  );",
+        "meaning": "Returns the vector position of the task in region coordinates",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPos"
+    },
+    "llLoopSoundSlave": {
+        "declaration": "",
+        "meaning": "llLoopSoundSlave",
+        "wiki": "https://wiki.secondlife.com/wiki/llLoopSoundSlave"
+    },
+    "llGetCameraRot": {
+        "declaration": "rotation llGetCameraRot(  );",
+        "meaning": "Returns a rotation that is the current camera orientation for the agent the task has permissions for.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetCameraRot"
+    },
+    "llRequestPermissions": {
+        "declaration": "",
+        "meaning": "llRequestPermissions",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestPermissions"
+    },
+    "llGetEnv": {
+        "declaration": "string llGetEnv( string name );",
+        "meaning": "Returns a string with the requested data about the region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetEnv"
+    },
+    "llGetSimStats": {
+        "declaration": "float llGetSimStats( integer stat_type );",
+        "meaning": "Returns a float that is the requested statistic.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetSimStats"
+    },
+    "llGetRegionSunRotation": {
+        "declaration": "rotation llGetRegionSunRotation(  );",
+        "meaning": "Return the rotation applied to the sun for the region at the location of the object containing the script.  These functions are altitude aware and so will pick up the sun for their current track. llGetRegionSunRotation returns the rotation applied at the region level, llGetSunRotation does the same for the parcel.  If there is no custom environment applied to parcel llGetSunRotation returns the same value as llGetRegionSunRotation.Returns a rotation ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionSunRotation"
+    },
+    "llWind": {
+        "declaration": "vector llWind( vector offset );",
+        "meaning": "Returns a vector that is the wind velocity at the prim's position + offset",
+        "wiki": "https://wiki.secondlife.com/wiki/llWind"
+    },
+    "llGetStartParameter": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetStartParameter"
+    },
+    "llGetRegionDayLength": {
+        "declaration": "integer llGetRegionDayLength(  );",
+        "meaning": "Return the number of seconds in the day cycle applied to the current region. llGetDayLength returns the number of seconds for the current parcel, llGetRegionDayLength is the number of seconds in the day cycle applied to the entire region.Returns an integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionDayLength"
+    },
+    "llGetRootPosition": {
+        "declaration": "vector llGetRootPosition(  );",
+        "meaning": "Returns a vector that is the region position of the root object of the object script is attached to",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRootPosition"
+    },
+    "llIsFriend": {
+        "declaration": "integer llIsFriend( key agent_id );",
+        "meaning": "Returns a boolean (an integer) that is TRUE if agent_id and the owner of the prim the script is in are friends, otherwise FALSE.",
+        "wiki": "https://wiki.secondlife.com/wiki/llIsFriend"
+    },
+    "llGetVel": {
+        "declaration": "vector llGetVel(  );",
+        "meaning": "Returns a vector that is the velocity of the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetVel"
+    },
+    "llGetRegionSunDirection": {
+        "declaration": "vector llGetRegionSunDirection(  );",
+        "meaning": "Returns a normalized vector to the current sun position at the location of object containing the script.  llGetSunDirection is the vector to the parcel's sun, llGetRegionSunDirection is the vector to region's sun. If there is no custom environment set for the current parcel llGetSunDirection returns the direction to the region's sun. These functions are altitude aware.Returns a vector ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionSunDirection"
+    },
+    "llRot2Up": {
+        "declaration": "vector llRot2Up( rotation q );",
+        "meaning": "Computes the orientation of the local z-axis relative to the parent (i.e. the root prim or the world).Returns a vector that is the up vector defined by q, i.e. a unit vector pointing in the positive Z direction",
+        "wiki": "https://wiki.secondlife.com/wiki/llRot2Up"
+    },
+    "llSetScriptState": {
+        "declaration": "llSetScriptState( string name, integer running );",
+        "meaning": "Set the running state of the script name.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetScriptState"
+    },
+    "llRefreshPrimURL": {
+        "declaration": "llRefreshPrimURL(  );",
+        "meaning": "Reloads the web page shown on the sides of the object.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRefreshPrimURL"
+    },
+    "llSetAngularVelocity": {
+        "declaration": "llSetAngularVelocity( vector initial_omega, integer local );",
+        "meaning": "Applies rotational velocity to object. \nIt does the same job as llApplyRotationalImpulse but doesn't depend of the mass of object .",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetAngularVelocity"
+    },
+    "llXorBase64StringsCorrect": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llXorBase64StringsCorrect"
+    },
+    "llGetLocalRot": {
+        "declaration": "rotation llGetLocalRot(  );",
+        "meaning": "Returns the rotation of the prim relative to the root.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetLocalRot"
+    },
+    "llSetVehicleFloatParam": {
+        "declaration": "llSetVehicleFloatParam( integer param, float value );",
+        "meaning": "Sets the vehicle float parameter param to value.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetVehicleFloatParam"
+    },
+    "llGroundNormal": {
+        "declaration": "vector llGroundNormal( vector offset );",
+        "meaning": "Returns a vector that is the ground  normal from the current position + offset.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGroundNormal"
+    },
+    "llSendRemoteData": {
+        "declaration": "key llSendRemoteData( key channel, string dest, integer idata, string sdata );",
+        "meaning": "Send an XML-RPC request to dest through channel with payload of channel (in a string), integer idata and string sdata.Returns a key that is the message_id for the resulting remote_data events.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSendRemoteData"
+    },
+    "llDialog": {
+        "declaration": "",
+        "meaning": "llDialog",
+        "wiki": "https://wiki.secondlife.com/wiki/llDialog"
+    },
+    "llGetNotecardLine": {
+        "declaration": "key llGetNotecardLine( string name, integer line );",
+        "meaning": "Requests the line line of the notecard name from the dataserver.Returns the handle (a key) for a dataserver event response.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetNotecardLine"
+    },
+    "llSetLinkTextureAnim": {
+        "declaration": "",
+        "meaning": "llSetLinkTextureAnim",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetLinkTextureAnim"
+    },
+    "llGetEnergy": {
+        "declaration": "float llGetEnergy(  );",
+        "meaning": "Returns a float that is how much energy is in the object as a percentage of maximum",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetEnergy"
+    },
+    "llGetObjectPermMask": {
+        "declaration": "integer llGetObjectPermMask( integer category );",
+        "meaning": "Returns a bit field (an integer) of the requested permission category for the object containing this script.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectPermMask"
+    },
+    "llGetWallclock": {
+        "declaration": "float llGetWallclock(  );",
+        "meaning": "Returns a float that is the time in seconds since midnight Pacific time (PST/PDT), truncated to whole seconds. That is the same as the time of day in SLT expressed as seconds.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetWallclock"
+    },
+    "llJsonGetValue": {
+        "declaration": "",
+        "meaning": "string",
+        "wiki": "https://wiki.secondlife.com/wiki/llJsonGetValue"
+    },
+    "llGetPermissionsKey": {
+        "declaration": "",
+        "meaning": "key",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPermissionsKey"
+    },
+    "llGiveInventory": {
+        "declaration": "",
+        "meaning": "llGiveInventory",
+        "wiki": "https://wiki.secondlife.com/wiki/llGiveInventory"
+    },
+    "llSignRSA": {
+        "declaration": "string llSignRSA( string private_key, string msg, string algorithm );",
+        "meaning": "Returns a string that is the  Base64-encoded  RSA signature of msg when using hash algorithm algorithm and secret key private_key.  Can be paired with llVerifyRSA to pass verifiable messages.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSignRSA"
+    },
+    "llScaleByFactor": {
+        "declaration": "integer llScaleByFactor( float scaling_factor );",
+        "meaning": "Attempts to resize the entire object by scaling_factor, maintaining the size-position ratios of the prims.",
+        "wiki": "https://wiki.secondlife.com/wiki/llScaleByFactor"
+    },
+    "llVolumeDetect": {
+        "declaration": "",
+        "meaning": "llVolumeDetect",
+        "wiki": "https://wiki.secondlife.com/wiki/llVolumeDetect"
+    },
+    "llGetExperienceErrorMessage": {
+        "declaration": "string llGetExperienceErrorMessage( integer error );",
+        "meaning": "Returns a text description of a particular Experience LSL error constant.Returns a string describing the error code passed or the string corresponding to error. Returns XP_ERROR_UNKNOWN_ERROR if the error is not a valid error code.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetExperienceErrorMessage"
+    },
+    "llSameGroup": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llSameGroup"
+    },
+    "llSetVehicleVectorParam": {
+        "declaration": "llSetVehicleVectorParam( integer param, vector vec );",
+        "meaning": "Sets the vehicle vector parameter param to vec.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetVehicleVectorParam"
+    },
+    "llInsertString": {
+        "declaration": "string llInsertString( string dst, integer pos, string src );",
+        "meaning": "Returns the string dst with src inserted starting at pos.",
+        "wiki": "https://wiki.secondlife.com/wiki/llInsertString"
+    },
+    "llLinear2sRGB": {
+        "declaration": "vector llLinear2sRGB( vector color );",
+        "meaning": "Returns a vector Transforms a color specified in linear RGB colorspace into the sRGB colorspace.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinear2sRGB"
+    },
+    "llSetTextureAnim": {
+        "declaration": "",
+        "meaning": "llSetTextureAnim",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetTextureAnim"
+    },
+    "llSetStatus": {
+        "declaration": "",
+        "meaning": "llSetStatus",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetStatus"
+    },
+    "llSleep": {
+        "declaration": "llSleep( float sec );",
+        "meaning": "Puts the script to sleep for sec seconds. The script will not do anything during this time.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSleep"
+    },
+    "llSensorRepeat": {
+        "declaration": "",
+        "meaning": "llSensorRepeat",
+        "wiki": "https://wiki.secondlife.com/wiki/llSensorRepeat"
+    },
+    "llSensor": {
+        "declaration": "llSensor( string name, key id, integer type, float radius, float arc );",
+        "meaning": "Performs a single scan for name and id with type within radius meters and arc radians of forward vector.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSensor"
+    },
+    "llRotBetween": {
+        "declaration": "",
+        "meaning": "rotation",
+        "wiki": "https://wiki.secondlife.com/wiki/llRotBetween"
+    },
+    "llSitTarget": {
+        "declaration": "llSitTarget( vector offset, rotation rot );",
+        "meaning": "Set the sit location for the prim. The sit location is relative to the prim's position and rotation.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSitTarget"
+    },
+    "llGiveInventoryList": {
+        "declaration": "llGiveInventoryList( key target, string folder, list inventory );",
+        "meaning": "Gives inventory items to target, creating a new folder to put them in.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGiveInventoryList"
+    },
+    "llReleaseControls": {
+        "declaration": "llReleaseControls(  );",
+        "meaning": "Stop taking inputs (that were taken with llTakeControls), dequeues any remaining control events. If PERMISSION_TAKE_CONTROLS was previously granted, it will be revoked.",
+        "wiki": "https://wiki.secondlife.com/wiki/llReleaseControls"
+    },
+    "llRemoteDataReply": {
+        "declaration": "llRemoteDataReply( key channel, key message_id, string sdata, integer idata );",
+        "meaning": "Send an XML-RPC reply on channel to message_id with payload of string sdata and integer idata",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoteDataReply"
+    },
+    "llGetTime": {
+        "declaration": "float llGetTime(  );",
+        "meaning": "Returns a float that is script time in seconds with subsecond precision since the script started, was last reset, or call to either llResetTime or llGetAndResetTime.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTime"
+    },
+    "llHTTPResponse": {
+        "declaration": "llHTTPResponse( key request_id, integer status, string body );",
+        "meaning": "Responds to request_id with status and body.",
+        "wiki": "https://wiki.secondlife.com/wiki/llHTTPResponse"
+    },
+    "llGetTorque": {
+        "declaration": "vector llGetTorque(  );",
+        "meaning": "Returns a vector that is the torque (if the script is physical)",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTorque"
+    },
+    "llOpenRemoteDataChannel": {
+        "declaration": "llOpenRemoteDataChannel(  );",
+        "meaning": "Creates a channel to listen for XML-RPC calls. Will trigger a remote_data event with channel id once it is available.",
+        "wiki": "https://wiki.secondlife.com/wiki/llOpenRemoteDataChannel"
+    },
+    "llGetRegionMoonDirection": {
+        "declaration": "vector llGetRegionMoonDirection(  );",
+        "meaning": "Returns a normalized vector to the current moon position at the location of object containing the script.  llGetMoonDirection is the vector to the parcel's moon, llGetRegionMoonDirection is the vector to region's moon. If there is no custom environment set for the current parcel llGetMoonDirection returns the direction to the region's moon. These functions are altitude aware.Returns a vector ",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionMoonDirection"
+    },
+    "llLinksetDataListKeys": {
+        "declaration": "list llLinksetDataListKeys( integer start, integer count );",
+        "meaning": "The llLinksetDataListKeys function returns a list of up to count keys in the datastore, starting at the one indicated by start. If count is less than 1, then all keys between start and the end are returned. If count minus start exceeds the total number of keys, the returned list will be shorter than count, down to a zero-length list if start equals or exceeds the total number of keys.Returns a list of the keys in the datastore, ordered alphabetically.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataListKeys"
+    },
+    "llGetParcelMusicURL": {
+        "declaration": "string llGetParcelMusicURL(  );",
+        "meaning": "Returns a string containing the parcel streaming audio URL.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetParcelMusicURL"
+    },
+    "llRemoteDataSetRegion": {
+        "declaration": "llRemoteDataSetRegion(  );",
+        "meaning": "Used with XML-RPC.  If an object using remote data channels changes regions, you must call this function to reregister the remote data channels.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoteDataSetRegion"
+    },
+    "llGroundContour": {
+        "declaration": "vector llGroundContour( vector offset );",
+        "meaning": "Returns a vector that is the ground contour direction below the prim position + offset. The contour is the direction of a contour line at that point, that is the direction in which there is no change in elevation.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGroundContour"
+    },
+    "llGetMinScaleFactor": {
+        "declaration": "float llGetMinScaleFactor(  );",
+        "meaning": "Returns a float that is the smallest scaling factor that can be used with llScaleByFactor to resize the object.  This minimum is determined by the prim scale limits.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMinScaleFactor"
+    },
+    "llLog": {
+        "declaration": "float llLog( float val );",
+        "meaning": "Returns a float that is the  natural logarithm of val.If val <= 0 return 0.0 instead.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLog"
+    },
+    "llOwnerSay": {
+        "declaration": "llOwnerSay( string msg );",
+        "meaning": "Says msg to the object's owner only, if the owner is currently in the same region.",
+        "wiki": "https://wiki.secondlife.com/wiki/llOwnerSay"
+    },
+    "llReplaceSubString": {
+        "declaration": "string llReplaceSubString( string src, string pattern, string replacement_pattern, integer count );",
+        "meaning": "Returns a string that is the result of replacing the first count matching instances pattern in src with replacement_pattern.",
+        "wiki": "https://wiki.secondlife.com/wiki/llReplaceSubString"
+    },
+    "llGetMemoryLimit": {
+        "declaration": "integer llGetMemoryLimit(  );",
+        "meaning": "Get the maximum memory a script can use.Returns the integer amount of memory the script can use in bytes.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetMemoryLimit"
+    },
+    "llRequestDisplayName": {
+        "declaration": "key llRequestDisplayName( key id );",
+        "meaning": "Requests the Display Name of the agent identified by id. When the Display Name is available the dataserver event will be raised. The agent identified by id does not need to be in the same region or online at the time of the request.Returns the handle (a key) that is used to identify the dataserver event when it is raised.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestDisplayName"
+    },
+    "llResetOtherScript": {
+        "declaration": "llResetOtherScript( string name );",
+        "meaning": "Resets script name.",
+        "wiki": "https://wiki.secondlife.com/wiki/llResetOtherScript"
+    },
+    "llGetVisualParams": {
+        "declaration": "list llGetVisualParams( key agentid, list params );",
+        "meaning": "Returns a list of the details for agentid requested in params.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetVisualParams"
+    },
+    "llGetRegionName": {
+        "declaration": "string llGetRegionName(  );",
+        "meaning": "Returns a string that is the current region name",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetRegionName"
+    },
+    "llGetUsername": {
+        "declaration": "string llGetUsername( key id );",
+        "meaning": "Returns a string that is the unique username of the avatar specified by id.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetUsername"
+    },
+    "llLoopSound": {
+        "declaration": "llLoopSound( string sound, float volume );",
+        "meaning": "Plays attached sound looping indefinitely at volume",
+        "wiki": "https://wiki.secondlife.com/wiki/llLoopSound"
+    },
+    "llReplaceAgentEnvironment": {
+        "declaration": "nteger llReplaceAgentEnvironment( key agent_id, float transition, string environment );",
+        "meaning": "The llReplaceAgentEnvironment function overrides the current region and parcel environment seen by an agent. The new environment persists until the agent crosses to a new region or this function is called with the NULL_KEY or empty string in the environment parameter for the particular agent, doing so will strip all environmental settings applied to this agent as part of the experience. This function must be executed as part of an experience.Returns an Integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llReplaceAgentEnvironment"
+    },
+    "llGetNumberOfNotecardLines": {
+        "declaration": "key llGetNumberOfNotecardLines( string name );",
+        "meaning": "Requests the number of lines in notecard name via the dataserver event (cast dataserver value to integer)Returns the handle (a key) for a dataserver event response.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetNumberOfNotecardLines"
+    },
+    "llRequestSimulatorData": {
+        "declaration": "key llRequestSimulatorData( string region, integer data );",
+        "meaning": "Requests data about region. When data is available the dataserver event will be raised.Returns a handle (a key) for a dataserver event response.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestSimulatorData"
+    },
+    "llGetListLength": {
+        "declaration": "integer llGetListLength( list src );",
+        "meaning": "Returns an integer that is the number of elements in the list src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetListLength"
+    },
+    "llRequestExperiencePermissions": {
+        "declaration": "llRequestExperiencePermissions( key agent, string name );",
+        "meaning": "Asks the agent for permission to participate in the script's Experience.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestExperiencePermissions"
+    },
+    "llGetNotecardLineSync": {
+        "declaration": "string llGetNotecardLineSync( string name, integer line );",
+        "meaning": "Gets the line of the notecard name from the region's notecard cache immediately without raising a dataserver event.Returns the string containing the text of the requested line from the notecard.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetNotecardLineSync"
+    },
+    "llGetUnixTime": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetUnixTime"
+    },
+    "llGiveMoney": {
+        "declaration": "integer llGiveMoney( key destination, integer amount );",
+        "meaning": "Transfer amount of L$ money from script owner to destination avatar.Returns an integer that is always zero. In contrast llTransferLindenDollars returns a key that can be used to match the function call to the resulting transaction_result event and the transaction history.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGiveMoney"
+    },
+    "llReplaceEnvironment": {
+        "declaration": "integer llReplaceEnvironment( vector position, string environment, integer track_no, integer day_length, integer day_offset );",
+        "meaning": "The llReplaceEnvironment function replaces the environment in a parcel or a region. Either for a single elevation track or the entire environment. The owner of the script must have permission to edit the environment on the destination parcel, or be an estate manage in the case of an entire region.\nIn most cases errors are reported as a return value from the function (see table below). However, issues with the environment assets may be reported in the debug chat.Returns an Integer ",
+        "wiki": "https://wiki.secondlife.com/wiki/llReplaceEnvironment"
+    },
+    "llReturnObjectsByOwner": {
+        "declaration": "",
+        "meaning": "integer",
+        "wiki": "https://wiki.secondlife.com/wiki/llReturnObjectsByOwner"
+    },
+    "llList2Float": {
+        "declaration": "float llList2Float( list src, integer index );",
+        "meaning": "Returns a float that is at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2Float"
+    },
+    "llRequestInventoryData": {
+        "declaration": "key llRequestInventoryData( string name );",
+        "meaning": "Requests data about the item name in the prim's inventory. When data is available the dataserver event will be raised.Returns the handle (a key) that is used to identify the dataserver event when it is raised.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestInventoryData"
+    },
+    "llList2Vector": {
+        "declaration": "vector llList2Vector( list src, integer index );",
+        "meaning": "Returns a vector that is at index in src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llList2Vector"
+    },
+    "llPursue": {
+        "declaration": "llPursue( key target, list options );",
+        "meaning": "Causes the object to pursue target.",
+        "wiki": "https://wiki.secondlife.com/wiki/llPursue"
+    },
+    "llGetTimestamp": {
+        "declaration": "string llGetTimestamp(  );",
+        "meaning": "Returns a string that is the current date and time in the UTC time zone in the format \"YYYY-MM-DDThh:mm:ss.ff..fZ\"",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetTimestamp"
+    },
+    "llRezObject": {
+        "declaration": "",
+        "meaning": "llRezObject",
+        "wiki": "https://wiki.secondlife.com/wiki/llRezObject"
+    },
+    "llGetObjectLinkKey": {
+        "declaration": "key llGetLinkKey( integer link );",
+        "meaning": "Returns the key of the linked prim link",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectLinkKey"
+    },
+    "llRezAtRoot": {
+        "declaration": "",
+        "meaning": "llRezAtRoot",
+        "wiki": "https://wiki.secondlife.com/wiki/llRezAtRoot"
+    },
+    "llGetParcelPrimCount": {
+        "declaration": "integer llGetParcelPrimCount( vector pos, integer category, integer sim_wide );",
+        "meaning": "Returns an integer that is the total land impact of objects on the parcel at pos of the given category",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetParcelPrimCount"
+    },
+    "llGetObjectDetails": {
+        "declaration": "",
+        "meaning": "list",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetObjectDetails"
+    },
+    "llPatrolPoints": {
+        "declaration": "llPatrolPoints( list patrolPoints, list options );",
+        "meaning": "Sets the object patrolling between the points specified in patrolPoints.",
+        "wiki": "https://wiki.secondlife.com/wiki/llPatrolPoints"
+    },
+    "llReleaseCamera": {
+        "declaration": "llReleaseCamera( key avatar );",
+        "meaning": "This function is recognized by the compiler, but was never implemented in Second Life.",
+        "wiki": "https://wiki.secondlife.com/wiki/llReleaseCamera"
+    },
+    "llPow": {
+        "declaration": "float llPow( float base, float exponent );",
+        "meaning": "Returns a float that is base raised to the power exponent (baseexponent)",
+        "wiki": "https://wiki.secondlife.com/wiki/llPow"
+    },
+    "llParcelMediaQuery": {
+        "declaration": "list llParcelMediaQuery( list query );",
+        "meaning": "Returns a list containing results of query. The results are in the same order as the request.",
+        "wiki": "https://wiki.secondlife.com/wiki/llParcelMediaQuery"
+    },
+    "llMakeSmoke": {
+        "declaration": "llMakeSmoke( integer particles, float scale, float vel, float lifetime, float arc, string texture, vector offset );",
+        "meaning": "Make smoke like particles",
+        "wiki": "https://wiki.secondlife.com/wiki/llMakeSmoke"
+    },
+    "llParcelMediaCommandList": {
+        "declaration": "",
+        "meaning": "llParcelMediaCommandList",
+        "wiki": "https://wiki.secondlife.com/wiki/llParcelMediaCommandList"
+    },
+    "llLinksetDataFindKeys": {
+        "declaration": "list llLinksetDataFindKeys( string pattern, integer start, integer count );",
+        "meaning": "The llLinksetDataFindKeys function returns a list of up to count keys from the datastore that match pattern, starting at the one indicated by start. If count is less than 1, then all keys between start and the end which match pattern are returned. If count minus start exceeds the number of matching keys, the returned list will be shorter than count, down to a zero-length list if start equals or exceeds the number of matching keys. The list is ordered alphabetically.Returns a list of the keys in the datastore.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataFindKeys"
+    },
+    "llRemoteLoadScriptPin": {
+        "declaration": "",
+        "meaning": "llRemoteLoadScriptPin",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoteLoadScriptPin"
+    },
+    "llModPow": {
+        "declaration": "integer llModPow( integer a, integer b, integer c );",
+        "meaning": "Returns an integer that is a raised to the b power, mod c. ( (a**b)%c )",
+        "wiki": "https://wiki.secondlife.com/wiki/llModPow"
+    },
+    "llPassCollisions": {
+        "declaration": "llPassCollisions( integer pass );",
+        "meaning": "Sets the pass-collisions prim attribute.",
+        "wiki": "https://wiki.secondlife.com/wiki/llPassCollisions"
+    },
+    "llPointAt": {
+        "declaration": "llPointAt( vector pos );",
+        "meaning": "Make agent that owns object point at pos",
+        "wiki": "https://wiki.secondlife.com/wiki/llPointAt"
+    },
+    "llLoopSoundMaster": {
+        "declaration": "llLoopSoundMaster( string sound, float volume );",
+        "meaning": "Plays attached sound looping at volume, declares it a sync master.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLoopSoundMaster"
+    },
+    "llOverMyLand": {
+        "declaration": "integer llOverMyLand( key id );",
+        "meaning": "Returns an integer boolean, TRUE if id is over land owned by the script owner, FALSE otherwise.",
+        "wiki": "https://wiki.secondlife.com/wiki/llOverMyLand"
+    },
+    "llListStatistics": {
+        "declaration": "float llListStatistics( integer operation, list src );",
+        "meaning": "Returns a float that is the result of performing statistical aggregate function operation on src.",
+        "wiki": "https://wiki.secondlife.com/wiki/llListStatistics"
+    },
+    "llResetTime": {
+        "declaration": "llResetTime(  );",
+        "meaning": "Resets the script-time timer to zero.",
+        "wiki": "https://wiki.secondlife.com/wiki/llResetTime"
+    },
+    "llPreloadSound": {
+        "declaration": "llPreloadSound( string sound );",
+        "meaning": "Preloads sound on viewers within range",
+        "wiki": "https://wiki.secondlife.com/wiki/llPreloadSound"
+    },
+    "llRot2Euler": {
+        "declaration": "vector llRot2Euler( rotation quat );",
+        "meaning": "Returns a vector that is the Euler representation (roll, pitch, yaw) of quat, with each component expressed in radians.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRot2Euler"
+    },
+    "llRemoveFromLandPassList": {
+        "declaration": "llRemoveFromLandPassList( key avatar );",
+        "meaning": "Remove avatar from the land pass list.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoveFromLandPassList"
+    },
+    "llRemoveFromLandBanList": {
+        "declaration": "llRemoveFromLandBanList( key avatar );",
+        "meaning": "Remove avatar from the land ban list",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoveFromLandBanList"
+    },
+    "llRot2Axis": {
+        "declaration": "vector llRot2Axis( rotation rot );",
+        "meaning": "Returns a vector the rotation axis represented by rot",
+        "wiki": "https://wiki.secondlife.com/wiki/llRot2Axis"
+    },
+    "llRot2Angle": {
+        "declaration": "float llRot2Angle( rotation rot );",
+        "meaning": "Returns a float that is the rotation angle represented by rot",
+        "wiki": "https://wiki.secondlife.com/wiki/llRot2Angle"
+    },
+    "llRemoveInventory": {
+        "declaration": "",
+        "meaning": "llRemoveInventory",
+        "wiki": "https://wiki.secondlife.com/wiki/llRemoveInventory"
+    },
+    "llRezObjectWithParams": {
+        "declaration": "key llRezObjectWithParams( string inventory, list params );",
+        "meaning": "Instantiate inventory object at pos with an initial set of parameters specified in params.",
+        "wiki": "https://wiki.secondlife.com/wiki/llRezObjectWithParams"
+    },
+    "llRegionSayTo": {
+        "declaration": "llRegionSayTo( key target, integer channel, string msg );",
+        "meaning": "Says[1] the text supplied in string msg on channel supplied in integer channel to the object or avatar specified by target",
+        "wiki": "https://wiki.secondlife.com/wiki/llRegionSayTo"
+    },
+    "llRequestAgentData": {
+        "declaration": "",
+        "meaning": "key",
+        "wiki": "https://wiki.secondlife.com/wiki/llRequestAgentData"
+    },
+    "llComputeHash": {
+        "declaration": "string llComputeHash( string message, string algorithm );",
+        "meaning": "Returns a string hex-encoded hash digest of message using cryptographic algorithm",
+        "wiki": "https://wiki.secondlife.com/wiki/llComputeHash"
+    },
+    "llLinksetDataWrite": {
+        "declaration": "integer LlLinksetDataWrite( string name, string value );",
+        "meaning": "Creates or updates an unprotected name:value pair from the linkset's datastore.\nReturns an integer success or failure code.",
+        "wiki": "https://wiki.secondlife.com/wiki/LlLinksetDataWrite"
+    },
+    "llLinksetDataWriteProtected": {
+        "declaration": "integer llLinksetDataWriteProtected( string name, string value, string pass );",
+        "meaning": "Creates or updates a protected name:value pair from the linkset's datastore. Further attempts to read, write or update the name:value pair must use the protected versions of those functions and must supply the same string that was used in pass.\nReturns an integer success or failure code.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataWrite"
+    },
+    "llAdjustSoundVolume": {
+        "declaration": "llAdjustSoundVolume( float volume );",
+        "meaning": "Adjusts volume of attached sound.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAdjustSoundVolume"
+    },
+    "llLinkAdjustSoundVolume": {
+        "declaration": "llLinkAdjustSoundVolume( integer link, float volume );",
+        "meaning": "Adjusts volume of attached sound.",
+        "wiki": "https://wiki.secondlife.com/wiki/llAdjustSoundVolume"
+    },
+    "llSetSoundRadius": {
+        "declaration": "llSetSoundRadius( float radius );",
+        "meaning": "Establishes a hard cut-off radius for audibility of scripted sounds (both attached and triggered).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetSoundRadius"
+    },
+    "llLinkSetSoundRadius": {
+        "declaration": "llLinkSetSoundRadius( integer link, float radius );",
+        "meaning": "Establishes a hard cut-off radius for audibility of scripted sounds (both attached and triggered).",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetSoundRadius"
+    },
+    "llGodLikeRezObject": {
+        "declaration": "llGodLikeRezObject( key inventory, vector pos );",
+        "meaning": "Rez directly off of UUID if owner has god-bit set.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGodLikeRezObject"
+    },
+    "llLinksetDataDelete": {
+        "declaration": "integer llLinksetDataDelete( string name );",
+        "meaning": "Removes an unprotected name:value pair from the linkset's datastore. If the pair was created\nReturns an integer success or failure code.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataDelete"
+    },
+    "llLinksetDataDeleteProtected": {
+        "declaration": "integer llLinksetDataDeleteProtected( string name, string pass );",
+        "meaning": "The llLinksetDataDeleteProtected function erases a protected name:value pair from the linkset's datastore.\nReturns an integer success or failure code.",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataDelete"
+    },
+    "llSetObjectPermMask": {
+        "declaration": "llSetObjectPermMask( integer mask, integer value );",
+        "meaning": "Sets the given permission mask to the new value on the root object the task is attached to.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetObjectPermMask"
+    },
+    "llStopSound": {
+        "declaration": "llStopSound( );",
+        "meaning": "Stops the attached sound(s) currently playing, if they were started by llLoopSound",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopSound"
+    },
+    "llLinkStopSound": {
+        "declaration": "llLinkStopSound( integer link );",
+        "meaning": "Stops the attached sound(s) currently playing, if they were started by llLoopSound",
+        "wiki": "https://wiki.secondlife.com/wiki/llStopSound"
+    },
+    "llLinksetDataRead": {
+        "declaration": "string llLinksetDataRead( string name );",
+        "meaning": "Reads an unprotected name:value pair from the linkset's datastore.\nReturns a string value corresponding to name",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataRead"
+    },
+    "llLinksetDataReadProtected": {
+        "declaration": "string llLinksetDataReadProtected( string name, string pass );",
+        "meaning": "Reads a protected name:value pair from the datastore.\nReturns a string value corresponding to name",
+        "wiki": "https://wiki.secondlife.com/wiki/llLinksetDataRead"
+    },
+    "llSetInventoryPermMask": {
+        "declaration": "llSetInventoryPermMask( string item, integer category, integer value );",
+        "meaning": "Sets the given permission category to the new value on the inventory item.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetInventoryPermMask"
+    },
+    "llSetSoundQueueing": {
+        "declaration": "llSetSoundQueueing( integer queue );",
+        "meaning": "Set whether attached sounds wait for the current sound to finish. If queue is TRUE, queuing is enabled, if FALSE queuing is disabled. Sound queuing is disabled by default.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetSoundQueueing"
+    },
+    "llLinkSetSoundQueueing": {
+        "declaration": "llLinkSetSoundQueueing( integer link, integer queue );",
+        "meaning": "Set whether attached sounds wait for the current sound to finish. If queue is TRUE, queuing is enabled, if FALSE queuing is disabled. Sound queuing is disabled by default.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetSoundQueueing"
+    },
+    "llParticleSystem": {
+        "declaration": "llParticleSystem( list rules );",
+        "meaning": "Defines a particle system for the containing prim based on a list of rules.",
+        "wiki": "https://wiki.secondlife.com/wiki/llParticleSystem"
+    },
+    "llLinkParticleSystem": {
+        "declaration": "llLinkParticleSystem( integer link, list rules );",
+        "meaning": "A particle system defined by a list of rules is set for the prim(s) link.",
+        "wiki": "https://wiki.secondlife.com/wiki/llParticleSystem"
+    },
+    "llGetPrimitiveParams": {
+        "declaration": "list llGetPrimitiveParams( list params );",
+        "meaning": "Returns attribute values (a list) for the attributes requested in the params list.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPrimitiveParams"
+    },
+    "llGetLinkPrimitiveParams": {
+        "declaration": "list llGetLinkPrimitiveParams( integer link, list params );",
+        "meaning": "Identical to llGetPrimitiveParams except that it acts on the prim specified by the link number given.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPrimitiveParams"
+    },
+    "llSetPrimitiveParams": {
+        "declaration": "llSetPrimitiveParams( list rules );",
+        "meaning": "Sets the prim's parameters according to rules.",
+        "wiki": "https://wiki.secondlife.com/wiki/llSetPrimitiveParams"
+    },
+    "llSetLinkPrimitiveParams": {
+        "declaration": "llSetLinkPrimitiveParams( integer link, list rules );",
+        "meaning": "Sets the prim's parameters according to rules.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPrimitiveParams"
+    },
+    "llSetLinkPrimitiveParamsFast": {
+        "declaration": "llSetLinkPrimitiveParamsFast( integer link, list rules );",
+        "meaning": "Sets the prim's parameters according to rules.",
+        "wiki": "https://wiki.secondlife.com/wiki/llGetPrimitiveParams"
+    }
+}
