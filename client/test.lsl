@@ -76,7 +76,9 @@ default
     {
         if (menuOpen) {
             menuToucher = NULL_KEY;
+            
             llListenRemove(menuListener);
+            
         }
     }
 
