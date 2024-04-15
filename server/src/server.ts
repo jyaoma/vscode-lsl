@@ -17,9 +17,15 @@ import {
   InitializeResult,
   DocumentDiagnosticReportKind,
   type DocumentDiagnosticReport,
+  CompletionItemTag,
 } from 'vscode-languageserver/node';
+import fs from 'fs';
+import type { LSLConstant, LSLFunction } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
+
+const allFunctions: { [key: string]: LSLFunction } = JSON.parse(fs.readFileSync(`${__dirname}/../../functions.json`, { encoding: 'utf8' }));
+const allConstants: { [key: string]: LSLConstant } = JSON.parse(fs.readFileSync(`${__dirname}/../../constants.json`, { encoding: 'utf8' }));
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -170,12 +176,33 @@ connection.onCompletion(
     // The pass parameter contains the position of the text document in
     // which code complete got requested. For the example we ignore this
     // info and always provide the same completion items.
-    return [
-      {
-        label: 'llSay',
+    const functions = Object.keys(allFunctions).map<CompletionItem>(name => {
+      const func = allFunctions[name];
+      const tags: CompletionItemTag[] = [];
+      if (func.deprecated) {
+        tags.push(CompletionItemTag.Deprecated);
+      }
+
+      return {
+        label: name,
         kind: CompletionItemKind.Function,
-        data: 'llSay',
-      },
+        data: name,
+        detail: `${func.returnType ? `(${func.returnType}) ` : ''}${name}(${func.parameters.map(p => `${p.type} ${p.name}`).join(', ')})`,
+        documentation: func.description ?? undefined,
+        tags
+      };
+    });
+    const constants = Object.keys(allConstants).map<CompletionItem>(name => ({
+      label: name,
+      kind: CompletionItemKind.Constant,
+      data: name,
+      detail: `${allConstants[name].type} ${allConstants[name].name} = ${allConstants[name].value}`,
+      documentation: allConstants[name].meaning ?? undefined
+    }));
+
+    return [
+      ...functions,
+      ...constants
     ];
   }
 );
@@ -183,11 +210,14 @@ connection.onCompletion(
 // This handler resolves additional information for the item selected in
 // the completion list.
 connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
-  if (item.data === 'llSay') {
-    item.detail = 'llSay(integer channel, string msg)';
-    item.documentation =
-      'Says the text supplied in <= string msg on channel supplied in integer channel. The message can be heard 20m away, usually.';
-  }
+  // if (item.data === 'llSay') {
+  //   item.detail = 'llSay(integer channel, string msg)';
+  //   item.documentation =
+  //     'Says the text supplied in <= string msg on channel supplied in integer channel. The message can be heard 20m away, usually.';
+  // }
+  // if (Object.keys(allConstants).includes(item.data)) {
+  //   item.kind = CompletionItemKind.Constant;
+  // }
   // if (item.data === 1) {
   //   item.detail = 'TypeScript details'lS
   //   item.documentation = 'TypeScript documentation';

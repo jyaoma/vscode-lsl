@@ -1,34 +1,12 @@
 import fs from 'fs';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
+import { LSLFunction, LSLParam } from './lslTypes';
 
 const type = 'functions';
 
 const items = fs.readFileSync(`${__dirname}/../${type}.txt`, { encoding: 'utf8' }).split('\r\n');
 const alreadyDefinedConstants = JSON.parse(fs.readFileSync(`${__dirname}/../${type}.json`, { encoding: 'utf8' }));
-
-type LSLParam = {
-	name: string;
-	type: string;
-	subtype?: string | null;
-	description?: string | null;
-}
-
-type LSLFunction = {
-    returnType?: string;
-	returns?: string;
-    description?: string | null;
-	parameters: LSLParam[];
-	id?: number;
-	sleep: number;
-	energy: number;
-    wiki: string;
-	deprecated?: string;
-	experimental: boolean;
-	godMode: boolean;
-	experience: boolean;
-	broken: boolean;
-}
 
 type SLWiki = {
 	[key: string]: string

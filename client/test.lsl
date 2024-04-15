@@ -40,9 +40,8 @@ test() {
 default
 {
     state_entry()
-    {
+    {   
         llAdjustDamage();
-        llS
         llRezObject(string inventory, vector pos, vector vel, rotation rot, integer param);
         menuToucher = NULL_KEY;
         menuOpen = FALSE;
@@ -79,7 +78,6 @@ default
             menuToucher = NULL_KEY;
             
             llListenRemove(menuListener);
-            
         }
     }
 
