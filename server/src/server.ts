@@ -186,10 +186,10 @@ connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
   if (item.data === 'llSay') {
     item.detail = 'llSay(integer channel, string msg)';
     item.documentation =
-      'Says the text supplied in string msg on channel supplied in integer channel. The message can be heard 20m away, usually.';
+      'Says the text supplied in <= string msg on channel supplied in integer channel. The message can be heard 20m away, usually.';
   }
   // if (item.data === 1) {
-  //   item.detail = 'TypeScript details';
+  //   item.detail = 'TypeScript details'lS
   //   item.documentation = 'TypeScript documentation';
   // } else if (item.data === 2) {
   //   item.detail = 'JavaScript details';
