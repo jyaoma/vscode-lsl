@@ -15,9 +15,7 @@
   "engines": {
     "vscode": "^1.75.0"
   },
-  "activationEvents": [
-    "onLanguage:lsl"
-  ],
+  "activationEvents": [],
   "main": "./client/out/extension",
   "contributes": {
     "configuration": {
@@ -62,7 +60,27 @@
           "path": "./syntaxes/lsl.tmLanguage.json"
         }
       ]
-    }
+    },
+    "languages": [
+      {
+        "id": "lsl",
+        "aliases": [
+          "LSL",
+          "lsl"
+        ],
+        "extensions": [
+          ".lsl"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "lsl",
+        "scopeName": "source.lsl",
+        "path": "./syntaxes/lsl.tmLanguage.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
