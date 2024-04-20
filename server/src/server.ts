@@ -5,8 +5,6 @@
 import {
   createConnection,
   TextDocuments,
-  Diagnostic,
-  DiagnosticSeverity,
   ProposedFeatures,
   InitializeParams,
   DidChangeConfigurationNotification,
@@ -18,6 +16,8 @@ import {
   DocumentDiagnosticReportKind,
   type DocumentDiagnosticReport,
   CompletionItemTag,
+  SignatureHelp,
+  SignatureHelpRequest,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type { LSLConstant, LSLFunction } from './lslTypes';
@@ -66,6 +66,9 @@ connection.onInitialize((params: InitializeParams) => {
         interFileDependencies: false,
         workspaceDiagnostics: false,
       },
+      signatureHelpProvider: {
+        triggerCharacters: ['(', ','],
+      }
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -91,6 +94,13 @@ connection.onInitialized(() => {
       connection.console.log('Workspace folder change event received.');
     });
   }
+  connection.client.register(
+    SignatureHelpRequest.type,
+    {
+      triggerCharacters: ['(', ','],
+      documentSelector: [{ scheme: 'file', language: 'lsl' }],
+    }
+  );
 });
 
 // The example settings
@@ -183,12 +193,20 @@ connection.onCompletion(
         tags.push(CompletionItemTag.Deprecated);
       }
 
+      let documentation = func.description || '';
+      if (func.returnType || func.returns) {
+        if (documentation !== '') {
+          documentation += '\n\n';
+        }
+        documentation += `Returns a ${func.returnType} ${func.returns}`;
+      }
+
       return {
         label: name,
         kind: CompletionItemKind.Function,
         data: name,
         detail: `${func.returnType ? `(${func.returnType}) ` : ''}${name}(${func.parameters.map(p => `${p.type} ${p.name}`).join(', ')})`,
-        documentation: func.description ?? undefined,
+        documentation,
         tags
       };
     });
@@ -226,6 +244,139 @@ connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
   //   item.documentation = 'JavaScript documentation';
   // }
   return item;
+});
+
+const allFunctionNames = Object.keys(allFunctions);
+connection.onSignatureHelp((_textDocumentPosition: TextDocumentPositionParams): SignatureHelp => {
+  const document = documents.get(_textDocumentPosition.textDocument.uri);
+  const text = document?.getText();
+  
+  // console.log(_textDocumentPosition);
+  if (!text) return { signatures: [], activeSignature: 0 };
+  const lines = text.split('\n');
+  let lineNumber = _textDocumentPosition.position.line;
+  if (lineNumber >= lines.length) return { signatures: [], activeSignature: 0 };
+  let line = lines[lineNumber];
+  let quoteRanges: { start: number; end: number }[] = [];
+  let start = -1;
+  line.split('').forEach((char, index) => {
+    if (char === '"' && start === -1) {
+      start = index;
+    } else if (char === '"' && start !== -1) {
+      quoteRanges.push({ start, end: index });
+      start = -1;
+    }
+  });
+  let colNumber = _textDocumentPosition.position.character - 1;
+  // find the function name
+  let numberOfCommas = 0;
+  let funcName = '';
+  let parenFound = false;
+  const bracketMatch: string[] = [];
+  // console.log('---------');
+  while (!(allFunctionNames.includes(funcName) && parenFound) || !'{}'.includes(line[colNumber])) {
+    const char = line[colNumber--];
+    console.log({ char, numberOfCommas, funcName, bracketMatch, colNumber, quoteRanges });
+    let isInQuote = false;
+    quoteRanges.forEach(range => {
+      if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
+        isInQuote = true;
+      }
+    });
+    if (isInQuote) continue;
+
+    switch (char) {
+      case ',':
+        if (bracketMatch.length === 0) {
+          numberOfCommas++;
+        }
+        funcName = '';
+        break;
+      case '<': 
+        if (bracketMatch[bracketMatch.length - 1] === '>') {
+          bracketMatch.pop();
+        } else {
+          numberOfCommas = 0;
+        }
+        funcName = '';
+        break;
+      case '[': 
+        if (bracketMatch[bracketMatch.length - 1] === ']') {
+          bracketMatch.pop();
+        } else {
+          numberOfCommas = 0;
+        }
+        funcName = '';
+        break;
+      case '(':
+        if (bracketMatch.length === 0) {
+          parenFound = true;
+        }
+        if (bracketMatch[bracketMatch.length - 1] === ')') {
+          bracketMatch.pop();
+        }
+        funcName = '';
+        break;
+      case '>':
+      case ')':
+      case ']':
+        bracketMatch.push(char);
+        break;
+      default:
+        if (char.match(/[a-zA-Z0-9_]/)) {
+          funcName = char + funcName;
+        }
+        break;
+    }
+    if (colNumber < 0) {
+      if (lineNumber === 0) return { signatures: [], activeSignature: 0 };
+      line = lines[--lineNumber];
+      quoteRanges = [];
+      start = -1;
+      line.split('').forEach((char, index) => {
+        if (char === '"' && start === -1) {
+          start = index;
+        } else if (char === '"' && start !== -1) {
+          quoteRanges.push({ start, end: index });
+          start = -1;
+        }
+      });
+      colNumber = line.length - 1;
+    }
+  }
+
+  console.log({ numberOfCommas, funcName });
+
+  if (!allFunctionNames.includes(funcName) || !parenFound) return { signatures: [], activeSignature: 0 };
+
+  const { parameters, returnType, returns, description } = allFunctions[funcName];
+
+  let documentation: string | undefined = '';
+
+  if (returnType && returns) {
+    documentation += `Returns a ${returnType} ${returns}\n\n`;
+  }
+  if (description) {
+    documentation += description;
+  }
+  if (documentation === '') {
+    documentation = undefined;
+  }
+
+  return {
+    signatures: [
+      {
+        label: `${funcName}(${parameters.map(p => `${p.type} ${p.name}`).join(', ')})`,
+        documentation,
+        parameters: parameters.map(p => ({
+          label: `${p.type} ${p.name}`,
+          documentation: p.description ?? undefined
+        }))
+      }
+    ],
+    activeSignature: 0,
+    activeParameter: numberOfCommas
+  };
 });
 
 // Make the text document manager listen on the connection
