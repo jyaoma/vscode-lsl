@@ -315,7 +315,6 @@ connection.onCompletion(
       const { parameters } = currentFunction;
       const currentParam = parameters[numberOfCommas];
       const { subtype } = currentParam;
-      console.log({ subtype });
       switch (subtype) {
         case 'attach_point':
           return getConstantCompletionItems([
