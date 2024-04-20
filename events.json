@@ -1,0 +1,670 @@
+{
+	"link_message": {
+		"description": "Triggered when the script receives a link message that was sent by a call to llMessageLinked. llMessageLinked is used to send messages from one script to another.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "sender_num",
+				"subtype": "link",
+				"description": "The link number of the prim that contained the script that called llMessageLinked."
+			},
+			{
+				"type": "integer",
+				"name": "num",
+				"subtype": null,
+				"description": "Second parameter of the llMessageLinked call."
+			},
+			{
+				"type": "string",
+				"name": "str",
+				"subtype": null,
+				"description": " The message that was sent from the script that called llMessageLinked."
+			},
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": "Fourth parameter of the llMessageLinked call."
+			}
+		],
+		"sleep": null,
+		"energy": null,
+		"wiki": "https://wiki.secondlife.com/wiki/link_message",
+		"experimental": false,
+		"godMode": false,
+		"experience": false,
+		"broken": false
+	},
+	"land_collision": {
+		"description": "Triggered in the root when physical object or attached avatar is colliding with land",
+		"parameters": [
+			{
+				"type": "vector",
+				"name": "pos",
+				"subtype": null,
+				"description": "position of collision with the ground"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/land_collision"
+	},
+	"experience_permissions_denied": {
+		"description": "The agent has denied experience permission.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "agent_id",
+				"subtype": null,
+				"description": "avatar UUID that is in the same region "
+			},
+			{
+				"type": "integer",
+				"name": "reason",
+				"subtype": "experience_error",
+				"description": "Reason for denial; one of the Experience Tools XP_ERROR_* errors flags."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/experience_permissions_denied"
+	},
+	"on_damage": {
+		"description": "{{LSL Warnings/Combat2}}This event is triggered when damage has been inflicted on an avatar or task in the world but before damage has been applied or distributed.All llDetected* functions that are normally available within a collision event are available while processing this event. Additionally the llDetectedDamage and llAdjustDamage methods may be called while processing this event.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": "The number of damage events pending against the avatar or task."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/on_damage"
+	},
+	"http_response": {
+		"description": "Triggered when task receives a response to one of its llHTTPRequest<nowiki>s</nowiki>",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "request_id",
+				"subtype": "handle",
+				"description": "Matches return from llHTTPRequest"
+			},
+			{
+				"type": "integer",
+				"name": "status",
+				"subtype": null,
+				"description": "[https://en.wikipedia.org/wiki/List_of_HTTP_status_codes HTTP status code] (like 404 or 200)"
+			},
+			{
+				"type": "list",
+				"name": "metadata",
+				"subtype": null,
+				"description": "List of HTTP_* constants and attributes"
+			},
+			{
+				"type": "string",
+				"name": "body",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/http_response"
+	},
+	"dataserver": {
+		"description": "Triggered when task receives asynchronous data",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "queryid",
+				"subtype": "handle",
+				"description": "matches the return of the requesting function"
+			},
+			{
+				"type": "string",
+				"name": "data",
+				"subtype": null,
+				"description": "the requested data (cast as a string as necessary)."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/dataserver"
+	},
+	"email": {
+		"description": "Triggered as a result of calling llGetNextEmail where there is a matching email in the email queue.",
+		"parameters": [
+			{
+				"type": "string",
+				"name": "time",
+				"subtype": null,
+				"description": "In the (string)llGetUnixTime format"
+			},
+			{
+				"type": "string",
+				"name": "address",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "string",
+				"name": "subject",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "string",
+				"name": "message",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "integer",
+				"name": "num_left",
+				"subtype": null,
+				"description": "The number of emails remaining in the email queue.{{Footnote"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/email"
+	},
+	"attach": {
+		"description": "Triggered in an object when the object attaches or detaches from agent.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": "the avatar if attached, if not attached {{LSL_Constant/NULL_KEY}}."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/attach"
+	},
+	"no_sensor": {
+		"description": "Result of a call to llSensor or llSensorRepeat.",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/no_sensor"
+	},
+	"listen": {
+		"description": "Triggered by chat, use llListen to enable and filter",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "channel",
+				"subtype": null,
+				"description": "channel that the message appeared on."
+			},
+			{
+				"type": "string",
+				"name": "name",
+				"subtype": null,
+				"description": "prim name or avatar Legacy Name"
+			},
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "string",
+				"name": "message",
+				"subtype": null,
+				"description": "text spoken"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/listen"
+	},
+	"on_death": {
+		"description": "This event is triggered on all attachments worn by an avatar when that avatar's health reaches 0.",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/on_death"
+	},
+	"linkset_data": {
+		"description": "The linkset_data event fires in all scripts in a linkset whenever the datastore has been modified through a call to one of the llLinksetData functions.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "action",
+				"subtype": null,
+				"description": "Action taken on the linkset Datastore"
+			},
+			{
+				"type": "string",
+				"name": "name",
+				"subtype": null,
+				"description": "The key of the name:value pair."
+			},
+			{
+				"type": "string",
+				"name": "value",
+				"subtype": null,
+				"description": "The new value of the pair. Empty string if pair was deleted or is password-protected (see llLinksetDataWriteProtected)."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/linkset_data"
+	},
+	"http_request": {
+		"description": "Triggered when task receives an HTTP request.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "request_id",
+				"subtype": "handle",
+				"description": "HTTP request id for response use, and function response identification."
+			},
+			{
+				"type": "string",
+				"name": "method",
+				"subtype": null,
+				"description": "GET, POST, PUT, DELETE, URL_REQUEST_GRANTED, URL_REQUEST_DENIED"
+			},
+			{
+				"type": "string",
+				"name": "body",
+				"subtype": null,
+				"description": "Contents of the request."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/http_request"
+	},
+	"collision": {
+		"description": "Triggered while task is colliding with another task.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/collision"
+	},
+	"land_collision_end": {
+		"description": "Triggered in the root when a physical object or attached avatar stops colliding with land",
+		"parameters": [
+			{
+				"type": "vector",
+				"name": "pos",
+				"subtype": null,
+				"description": "position of last collision with the ground"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/land_collision_end"
+	},
+	"collision_start": {
+		"description": "Triggered when task starts colliding with another task",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/collision_start"
+	},
+	"game_control": {
+		"description": "Experimental event only available in some testing regions (soon).  Triggered when compatible viewer sends fresh GameControlInput message, but only for scripts on attachments or seat.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": "avatar UUID"
+			},
+			{
+				"type": "integer",
+				"name": "button_levels",
+				"subtype": null,
+				"description": "bitfield of buttons held down"
+			},
+			{
+				"type": "list",
+				"name": "axes",
+				"subtype": null,
+				"description": "list of axes float values in range [-1, 1]"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/game_control"
+	},
+	"object_rez": {
+		"description": "Triggered when the object rezzes an object.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": "UUID of object rezzed."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/object_rez"
+	},
+	"moving_end": {
+		"description": "Triggered when task stops moving",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/moving_end"
+	},
+	"at_rot_target": {
+		"description": "Result of llRotTarget library function call",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "handle",
+				"subtype": null,
+				"description": "llRotTarget return"
+			},
+			{
+				"type": "rotation",
+				"name": "targetrot",
+				"subtype": null,
+				"description": "llRotTarget rot parameter"
+			},
+			{
+				"type": "rotation",
+				"name": "ourrot",
+				"subtype": null,
+				"description": "current rotation (similar to llGetRot)"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/at_rot_target"
+	},
+	"collision_end": {
+		"description": "Triggered when task stops colliding with another task",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/collision_end"
+	},
+	"changed": {
+		"description": "Various changes to the object/prim trigger this event.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "change",
+				"subtype": "bit_field",
+				"description": "bit field of CHANGED_* flags"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/changed"
+	},
+	"at_target": {
+		"description": "Result of llTarget library function call",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "tnum",
+				"subtype": null,
+				"description": "llTarget return"
+			},
+			{
+				"type": "vector",
+				"name": "targetpos",
+				"subtype": null,
+				"description": "llTarget position parameter"
+			},
+			{
+				"type": "vector",
+				"name": "ourpos",
+				"subtype": null,
+				"description": "current position (similar to llGetPos)"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/at_target"
+	},
+	"control": {
+		"description": "Result of llTakeControls library function call and user input.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "integer",
+				"name": "level",
+				"subtype": "bit_field",
+				"description": "bitfield of CONTROL_* flags, non-zero while one or more keys is being held down."
+			},
+			{
+				"type": "integer",
+				"name": "edge",
+				"subtype": "bit_field",
+				"description": "bitfield of CONTROL_* flags, non-zero when one or more keys have been just pressed or released."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/control"
+	},
+	"money": {
+		"description": "Triggered when money is paid to the prim in the amount by id.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": "who paid"
+			},
+			{
+				"type": "integer",
+				"name": "amount",
+				"subtype": null,
+				"description": "the amount paid"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/money"
+	},
+	"land_collision_start": {
+		"description": "Triggered in the root when a physical object or attached avatar starts colliding with land",
+		"parameters": [
+			{
+				"type": "vector",
+				"name": "pos",
+				"subtype": null,
+				"description": "position of collision with the ground"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/land_collision_start"
+	},
+	"final_damage": {
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/final_damage"
+	},
+	"moving_start": {
+		"description": "Triggered when task begins moving",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/moving_start"
+	},
+	"not_at_rot_target": {
+		"description": "Result of llRotTarget library function call",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/not_at_rot_target"
+	},
+	"not_at_target": {
+		"description": "Triggered if an object has not yet reached the target set by the call to llTarget.",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/not_at_target"
+	},
+	"experience_permissions": {
+		"description": "The agent has approved an experience permissions request.  This may be through interaction with the experience permission dialog or the experience profile, or automatically if the agent has previously approved the experience.",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "agent_id",
+				"subtype": null,
+				"description": "avatar UUID that is in the same region "
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/experience_permissions"
+	},
+	"transaction_result": {
+		"description": "Triggered when task receives asynchronous data",
+		"parameters": [
+			{
+				"type": "key",
+				"name": "id",
+				"subtype": null,
+				"description": "matches the return of the llTransfer* function"
+			},
+			{
+				"type": "integer ",
+				"name": "success",
+				"subtype": null,
+				"description": "TRUE if the transfer succeeded otherwise FALSE."
+			},
+			{
+				"type": "string",
+				"name": "data",
+				"subtype": null,
+				"description": "On successful transactions this will contain a CSV of information pertaining to the transaction. In failure, a string will be returned matching one of the error tags below."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/transaction_result"
+	},
+	"remote_data": {
+		"description": "Triggered by various XML-RPC calls.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "event_type",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "key",
+				"name": "channel",
+				"subtype": "channel",
+				"description": ""
+			},
+			{
+				"type": "key",
+				"name": "message_id",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "string",
+				"name": "sender",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "integer",
+				"name": "idata",
+				"subtype": null,
+				"description": ""
+			},
+			{
+				"type": "string",
+				"name": "sdata",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/remote_data",
+		"deprecated": "LSL_http_server"
+	},
+	"timer": {
+		"description": "Repeats the code in the timer(). Result of the llSetTimerEvent library function call.",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/timer"
+	},
+	"state_entry": {
+		"description": "Triggered on any state transition and startup",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/state_entry"
+	},
+	"touch_end": {
+		"description": "Triggered when agent stops clicking on task",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/touch_end"
+	},
+	"touch_start": {
+		"description": "Triggered by the start of agent clicking on task",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": "Number of agents detected touching during the last clock cycle"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/touch_start"
+	},
+	"sensor": {
+		"description": "Results from a call to either llSensor or llSensorRepeat.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": "number of objects/avatars found"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/sensor"
+	},
+	"on_rez": {
+		"description": "Triggered when an object is rezzed (by script or by user). Also triggered in attachments when a user logs in, or when the object is attached from inventory.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "start_param",
+				"subtype": null,
+				"description": "parameter supplied to llRezObject or llRezAtRoot"
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/on_rez"
+	},
+	"touch": {
+		"description": "Triggered whilst an agent is clicking the task. It will continue to be triggered until the the prim/object is stopped being clicked (it triggers multiple times).Triggered on touch start, each minimum event delay while held, and touch end.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "num_detected",
+				"subtype": null,
+				"description": ""
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/touch"
+	},
+	"state_exit": {
+		"description": "Triggered on a qualifying state transition.",
+		"parameters": [],
+		"wiki": "https://wiki.secondlife.com/wiki/state_exit"
+	},
+	"run_time_permissions": {
+		"description": "Triggered when an agent grants run time permissions to this script.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "perm",
+				"subtype": null,
+				"description": "mask of PERMISSIONS_* flags granting permissions "
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/run_time_permissions"
+	},
+	"path_update": {
+		"description": "Event description goes here.",
+		"parameters": [
+			{
+				"type": "integer",
+				"name": "type",
+				"subtype": null,
+				"description": "A PU_*, it's the path event type"
+			},
+			{
+				"type": "list",
+				"name": "reserved",
+				"subtype": null,
+				"description": "Reserved; not currently used."
+			}
+		],
+		"wiki": "https://wiki.secondlife.com/wiki/path_update"
+	}
+}

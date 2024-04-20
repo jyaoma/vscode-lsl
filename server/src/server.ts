@@ -194,11 +194,11 @@ connection.onCompletion(
       }
 
       let documentation = func.description || '';
-      if (func.returnType || func.returns) {
+      if (func.returnType) {
         if (documentation !== '') {
           documentation += '\n\n';
         }
-        documentation += `Returns a ${func.returnType} ${func.returns}`;
+        documentation += `Returns a ${func.returnType} ${func.returns ?? ''}`;
       }
 
       return {

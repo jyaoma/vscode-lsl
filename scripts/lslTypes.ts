@@ -5,6 +5,14 @@ export type LSLParam = {
 	description?: string | null;
 }
 
+export type LSLEvent = {
+    description?: string | null;
+	parameters: LSLParam[];
+	id?: number;
+    wiki: string;
+	deprecated?: string;
+}
+
 export type LSLFunction = {
     returnType?: string;
 	returns?: string;
