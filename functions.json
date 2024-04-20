@@ -1352,7 +1352,7 @@
 			{
 				"type": "integer",
 				"name": "channel",
-				"subtype": null,
+				"subtype": "chat",
 				"description": "input chat channel, any integer value "
 			},
 			{
@@ -1941,7 +1941,7 @@
 			{
 				"type": "integer",
 				"name": "flags",
-				"subtype": "bit mask",
+				"subtype": "vehicle_flag",
 				"description": "mask of VEHICLE_FLAG_* flags"
 			}
 		],
@@ -2507,7 +2507,7 @@
 			{
 				"type": "integer",
 				"name": "channel",
-				"subtype": null,
+				"subtype": "chat",
 				"description": "input chat channel, any integer value "
 			},
 			{
@@ -3294,7 +3294,7 @@
 			{
 				"type": "integer",
 				"name": "param",
-				"subtype": null,
+				"subtype": "vehicle_vector",
 				"description": "VEHICLE_* flag"
 			},
 			{
@@ -4515,7 +4515,7 @@
 			{
 				"type": "integer",
 				"name": "channel",
-				"subtype": null,
+				"subtype": "chat",
 				"description": "input chat channel, any integer value "
 			},
 			{
@@ -5897,7 +5897,7 @@
 			{
 				"type": "integer",
 				"name": "face",
-				"subtype": null,
+				"subtype": "face",
 				"description": "face number "
 			},
 			{
@@ -6762,7 +6762,7 @@
 			{
 				"type": "integer",
 				"name": "status",
-				"subtype": "bit mask",
+				"subtype": "status",
 				"description": "A single STATUS_* flag"
 			}
 		],
@@ -9015,7 +9015,7 @@
 			{
 				"type": "integer",
 				"name": "status",
-				"subtype": "bit mask",
+				"subtype": "status",
 				"description": "bit mask, STATUS_* flags"
 			},
 			{
@@ -9254,7 +9254,7 @@
 			{
 				"type": "integer",
 				"name": "flags",
-				"subtype": "bit mask",
+				"subtype": "vehicle_flag",
 				"description": "mask of VEHICLE_FLAG_* flags"
 			}
 		],
@@ -9343,7 +9343,7 @@
 			{
 				"type": "integer",
 				"name": "type",
-				"subtype": null,
+				"subtype": "vehicle_type",
 				"description": ""
 			}
 		],
@@ -9451,13 +9451,13 @@
 			{
 				"type": "integer",
 				"name": "category",
-				"subtype": null,
+				"subtype": "mask",
 				"description": "MASK_* flag"
 			},
 			{
 				"type": "integer",
 				"name": "value",
-				"subtype": "bit field",
+				"subtype": "perm",
 				"description": "Permission bit field (PERM_* flags)"
 			}
 		],
@@ -10083,7 +10083,7 @@
 			{
 				"type": "integer",
 				"name": "channel",
-				"subtype": null,
+				"subtype": "chat",
 				"description": ""
 			},
 			{
@@ -10289,7 +10289,7 @@
 			{
 				"type": "integer",
 				"name": "channel",
-				"subtype": null,
+				"subtype": "chat",
 				"description": "input chat channel, any integer value "
 			},
 			{
@@ -10334,7 +10334,7 @@
 			{
 				"type": "integer",
 				"name": "param",
-				"subtype": null,
+				"subtype": "vehicle_rotation",
 				"description": "VEHICLE_* flag"
 			},
 			{
@@ -10479,7 +10479,7 @@
 			{
 				"type": "integer",
 				"name": "param",
-				"subtype": null,
+				"subtype": "vehicle_float",
 				"description": "VEHICLE_* flag"
 			},
 			{
@@ -10573,13 +10573,13 @@
 			{
 				"type": "integer",
 				"name": "mode",
-				"subtype": "bit_field",
+				"subtype": "texture_anim",
 				"description": "Mask of Mode flags"
 			},
 			{
 				"type": "integer",
 				"name": "face",
-				"subtype": null,
+				"subtype": "face",
 				"description": "face number or ALL_SIDES "
 			},
 			{
@@ -10660,7 +10660,7 @@
 			{
 				"type": "integer",
 				"name": "permissions",
-				"subtype": null,
+				"subtype": "permission",
 				"description": "Permission mask (bitfield containing the permissions to request)."
 			}
 		],
@@ -10780,7 +10780,7 @@
 			{
 				"type": "integer",
 				"name": "mode",
-				"subtype": "bit_field",
+				"subtype": "texture_anim",
 				"description": "bit field of Mode flags"
 			},
 			{

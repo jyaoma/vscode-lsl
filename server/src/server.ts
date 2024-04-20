@@ -20,7 +20,7 @@ import {
   SignatureHelpRequest,
   Hover,
 } from 'vscode-languageserver/node';
-import fs from 'fs';
+import fs, { symlink } from 'fs';
 import type { LSLConstant, LSLEvent, LSLFunction } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
@@ -39,6 +39,109 @@ const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
+
+const findFunctionName = (_textDocumentPosition: TextDocumentPositionParams): { funcName: string, parenFound: boolean, numberOfCommas: number } | undefined => {
+  const document = documents.get(_textDocumentPosition.textDocument.uri);
+  const text = document?.getText();
+  
+  // console.log(_textDocumentPosition);
+  if (!text) return undefined;
+  const lines = text.split('\n');
+  let lineNumber = _textDocumentPosition.position.line;
+  if (lineNumber >= lines.length) return undefined;
+  let line = lines[lineNumber];
+  let quoteRanges: { start: number; end: number }[] = [];
+  let start = -1;
+  line.split('').forEach((char, index) => {
+    if (char === '"' && start === -1) {
+      start = index;
+    } else if (char === '"' && start !== -1) {
+      quoteRanges.push({ start, end: index });
+      start = -1;
+    }
+  });
+  let colNumber = _textDocumentPosition.position.character - 1;
+  // find the function name
+  let numberOfCommas = 0;
+  let funcName = '';
+  let parenFound = false;
+  const bracketMatch: string[] = [];
+  // console.log('---------');
+  while (!(allFunctionNames.includes(funcName) && parenFound) && !'{};'.includes(line[colNumber])) {
+    const char = line[colNumber--];
+    // console.log({ char, numberOfCommas, funcName, bracketMatch, colNumber, quoteRanges });
+    let isInQuote = false;
+    quoteRanges.forEach(range => {
+      if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
+        isInQuote = true;
+      }
+    });
+    if (isInQuote) continue;
+
+    switch (char) {
+      case ',':
+        if (bracketMatch.length === 0) {
+          numberOfCommas++;
+        }
+        funcName = '';
+        break;
+      case '<': 
+        if (bracketMatch[bracketMatch.length - 1] === '>') {
+          bracketMatch.pop();
+        } else {
+          numberOfCommas = 0;
+        }
+        funcName = '';
+        break;
+      case '[': 
+        if (bracketMatch[bracketMatch.length - 1] === ']') {
+          bracketMatch.pop();
+        } else {
+          numberOfCommas = 0;
+        }
+        funcName = '';
+        break;
+      case '(':
+        if (bracketMatch.length === 0) {
+          parenFound = true;
+        }
+        if (bracketMatch[bracketMatch.length - 1] === ')') {
+          bracketMatch.pop();
+        }
+        funcName = '';
+        break;
+      case '>':
+      case ')':
+      case ']':
+        bracketMatch.push(char);
+        break;
+      default:
+        if (char.match(/[a-zA-Z0-9_]/)) {
+          funcName = char + funcName;
+        }
+        break;
+    }
+    if (colNumber < 0) {
+      if (lineNumber === 0) return undefined;
+      line = lines[--lineNumber];
+      quoteRanges = [];
+      start = -1;
+      line.split('').forEach((char, index) => {
+        if (char === '"' && start === -1) {
+          start = index;
+        } else if (char === '"' && start !== -1) {
+          quoteRanges.push({ start, end: index });
+          start = -1;
+        }
+      });
+      colNumber = line.length - 1;
+    }
+  }
+
+  console.log({ numberOfCommas, funcName });
+
+  return { funcName, parenFound, numberOfCommas };
+};
 
 connection.onInitialize((params: InitializeParams) => {
   const capabilities = params.capabilities;
@@ -63,6 +166,7 @@ connection.onInitialize((params: InitializeParams) => {
       // Tell the client that this server supports code completion.
       completionProvider: {
         resolveProvider: true,
+        triggerCharacters: ['(', ',', ' ']
       },
       diagnosticProvider: {
         interFileDependencies: false,
@@ -183,48 +287,270 @@ connection.onDidChangeWatchedFiles((_change) => {
   connection.console.log('We received a file change event');
 });
 
+const getConstantCompletionItems = (array: string[]): CompletionItem[] =>
+  array.map<CompletionItem>(name => ({
+    label: name,
+    kind: CompletionItemKind.Constant,
+    data: name,
+    detail: `${allConstants[name].type} ${allConstants[name].name} = ${allConstants[name].value}`,
+    documentation: allConstants[name].meaning ?? undefined
+  }));
+
 // This handler provides the initial list of the completion items.
 connection.onCompletion(
   (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-    // The pass parameter contains the position of the text document in
-    // which code complete got requested. For the example we ignore this
-    // info and always provide the same completion items.
-    const functions = Object.keys(allFunctions).map<CompletionItem>(name => {
-      const func = allFunctions[name];
-      const tags: CompletionItemTag[] = [];
-      if (func.deprecated) {
-        tags.push(CompletionItemTag.Deprecated);
-      }
+    const document = documents.get(_textDocumentPosition.textDocument.uri);
+    if (document === undefined) return [];
+    const lines = document.getText().split('\n');
+    const line = lines[_textDocumentPosition.position.line];
+    if (!line) return [];
+    const lastChar = line[_textDocumentPosition.position.character - 1];
+    if (' (,'.includes(lastChar)) {
+      const functionNameInfo = findFunctionName(_textDocumentPosition);
+      if (!functionNameInfo) return [];
+      const { funcName, parenFound, numberOfCommas } = functionNameInfo;
+      if (!allFunctionNames.includes(funcName) || !parenFound) return [];
 
-      let documentation = func.description || '';
-      if (func.returnType) {
-        if (documentation !== '') {
-          documentation += '\n\n';
+      const currentFunction = allFunctions[funcName];
+      const { parameters } = currentFunction;
+      const currentParam = parameters[numberOfCommas];
+      const { subtype } = currentParam;
+      console.log({ subtype });
+      switch (subtype) {
+        case 'attach_point':
+          return getConstantCompletionItems([
+            'ATTACH_HEAD',
+            'ATTACH_NOSE',
+            'ATTACH_MOUTH',
+            'ATTACH_FACE_TONGUE',
+            'ATTACH_CHIN',
+            'ATTACH_FACE_JAW',
+            'ATTACH_LEAR',
+            'ATTACH_REAR',
+            'ATTACH_FACE_LEAR',
+            'ATTACH_FACE_REAR',
+            'ATTACH_LEYE',
+            'ATTACH_REYE',
+            'ATTACH_FACE_LEYE',
+            'ATTACH_FACE_REYE',
+            'ATTACH_NECK',
+            'ATTACH_LSHOULDER',
+            'ATTACH_RSHOULDER',
+            'ATTACH_LUARM',
+            'ATTACH_RUARM',
+            'ATTACH_LLARM',
+            'ATTACH_RLARM',
+            'ATTACH_LHAND',
+            'ATTACH_RHAND',
+            'ATTACH_LHAND_RING1',
+            'ATTACH_RHAND_RING1',
+            'ATTACH_LWING',
+            'ATTACH_RWING',
+            'ATTACH_CHEST',
+            'ATTACH_LEFT_PEC',
+            'ATTACH_RIGHT_PEC',
+            'ATTACH_BELLY',
+            'ATTACH_BACK',
+            'ATTACH_TAIL_BASE',
+            'ATTACH_TAIL_TIP',
+            'ATTACH_AVATAR_CENTER',
+            'ATTACH_PELVIS',
+            'ATTACH_GROIN',
+            'ATTACH_LHIP',
+            'ATTACH_RHIP',
+            'ATTACH_LULEG',
+            'ATTACH_RULEG',
+            'ATTACH_RLLEG',
+            'ATTACH_LLLEG',
+            'ATTACH_LFOOT',
+            'ATTACH_RFOOT',
+            'ATTACH_HIND_LFOOT',
+            'ATTACH_HIND_RFOOT',
+            'ATTACH_HUD_CENTER_2',
+            'ATTACH_HUD_TOP_RIGHT',
+            'ATTACH_HUD_TOP_CENTER',
+            'ATTACH_HUD_TOP_LEFT',
+            'ATTACH_HUD_CENTER_1',
+            'ATTACH_HUD_BOTTOM_LEFT',
+            'ATTACH_HUD_BOTTOM',
+            'ATTACH_HUD_BOTTOM_RIGHT'
+          ]);
+        case 'boolean':
+          return getConstantCompletionItems(['TRUE', 'FALSE']);
+        case 'chat':
+          return getConstantCompletionItems(['PUBLIC_CHANNEL', 'DEBUG_CHANNEL']);
+        case 'click_action':
+          return getConstantCompletionItems([
+            'CLICK_ACTION_NONE',
+            'CLICK_ACTION_TOUCH',
+            'CLICK_ACTION_SIT',
+            'CLICK_ACTION_BUY',
+            'CLICK_ACTION_PAY',
+            'CLICK_ACTION_OPEN',
+            'CLICK_ACTION_PLAY',
+            'CLICK_ACTION_OPEN_MEDIA',
+            'CLICK_ACTION_ZOOM',
+            'CLICK_ACTION_DISABLED',
+            'CLICK_ACTION_IGNORE'
+          ]);
+        case 'face':
+          return getConstantCompletionItems(['ALL_SIDES']);
+        case 'link':
+          return getConstantCompletionItems(['LINK_ROOT', 'LINK_SET', 'LINK_ALL_OTHERS', 'LINK_ALL_CHILDREN', 'LINK_THIS']);
+        case 'mask':
+          return getConstantCompletionItems([
+            'MASK_BASE',
+            'MASK_OWNER',
+            'MASK_GROUP',
+            'MASK_EVERYONE',
+            'MASK_NEXT'
+          ]);
+        case 'pass':
+          return getConstantCompletionItems([
+            'PASS_IF_NOT_HANDLED',
+            'PASS_ALWAYS',
+            'PASS_NEVER'
+          ]);
+        case 'perm':
+          return getConstantCompletionItems([
+            'PERM_ALL',
+            'PERM_COPY',
+            'PERM_MODIFY',
+            'PERM_MOVE',
+            'PERM_TRANSFER'
+          ]);
+        case 'permission':
+          return getConstantCompletionItems([
+            'PERMISSION_DEBIT',
+            'PERMISSION_TAKE_CONTROLS',
+            'PERMISSION_TRIGGER_ANIMATION',
+            'PERMISSION_ATTACH',
+            'PERMISSION_CHANGE_LINKS',
+            'PERMISSION_TRACK_CAMERA',
+            'PERMISSION_CONTROL_CAMERA',
+            'PERMISSION_TELEPORT',
+            'PERMISSION_SILENT_ESTATE_MANAGEMENT',
+            'PERMISSION_OVERRIDE_ANIMATIONS',
+            'PERMISSION_RETURN_OBJECTS'
+          ]);
+        case 'status':
+          return getConstantCompletionItems([
+            'STATUS_PHYSICS',
+            'STATUS_ROTATE_X',
+            'STATUS_ROTATE_Y',
+            'STATUS_ROTATE_Z',
+            'STATUS_PHANTOM',
+            'STATUS_SANDBOX',
+            'STATUS_BLOCK_GRAB',
+            'STATUS_DIE_AT_EDGE',
+            'STATUS_RETURN_AT_EDGE',
+            'STATUS_CAST_SHADOWS',
+            'STATUS_BLOCK_GRAB_OBJECT',
+            'STATUS_DIE_AT_NO_ENTRY'
+          ]);
+        case 'texture_anim':
+          return getConstantCompletionItems([
+            'ANIM_ON',
+            'LOOP',
+            'REVERSE',
+            'PING_PONG',
+            'SMOOTH',
+            'ROTATE',
+            'SCALE'
+          ]);
+        case 'vehicle_flag':
+          return getConstantCompletionItems([
+            'VEHICLE_FLAG_CAMERA_DECOUPLED',
+            'VEHICLE_FLAG_HOVER_GLOBAL_HEIGHT',
+            'VEHICLE_FLAG_HOVER_TERRAIN_ONLY',
+            'VEHICLE_FLAG_HOVER_UP_ONLY',
+            'VEHICLE_FLAG_HOVER_WATER_ONLY',
+            'VEHICLE_FLAG_LIMIT_MOTOR_UP',
+            'VEHICLE_FLAG_LIMIT_ROLL_ONLY',
+            'VEHICLE_FLAG_MOUSELOOK_BANK',
+            'VEHICLE_FLAG_MOUSELOOK_STEER',
+            'VEHICLE_FLAG_NO_DEFLECTION_UP'
+          ]);
+        case 'vehicle_float':
+          return getConstantCompletionItems([
+            'VEHICLE_ANGULAR_DEFLECTION_EFFICIENCY',
+            'VEHICLE_ANGULAR_DEFLECTION_TIMESCALE',
+            'VEHICLE_ANGULAR_MOTOR_DECAY_TIMESCALE',
+            'VEHICLE_ANGULAR_MOTOR_TIMESCALE',
+            'VEHICLE_BANKING_EFFICIENCY',
+            'VEHICLE_BANKING_MIX',
+            'VEHICLE_BANKING_TIMESCALE',
+            'VEHICLE_BUOYANCY',
+            'VEHICLE_HOVER_HEIGHT',
+            'VEHICLE_HOVER_EFFICIENCY',
+            'VEHICLE_HOVER_TIMESCALE',
+            'VEHICLE_LINEAR_DEFLECTION_EFFICIENCY',
+            'VEHICLE_LINEAR_DEFLECTION_TIMESCALE',
+            'VEHICLE_LINEAR_MOTOR_DECAY_TIMESCALE',
+            'VEHICLE_LINEAR_MOTOR_TIMESCALE',
+            'VEHICLE_VERTICAL_ATTRACTION_EFFICIENCY',
+            'VEHICLE_VERTICAL_ATTRACTION_TIMESCALE'
+          ]);
+        case 'vehicle_rotation':
+          return getConstantCompletionItems(['VEHICLE_REFERENCE_FRAME']);
+        case 'vehicle_type':
+          return getConstantCompletionItems([
+            'VEHICLE_TYPE_NONE',
+            'VEHICLE_TYPE_SLED',
+            'VEHICLE_TYPE_CAR',
+            'VEHICLE_TYPE_BOAT',
+            'VEHICLE_TYPE_AIRPLANE',
+            'VEHICLE_TYPE_BALLOON'
+          ]);
+        case 'vehicle_vector':
+          return getConstantCompletionItems([
+            'VEHICLE_ANGULAR_FRICTION_TIMESCALE',
+            'VEHICLE_ANGULAR_MOTOR_DIRECTION',
+            'VEHICLE_LINEAR_FRICTION_TIMESCALE',
+            'VEHICLE_LINEAR_MOTOR_DIRECTION',
+            'VEHICLE_LINEAR_MOTOR_OFFSET'
+          ]);
+        default:
+          return [];
+      }
+    } else {
+      const functions = Object.keys(allFunctions).map<CompletionItem>(name => {
+        const func = allFunctions[name];
+        const tags: CompletionItemTag[] = [];
+        if (func.deprecated) {
+          tags.push(CompletionItemTag.Deprecated);
         }
-        documentation += `Returns a ${func.returnType} ${func.returns ?? ''}`;
-      }
 
-      return {
+        let documentation = func.description || '';
+        if (func.returnType) {
+          if (documentation !== '') {
+            documentation += '\n\n';
+          }
+          documentation += `Returns a ${func.returnType} ${func.returns ?? ''}`;
+        }
+
+        return {
+          label: name,
+          kind: CompletionItemKind.Function,
+          data: name,
+          detail: `${func.returnType ? `(${func.returnType}) ` : ''}${name}(${func.parameters.map(p => `${p.type} ${p.name}`).join(', ')})`,
+          documentation,
+          tags
+        };
+      });
+      const constants = Object.keys(allConstants).map<CompletionItem>(name => ({
         label: name,
-        kind: CompletionItemKind.Function,
+        kind: CompletionItemKind.Constant,
         data: name,
-        detail: `${func.returnType ? `(${func.returnType}) ` : ''}${name}(${func.parameters.map(p => `${p.type} ${p.name}`).join(', ')})`,
-        documentation,
-        tags
-      };
-    });
-    const constants = Object.keys(allConstants).map<CompletionItem>(name => ({
-      label: name,
-      kind: CompletionItemKind.Constant,
-      data: name,
-      detail: `${allConstants[name].type} ${allConstants[name].name} = ${allConstants[name].value}`,
-      documentation: allConstants[name].meaning ?? undefined
-    }));
+        detail: `${allConstants[name].type} ${allConstants[name].name} = ${allConstants[name].value}`,
+        documentation: allConstants[name].meaning ?? undefined
+      }));
 
-    return [
-      ...functions,
-      ...constants
-    ];
+      return [
+        ...functions,
+        ...constants
+      ];
+    }
   }
 );
 
@@ -334,104 +660,10 @@ connection.onCompletionResolve((item: CompletionItem): CompletionItem => {
 
 const allFunctionNames = Object.keys(allFunctions);
 connection.onSignatureHelp((_textDocumentPosition: TextDocumentPositionParams): SignatureHelp => {
-  const document = documents.get(_textDocumentPosition.textDocument.uri);
-  const text = document?.getText();
-  
-  // console.log(_textDocumentPosition);
-  if (!text) return { signatures: [], activeSignature: 0 };
-  const lines = text.split('\n');
-  let lineNumber = _textDocumentPosition.position.line;
-  if (lineNumber >= lines.length) return { signatures: [], activeSignature: 0 };
-  let line = lines[lineNumber];
-  let quoteRanges: { start: number; end: number }[] = [];
-  let start = -1;
-  line.split('').forEach((char, index) => {
-    if (char === '"' && start === -1) {
-      start = index;
-    } else if (char === '"' && start !== -1) {
-      quoteRanges.push({ start, end: index });
-      start = -1;
-    }
-  });
-  let colNumber = _textDocumentPosition.position.character - 1;
-  // find the function name
-  let numberOfCommas = 0;
-  let funcName = '';
-  let parenFound = false;
-  const bracketMatch: string[] = [];
-  // console.log('---------');
-  while (!(allFunctionNames.includes(funcName) && parenFound) && !'{};'.includes(line[colNumber])) {
-    const char = line[colNumber--];
-    console.log({ char, numberOfCommas, funcName, bracketMatch, colNumber, quoteRanges });
-    let isInQuote = false;
-    quoteRanges.forEach(range => {
-      if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
-        isInQuote = true;
-      }
-    });
-    if (isInQuote) continue;
-
-    switch (char) {
-      case ',':
-        if (bracketMatch.length === 0) {
-          numberOfCommas++;
-        }
-        funcName = '';
-        break;
-      case '<': 
-        if (bracketMatch[bracketMatch.length - 1] === '>') {
-          bracketMatch.pop();
-        } else {
-          numberOfCommas = 0;
-        }
-        funcName = '';
-        break;
-      case '[': 
-        if (bracketMatch[bracketMatch.length - 1] === ']') {
-          bracketMatch.pop();
-        } else {
-          numberOfCommas = 0;
-        }
-        funcName = '';
-        break;
-      case '(':
-        if (bracketMatch.length === 0) {
-          parenFound = true;
-        }
-        if (bracketMatch[bracketMatch.length - 1] === ')') {
-          bracketMatch.pop();
-        }
-        funcName = '';
-        break;
-      case '>':
-      case ')':
-      case ']':
-        bracketMatch.push(char);
-        break;
-      default:
-        if (char.match(/[a-zA-Z0-9_]/)) {
-          funcName = char + funcName;
-        }
-        break;
-    }
-    if (colNumber < 0) {
-      if (lineNumber === 0) return { signatures: [], activeSignature: 0 };
-      line = lines[--lineNumber];
-      quoteRanges = [];
-      start = -1;
-      line.split('').forEach((char, index) => {
-        if (char === '"' && start === -1) {
-          start = index;
-        } else if (char === '"' && start !== -1) {
-          quoteRanges.push({ start, end: index });
-          start = -1;
-        }
-      });
-      colNumber = line.length - 1;
-    }
-  }
-
-  console.log({ numberOfCommas, funcName });
+  const functionNameInfo = findFunctionName(_textDocumentPosition);
+  if (!functionNameInfo) return { signatures: [], activeSignature: 0 };
+  const { funcName, parenFound, numberOfCommas } = functionNameInfo;
+  if (!funcName) return { signatures: [], activeSignature: 0 };
 
   if (!allFunctionNames.includes(funcName) || !parenFound) return { signatures: [], activeSignature: 0 };
 
