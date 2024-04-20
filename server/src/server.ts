@@ -18,14 +18,16 @@ import {
   CompletionItemTag,
   SignatureHelp,
   SignatureHelpRequest,
+  Hover,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
-import type { LSLConstant, LSLFunction } from './lslTypes';
+import type { LSLConstant, LSLEvent, LSLFunction } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 const allFunctions: { [key: string]: LSLFunction } = JSON.parse(fs.readFileSync(`${__dirname}/../../functions.json`, { encoding: 'utf8' }));
 const allConstants: { [key: string]: LSLConstant } = JSON.parse(fs.readFileSync(`${__dirname}/../../constants.json`, { encoding: 'utf8' }));
+const allEvents: { [key: string]: LSLEvent } = JSON.parse(fs.readFileSync(`${__dirname}/../../events.json`, { encoding: 'utf8' }));
 
 // Create a connection for the server, using Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -68,7 +70,8 @@ connection.onInitialize((params: InitializeParams) => {
       },
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
-      }
+      },
+      hoverProvider: true
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -224,6 +227,89 @@ connection.onCompletion(
     ];
   }
 );
+
+connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => {
+  const document = documents.get(textDocumentPosition.textDocument.uri);
+  if (document === undefined) {
+    return { contents: '' };
+  }
+  const lines = document.getText().split('\n');
+  const line = lines[textDocumentPosition.position.line];
+  let word = line[textDocumentPosition.position.character];
+  if (!word.match(/[a-zA-Z0-9_]/)) {
+    return { contents: '' };
+  }
+  let leftDone = false;
+  let rightDone = false;
+  let pointer1 = textDocumentPosition.position.character - 1;
+  let pointer2 = textDocumentPosition.position.character + 1;
+  while (!leftDone || !rightDone) {
+    const leftChar = line[pointer1--];
+    if (!leftDone) {
+      if (leftChar.match(/[a-zA-Z0-9_]/)) {
+        word = leftChar + word;
+      } else {
+        leftDone = true;
+      }
+    }
+    const rightChar = line[pointer2++];
+    if (!rightDone) {
+      if (rightChar.match(/[a-zA-Z0-9_]/)) {
+        word = word + rightChar;
+      } else {
+        rightDone = true;
+      }
+    }
+  }
+
+  const lslConstant = allConstants[word];
+  if (lslConstant) {
+      const hoverContent = [`\`\`\`lsl\n${lslConstant.name}\n\`\`\``];
+      if (lslConstant.meaning) {
+          hoverContent.push(...lslConstant.meaning.split('\n'));
+      }
+      hoverContent.push(`@see - ${lslConstant.wiki}`);
+      return { contents: hoverContent };
+  }
+
+  const lslFunction = allFunctions[word];
+  if (lslFunction) {
+      const hoverContent = [];
+      if (lslFunction.godMode) {
+          hoverContent.push(`This function requires god-mode.`);
+      }
+      if (lslFunction.deprecated) {
+          hoverContent.push(`@deprecated${lslFunction.deprecated !== 'none' ? ` - Use ${lslFunction.deprecated} instead` : ''}`);
+      }
+      if (lslFunction.broken) {
+          hoverContent.push(`@deprecated - This function is either broken or does not do anything.`);
+      }
+      if (lslFunction.experimental) {
+          hoverContent.push(`This is an experimental function currently being tested on the beta-grid.`);
+      }
+      if (lslFunction.experience) {
+          hoverContent.push(`This function requires an experience.`);
+      }
+      hoverContent.push(`\`\`\`lsl\n${lslFunction.returnType ? `(${lslFunction.returnType}) ` : ''}${word}(${lslFunction.parameters.map(p => `${p.type} ${p.name}`).join(', ')})\n\`\`\``);
+      if (lslFunction.description) {
+          hoverContent.push(...lslFunction.description.split('\n'));
+      }
+      hoverContent.push(`@see - ${lslFunction.wiki}`);
+      return { contents: hoverContent };
+  }
+
+  const lslEvent = allEvents[word];
+  if (lslEvent) {
+    const hoverContent = [`\`\`\`lsl\n${word}(${lslEvent.parameters.map(p => `${p.type} ${p.name}`).join(', ')})\n\`\`\``];
+    if (lslEvent.description) {
+        hoverContent.push(...lslEvent.description.split('\n'));
+    }
+    hoverContent.push(`@see - ${lslEvent.wiki}`);
+    return { contents: hoverContent };
+  }
+
+  return { contents: '' };
+});
 
 // This handler resolves additional information for the item selected in
 // the completion list.

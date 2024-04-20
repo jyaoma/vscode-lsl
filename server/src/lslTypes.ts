@@ -21,6 +21,14 @@ export type LSLFunction = {
 	broken: boolean;
 }
 
+export type LSLEvent = {
+    description?: string | null;
+	parameters: LSLParam[];
+	id?: number;
+    wiki: string;
+	deprecated?: string;
+}
+
 export type LSLConstant = {
 	name: string;
 	type: string;
