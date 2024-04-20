@@ -236,7 +236,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
   const lines = document.getText().split('\n');
   const line = lines[textDocumentPosition.position.line];
   let word = line[textDocumentPosition.position.character];
-  if (!word.match(/[a-zA-Z0-9_]/)) {
+  if (!word || !word.match(/[a-zA-Z0-9_]/)) {
     return { contents: '' };
   }
   let leftDone = false;
@@ -360,7 +360,7 @@ connection.onSignatureHelp((_textDocumentPosition: TextDocumentPositionParams): 
   let parenFound = false;
   const bracketMatch: string[] = [];
   // console.log('---------');
-  while (!(allFunctionNames.includes(funcName) && parenFound) || !'{}'.includes(line[colNumber])) {
+  while (!(allFunctionNames.includes(funcName) && parenFound) && !'{};'.includes(line[colNumber])) {
     const char = line[colNumber--];
     console.log({ char, numberOfCommas, funcName, bracketMatch, colNumber, quoteRanges });
     let isInQuote = false;
