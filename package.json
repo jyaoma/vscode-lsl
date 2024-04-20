@@ -80,6 +80,12 @@
         "scopeName": "source.lsl",
         "path": "./syntaxes/lsl.tmLanguage.json"
       }
+    ],
+    "snippets": [
+      {
+        "language": "lsl",
+        "path": "./snippets.json"
+      }
     ]
   },
   "scripts": {

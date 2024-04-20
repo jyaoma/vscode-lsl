@@ -1,0 +1,814 @@
+{
+	"Pragma Onse": {
+		"prefix": "pragma once",
+		"body": [
+			"#ifndef ${1:FILE_INDENTIFIER}",
+			"#define ${1:FILE_INDENTIFIER}",
+			"",
+			"",
+			"$0",
+			"",
+			"",
+			"#endif // ${1:FILE_INDENTIFIER}",
+			""
+		],
+		"description": "pragma once implement"
+	},
+	"Float Casting Preprocessor": {
+		"prefix": "float()",
+		"body": [
+			"float(${1:value})$0"
+		],
+		"description": "Float Casting Preprocessor"
+	},
+	"Integer Casting Preprocessor": {
+		"prefix": "integer()",
+		"body": [
+			"integer(${1:value})$0"
+		],
+		"description": "Integer Casting Preprocessor"
+	},
+	"Key Casting Preprocessor": {
+		"prefix": "key()",
+		"body": [
+			"key(${1:value})$0"
+		],
+		"description": "Key Casting Preprocessor"
+	},
+	"List Casting Preprocessor": {
+		"prefix": "list()",
+		"body": [
+			"list(${1:value})$0"
+		],
+		"description": "List Casting Preprocessor"
+	},
+	"Rotation Casting Preprocessor": {
+		"prefix": "rotation()",
+		"body": [
+			"rotation(${1:value})$0"
+		],
+		"description": "Rotation Casting Preprocessor"
+	},
+	"String Casting Preprocessor": {
+		"prefix": "string()",
+		"body": [
+			"string(${1:value})$0"
+		],
+		"description": "String Casting Preprocessor"
+	},
+	"Vector Casting Preprocessor": {
+		"prefix": "vector()",
+		"body": [
+			"vector(${1:value})$0"
+		],
+		"description": "Vector Casting Preprocessor"
+	},
+	"Define USE_LAZY_LISTS Preprocessor": {
+		"prefix": "#define USE_LAZY_LISTS",
+		"body": [
+			"#define USE_LAZY_LISTS",
+			"$0"
+		],
+		"description": "Define USE_LAZY_LISTS Preprocessor"
+	},
+	"Define USE_SWITCHES Preprocessor": {
+		"prefix": "#define USE_SWITCHES",
+		"body": [
+			"#define USE_SWITCHES",
+			"$0"
+		],
+		"description": "Define USE_SWITCHES Preprocessor"
+	},
+	"Define Preprocessor": {
+		"prefix": "#define",
+		"body": [
+			"#define ${1:identifier}",
+			"$0"
+		],
+		"description": "Define Preprocessor"
+	},
+	"Undef Preprocessor": {
+		"prefix": "#undef",
+		"body": [
+			"#undef ${1:identifier}",
+			"$0"
+		],
+		"description": "Undef Preprocessor"
+	},
+	"Ifdef Preprocessor": {
+		"prefix": "#ifdef",
+		"body": [
+			"#ifdef ${1:identifier}",
+			"$0"
+		],
+		"description": "Ifdef Preprocessor"
+	},
+	"Ifndef Preprocessor": {
+		"prefix": "#ifndef",
+		"body": [
+			"#ifndef ${1:identifier}",
+			"$0"
+		],
+		"description": "Ifndef Preprocessor"
+	},
+	"If Preprocessor": {
+		"prefix": "#if",
+		"body": [
+			"#if ${1:constant-expression}",
+			"$0"
+		],
+		"description": "If Preprocessor"
+	},
+	"Elif Preprocessor": {
+		"prefix": "#elif",
+		"body": [
+			"#elif ${1:constant-expression}",
+			"$0"
+		],
+		"description": "Elif Preprocessor"
+	},
+	"Else Preprocessor": {
+		"prefix": "#else",
+		"body": [
+			"#else",
+			"$0"
+		],
+		"description": "Else Preprocessor"
+	},
+	"Endif Preprocessor": {
+		"prefix": "#endif",
+		"body": [
+			"#endif",
+			"$0"
+		],
+		"description": "Endif Preprocessor"
+	},
+	"Warning Preprocessor": {
+		"prefix": "#warning",
+		"body": [
+			"#warning ${1:warningtoken-string}",
+			"$0"
+		],
+		"description": "Warning Preprocessor"
+	},
+	"Error Preprocessor": {
+		"prefix": "#error",
+		"body": [
+			"#error ${1:errortoken-string}",
+			"$0"
+		],
+		"description": "Error Preprocessor"
+	},
+	"Include Preprocessor": {
+		"prefix": "#include",
+		"body": [
+			"#include \"${1:path-spec}\"",
+			"$0"
+		],
+		"description": "Include Preprocessor"
+	},
+	"__FILE__ Preprocessor": {
+		"prefix": "__FILE__",
+		"body": [
+			"__FILE__$0"
+		],
+		"description": "the full path to the script as it would appear in the include cache. The top script only uses its name."
+	},
+	"__LINE__ Preprocessor": {
+		"prefix": "__LINE__",
+		"body": [
+			"__LINE__$0"
+		],
+		"description": "the line of the current script where it is expanded; this starts at line 0"
+	},
+	"__SHORTFILE__ Preprocessor": {
+		"prefix": "__SHORTFILE__",
+		"body": [
+			"__SHORTFILE__$0"
+		],
+		"description": "the name of the current script without full file path"
+	},
+	"__AGENTID__ Preprocessor": {
+		"prefix": "__AGENTID__",
+		"body": [
+			"__AGENTID__$0"
+		],
+		"description": "a string-encapsulated version of the agent's key who compiles the script"
+	},
+	"__AGENTKEY__ Preprocessor": {
+		"prefix": "__AGENTKEY__",
+		"body": [
+			"__AGENTKEY__$0"
+		],
+		"description": "same as above, legacy version"
+	},
+	"__AGENTIDRAW__ Preprocessor": {
+		"prefix": "__AGENTIDRAW__",
+		"body": [
+			"__AGENTIDRAW__$0"
+		],
+		"description": "a nonstring-encapsulated version of the agent's key who compiles the script"
+	},
+	"__AGENTNAME__ Preprocessor": {
+		"prefix": "__AGENTNAME__",
+		"body": [
+			"__AGENTNAME__$0"
+		],
+		"description": "a string-encapsulated version of the agent's full name who compiles the script"
+	},
+	"__ASSETID__ Preprocessor": {
+		"prefix": "__AGENTNAME__",
+		"body": [
+			"__AGENTNAME__$0"
+		],
+		"description": "a string-encapsulated version of the assetid of the current script; may return “NOT IN WORLD” or a nonstring-encapsulated null key in rare circumstances"
+	},
+	"Float Type": {
+		"prefix": "float",
+		"body": [
+			"float"
+		],
+		"description": "Float Type"
+	},
+	"Integer Type": {
+		"prefix": "integer",
+		"body": [
+			"integer"
+		],
+		"description": "Integer Type"
+	},
+	"Key Type": {
+		"prefix": "key",
+		"body": [
+			"key"
+		],
+		"description": "Key Type"
+	},
+	"List Type": {
+		"prefix": "list",
+		"body": [
+			"list"
+		],
+		"description": "List Type"
+	},
+	"Rotation Type": {
+		"prefix": "rotation",
+		"body": [
+			"rotation"
+		],
+		"description": "Rotation Type"
+	},
+	"String Type": {
+		"prefix": "string Type",
+		"body": [
+			"string"
+		],
+		"description": "String"
+	},
+	"Vector Type": {
+		"prefix": "vector",
+		"body": [
+			"vector"
+		],
+		"description": "Vector Type"
+	},
+	"Rotation Value": {
+		"prefix": "rv",
+		"body": [
+			"<${1:x}, ${2:y}, ${3:z}, ${4:w}>"
+		],
+		"description": "Rotation Value"
+	},
+	"Vector Value": {
+		"prefix": "vv",
+		"body": [
+			"<${1:x}, ${2:y}, ${3:z}>"
+		],
+		"description": "Vector Value"
+	},
+	"Label": {
+		"prefix": "label",
+		"body": [
+			"@$0;"
+		],
+		"description": "Label"
+	},
+	"Jump": {
+		"prefix": "jump",
+		"body": [
+			"jump $0;"
+		],
+		"description": "Jump"
+	},
+	"For Loop": {
+		"prefix": "for",
+		"body": [
+			"for (${1:initial}; ${2:compare}; ${3:increase})",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "For Loop"
+	},
+	"While Loop": {
+		"prefix": "while",
+		"body": [
+			"while (${1:compare})",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "While Loop"
+	},
+	"Do-While Loop": {
+		"prefix": "dowhile",
+		"body": [
+			"do",
+			"{",
+			"\t$0",
+			"}",
+			"while (${1:compare})"
+		],
+		"description": "Do-While Loop"
+	},
+	"If Statement": {
+		"prefix": "if",
+		"body": [
+			"if (${1:compare})",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "If Statement"
+	},
+	"If-Else Statement": {
+		"prefix": "ifelse",
+		"body": [
+			"if (${1:compare})",
+			"{",
+			"\t$0",
+			"}",
+			"else",
+			"{",
+			"\t",
+			"}"
+		],
+		"description": "If-Else Statement"
+	},
+	"Switch Statement": {
+		"prefix": "switch",
+		"body": [
+			"switch (${1:value})",
+			"{",
+			"\tcase (${2:case}):",
+			"\t{",
+			"\t\t$0",
+			"\t\tbreak;",
+			"\t}",
+			"\tdefault:",
+			"\t{",
+			"\t\tbreak;",
+			"\t}",
+			"}"
+		],
+		"description": "Switch Statement"
+	},
+	"Continue": {
+		"prefix": "continue",
+		"body": [
+			"continue;"
+		],
+		"description": "Continue"
+	},
+	"Break": {
+		"prefix": "break",
+		"body": [
+			"break;"
+		],
+		"description": "Break"
+	},
+	"Return": {
+		"prefix": "return",
+		"body": [
+			"return $0;"
+		],
+		"description": "Return"
+	},
+	"Function-Void": {
+		"prefix": "voidfunction",
+		"body": [
+			"${1:name} (${2:agments})",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Function Void"
+	},
+	"Function": {
+		"prefix": "function",
+		"body": [
+			"${1:datatype} ${2:name} (${3:agments})",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Function"
+	},
+	"State-Change": {
+		"prefix": "statechange",
+		"body": [
+			"state $0;"
+		],
+		"description": "State Change"
+	},
+	"State": {
+		"prefix": "state",
+		"body": [
+			"state ${1:name}",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "State"
+	},
+	"Default": {
+		"prefix": "default",
+		"body": [
+			"default",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Default"
+	},
+	"attack Event": {
+		"prefix": "attach",
+		"body": [
+			"attach(key ${1:id})",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered in an object when the object attaches or detaches from agent.\n• key id – the avatar if attached, if not attached NULL_KEY."
+	},
+	"at_rot_target Event": {
+		"prefix": "at_rot_target",
+		"body": [
+			"at_rot_target(integer handle, rotation targetrot, rotation ourrot)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Result of llRotTarget library function call\n• integer handle – llRotTarget return\n• rotation targetrot – llRotTarget rot parameter\n• rotation ourrot – current rotation (similar to llGetRot)"
+	},
+	"at_target Event": {
+		"prefix": "at_target",
+		"body": [
+			"at_target(integer tnum, vector targetpos, vector ourpos)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Result of llTarget library function call\n• integer tnum – llTarget return\n• vector targetpos – llTarget position parameter\n• vector ourpos – current position (similar to llGetPos)"
+	},
+	"changed Event": {
+		"prefix": "changed",
+		"body": [
+			"changed(integer change)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Various changes to the object/prim trigger this event.\n• integer change – bit field of CHANGED_* flags\nMultiple changes can be represented in a single event, so use bitwise arithmetic."
+	},
+	"collision Event": {
+		"prefix": "collision",
+		"body": [
+			"collision(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered while task is colliding with another task.\n• integer num_detected"
+	},
+	"collision_end Event": {
+		"prefix": "collision_end",
+		"body": [
+			"collision_end(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task stops colliding with another task\n• integer num_detected"
+	},
+	"collision_start Event": {
+		"prefix": "collision_start",
+		"body": [
+			"collision_start(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task starts colliding with another task\n• integer num_detected"
+	},
+	"control Event": {
+		"prefix": "control",
+		"body": [
+			"control(key id, integer level, integer edge)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Result of llTakeControls library function call and user input.\n• key id – avatar UUID\n• integer level – bitfield of CONTROL_* flags, non-zero while one or more keys is being held down.\n• integer edge – bitfield of CONTROL_* flags, non-zero when one or more keys have been just pressed or released."
+	},
+	"dataserver Event": {
+		"prefix": "dataserver",
+		"body": [
+			"dataserver(key queryid, string data)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task receives asynchronous data\n• key queryid – matches the return of the requesting function\n• string data – the requested data (cast as a string as necessary)."
+	},
+	"email Event": {
+		"prefix": "email",
+		"body": [
+			"email(string time, string address, string subject, string message, integer num_left)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered as a result of calling llGetNextEmail where there is a matching email in the email queue.\n• string time – In the (string)llGetUnixTime format • string address\n• string subject\n• string message\n• integer num_left – The number of emails remaining in the email queue.\nThe email queue is associated with the prim and any script in the prim can access it.\nThe prim's email address is its key with \"@lsl.secondlife.com\" appended, llGetKey() + \"@lsl.secondlife.com\"."
+	},
+	"experience_permissions Event": {
+		"prefix": "experience_permissions",
+		"body": [
+			"experience_permissions(key agent_id)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "The agent has approved an experience permissions request. This may be through interaction with the experience permission dialog or the experience profile, or automatically if the agent has previously approved the experience.\n• key agent_id – avatar UUID approving permission"
+	},
+	"experience_permissions_denied Event": {
+		"prefix": "experience_permissions_denied",
+		"body": [
+			"experience_permissions_denied(key agent_id, integer reason)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Event ID The agent has denied experience permission. \n• key agent_id – avatar UUID that denied permission. \n• integer reason – Reason for denial; one of the Experience Tools XP_ERROR_* errors flags.\nThis event may be generated in many cases:\n In response to a call to llRequestExperiencePermissions if any of the following is true:\n  The agent does not respond to the experience permission dialog. This will happen after a long delay if the agent is running a viewer which doesn't understand the request or if the agent has blocked the object.\n  The agent selects \"Block Experience\" in the experience permission dialog.\n  The agent has previously blocked the experience through another experience permission dialog or through the experience profile.\n  An attachment is asking for permission from an agent other than its owner.\n  The experience cannot run on the region because it is blocked or exceeds the maturity rating of the region.\n The experience can no longer run:\n  The script has moved to a region where the experience cannot run because it is blocked or it exceeds the maturity rating of the region.\n  The script has moved to a parcel where it is blocked or not allowed.\n  The agent has blocked the experience from the experience profile."
+	},
+	"http_request Event": {
+		"prefix": "http_request",
+		"body": [
+			"http_request(key request_id, string method, string body)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task receives an HTTP request.\n• key request_id – HTTP request id for response use, and function response identification.\n• string method – \"GET\", \"POST\", \"PUT\", \"DELETE\", URL_REQUEST_GRANTED, URL_REQUEST_DENIED\n• string body – Contents of the request."
+	},
+	"http_response Event": {
+		"prefix": "http_response",
+		"body": [
+			"http_response(key request_id, integer status, list metadata, string body)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task receives a response to one of its llHTTPRequests\n• key request_id – Matches return from llHTTPRequest\n• integer status – HTTP status code (like 404 or 200)\n• list metadata – List of HTTP_* constants and attributes\n• string body"
+	},
+	"land_collision Event": {
+		"prefix": "land_collision",
+		"body": [
+			"land_collision(vector pos)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered in the root when physical object or attached avatar is colliding with land\n• vector pos – position of collision with the ground"
+	},
+	"land_collision_end Event": {
+		"prefix": "land_collision_end",
+		"body": [
+			"land_collision_end(vector pos)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered in the root when a physical object or attached avatar stops colliding with land\n• vector pos – position of last collision with the ground"
+	},
+	"land_collision_start Event": {
+		"prefix": "land_collision_start",
+		"body": [
+			"land_collision_start(vector pos)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered in the root when a physical object or attached avatar starts colliding with land\n• vector pos – position of collision with the ground"
+	},
+	"link_message Event": {
+		"prefix": "link_message",
+		"body": [
+			"link_message(integer sender_num, integer num, string str, key id)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "29 Event ID Triggered when the script receives a link message that was sent by a call to llMessageLinked. llMessageLinked is used to send messages from one script to another.\n• integer sender_num – The link number of the prim that contained the script that called llMessageLinked.\n• integer num – Second parameter of the llMessageLinked call.\n• string str – The message that was sent from the script that called llMessageLinked.\n• key id – Fourth parameter of the llMessageLinked call.\nid is often used as a second string field (in LSL the key type is implemented as a string with just custom operators). Typecasting between string and key types has no effect on the data contained. The sizes of str and id are only limited by available script memory."
+	},
+	"listen Event": {
+		"prefix": "listen",
+		"body": [
+			"listen(integer channel, string name, key id, string message)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered by chat, use llListen to enable and filter\n• integer channel – channel that the message appeared on.\n• string name – prim name or avatar Legacy Name\n• key id – group, avatar or prim UUID\n• string message – text spoken"
+	},
+	"money Event": {
+		"prefix": "money",
+		"body": [
+			"money(key id, integer amount)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Security Warning!\n\nTriggered when money is paid to the prim in the amount by id.\n• key id – who paid\n• integer amount – the amount paid"
+	},
+	"moving_end Event": {
+		"prefix": "moving_end",
+		"body": [
+			"moving_end()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task stops moving"
+	},
+	"moving_start Event": {
+		"prefix": "moving_start",
+		"body": [
+			"moving_start()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when task begins moving"
+	},
+	"not_at_rot_target Event": {
+		"prefix": "not_at_rot_target",
+		"body": [
+			"not_at_rot_target()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Result of llRotTarget library function call"
+	},
+	"not_at_target Event": {
+		"prefix": "not_at_target",
+		"body": [
+			"not_at_target()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered if an object has not yet reached the target set by the call to llTarget.\nThis event may be triggered multiple times if the target has not been reached."
+	},
+	"no_sensor Event": {
+		"prefix": "no_sensor",
+		"body": [
+			"no_sensor()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Result of a call to llSensor or llSensorRepeat."
+	},
+	"object_rez Event": {
+		"prefix": "object_rez",
+		"body": [
+			"object_rez(key id)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when the object rezzes an object.\n• key id – UUID of object rezzed."
+	},
+	"on_rez Event": {
+		"prefix": "on_rez",
+		"body": [
+			"on_rez( integer start_param)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when an object is rezzed (by script or by user). Also triggered in attachments when a user logs in, or when the object is attached from inventory.\n• integer start_param – parameter supplied to llRezObject or llRezAtRoot\nstart_param is always zero when an object is not rezzed by llRezObject or llRezAtRoot.\nWhen an object is rezzed by llRezObject or llRezAtRoot, then start_param will be the value given as the last parameter of the rezzing command.\nstart_param is available at any subsequent time by calling llGetStartParameter (unless it has been overridden by llRemoteLoadScriptPin)."
+	},
+	"path_update Event": {
+		"prefix": "path_update",
+		"body": [
+			"path_update(integer type, list reserved)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Event description goes here.\n• integer type – A PU_*, it's the path event type\n• list reserved – Reserved; not currently used."
+	},
+	"remote_data Event": {
+		"prefix": "remote_data",
+		"body": [
+			"remote_data(integer event_type, key channel, key message_id, string sender, integer idata, string sdata)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered by various XML-RPC calls.\n• integer event_type\n• key channel\n• key message_id\n• string sender\n• integer idata\n• string sdata"
+	},
+	"run_time_permissions Event": {
+		"prefix": "run_time_permissions",
+		"body": [
+			"run_time_permissions(integer perm)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when an agent grants run time permissions to this script.\n• integer perm – mask of PERMISSIONS_* flags granting permissions"
+	},
+	"sensor Event": {
+		"prefix": "sensor",
+		"body": [
+			"sensor(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Results from a call to either llSensor or llSensorRepeat.\n• integer num_detected – number of objects/avatars found\nThe results are ordered from nearest to furthest.\nnum_detected is always greater than zero, the no_sensor event is triggered if no objects/avatars were found."
+	},
+	"state_entry Event": {
+		"prefix": "state_entry",
+		"body": [
+			"state_entry()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered on any state transition and startup"
+	},
+	"state_exit Event": {
+		"prefix": "state_exit",
+		"body": [
+			"state_exit()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered on a qualifying state transition."
+	},
+	"timer Event": {
+		"prefix": "timer",
+		"body": [
+			"timer()",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Repeats the code in the timer(). Result of the llSetTimerEvent library function call."
+	},
+	"touch Event": {
+		"prefix": "touch",
+		"body": [
+			"touch(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered whilst an agent is clicking the task. It will continue to be triggered until the the prim/object is stopped being clicked (it triggers multiple times). Triggered on touch start, each minimum event delay while held, and touch end.\n• integer num_detected"
+	},
+	"touch_end Event": {
+		"prefix": "touch_end",
+		"body": [
+			"touch_end(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered when agent stops clicking on task\n• integer num_detected"
+	},
+	"touch_start Event": {
+		"prefix": "touch_start",
+		"body": [
+			"touch_start(integer num_detected)",
+			"{",
+			"\t$0",
+			"}"
+		],
+		"description": "Triggered by the start of agent clicking on task\b• integer num_detected – Number of agents detected touching during the last clock cycle"
+	}
+}
