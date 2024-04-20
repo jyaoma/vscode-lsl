@@ -2258,7 +2258,7 @@
 			{
 				"type": "integer",
 				"name": "channel",
-				"subtype": null,
+				"subtype": "chat",
 				"description": "(-2147483648 through 2147483647)"
 			},
 			{
