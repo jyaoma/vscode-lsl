@@ -619,6 +619,9 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
       if (lslFunction.description) {
           hoverContent.push(...lslFunction.description.split('\n'));
       }
+      lslFunction.parameters.forEach(p => {
+        hoverContent.push(`@param \`${p.type} ${p.name}\`${p.description ? ` - ${p.description}` : ''}`);
+      });
       hoverContent.push(`@see - ${lslFunction.wiki}`);
       return { contents: hoverContent };
   }

@@ -57,7 +57,7 @@ default
         }
 
         if (DEBUG_MODE) {
-            llListen(0, "", llGetOwner(), "");
+            llListen(PUBLIC_CHANNEL, "", llGetOwner(), "");
         }
     }
 
