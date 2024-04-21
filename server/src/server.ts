@@ -52,13 +52,15 @@ const findFunctionName = (_textDocumentPosition: TextDocumentPositionParams): { 
   let line = lines[lineNumber];
   let quoteRanges: { start: number; end: number }[] = [];
   let start = -1;
+  let previousChar: string;
   line.split('').forEach((char, index) => {
-    if (char === '"' && start === -1) {
+    if (char === '"' && previousChar !== '\\' && start === -1) {
       start = index;
-    } else if (char === '"' && start !== -1) {
+    } else if (char === '"' && previousChar !== '\\' && start !== -1) {
       quoteRanges.push({ start, end: index });
       start = -1;
     }
+    previousChar = char;
   });
   let colNumber = _textDocumentPosition.position.character - 1;
   // find the function name
