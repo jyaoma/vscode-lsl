@@ -314,6 +314,7 @@ connection.onCompletion(
       const currentFunction = allFunctions[funcName];
       const { parameters } = currentFunction;
       const currentParam = parameters[numberOfCommas];
+      if (!currentParam) return [];
       const { subtype } = currentParam;
       switch (subtype) {
         case 'attach_point':
