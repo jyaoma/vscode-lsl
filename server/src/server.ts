@@ -24,7 +24,8 @@ import fs from 'fs';
 import type { LSLConstant, LSLEvent, LSLFunction, LSLVariable } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { getCommentedOutSections, getQuoteRanges } from './scanner';
+import { getCommentedOutSections, scanDocument } from './scanner';
+import getQuoteRanges from './quoteRanges';
 
 const allFunctions: { [key: string]: LSLFunction } = JSON.parse(fs.readFileSync(`${__dirname}/../../functions.json`, { encoding: 'utf8' }));
 const allConstants: { [key: string]: LSLConstant } = JSON.parse(fs.readFileSync(`${__dirname}/../../constants.json`, { encoding: 'utf8' }));
@@ -61,13 +62,7 @@ const findFunctionName = (_textDocumentPosition: TextDocumentPositionParams): { 
   while (!(allFunctionNames.includes(funcName) && parenFound) && !'{};'.includes(line[colNumber])) {
     const char = line[colNumber--];
 
-    let isInQuote = false;
-    quoteRanges.forEach(range => {
-      if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
-        isInQuote = true;
-      }
-    });
-    if (isInQuote) continue;
+    if (quoteRanges.isInRange(colNumber)) continue;
 
     switch (char) {
       case ',':
@@ -262,6 +257,7 @@ connection.languages.diagnostics.on(async (params) => {
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
   getCommentedOutSections(change.document.getText());
+  scanDocument(change.document.getText());
 });
 
 connection.onDidChangeWatchedFiles((_change) => {

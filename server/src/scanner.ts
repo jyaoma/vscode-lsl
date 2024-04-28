@@ -1,21 +1,5 @@
 import { LSLVariable } from './lslTypes';
-
-export const getQuoteRanges = (line: string) => {
-  const quoteRanges: { start: number; end: number }[] = [];
-  let start = -1;
-  let previousChar: string;
-  line.split('').forEach((char, index) => {
-    if (char === '"' && previousChar !== '\\' && start === -1) {
-      start = index;
-    } else if (char === '"' && previousChar !== '\\' && start !== -1) {
-      quoteRanges.push({ start, end: index });
-      start = -1;
-    }
-    previousChar = char;
-  });
-
-  return quoteRanges;
-};
+import getQuoteRanges from './quoteRanges';
 
 const allVariables: { [key: string]: LSLVariable } = {};
 
@@ -61,36 +45,45 @@ const isInCommentedOutSection = (line: number, col: number) => {
   );
 };
 
-const scanDocument = (document: string) => {
+export const scanDocument = (document: string) => {
   const lines = document.split('\n');
-  lines.forEach((line, i) => {
-    const quoteRanges = getQuoteRanges(line);
-    const lineVariables = line.match(/(integer|float|key|string|vector|rotation|quarternion|list) ([a-zA-Z_][a-zA-Z0-9_]*)(?=.*?[;,)])/gm);
-    if (lineVariables) {
-      lineVariables.forEach(match => {
-        const colNumber = line.indexOf(match);
-        if (
-          isInCommentedOutSection(i, colNumber) ||
-          quoteRanges.some(range => range.start <= colNumber && range.end >= colNumber)
-        ) return;
-        const [type, name] = match.split(' ');
-        if (!allVariables[name]) {
-          allVariables[name] = { name, type, line: i, column: colNumber, references: [] };
-        }
-      });
 
-      Object.keys(allVariables).forEach(variableName => {
-        const indexOfVariable = line.indexOf(variableName);
-        if (
-          allVariables[variableName] &&
-          !isInCommentedOutSection(i, indexOfVariable) &&
-          !quoteRanges.some(range => range.start <= indexOfVariable && range.end >= indexOfVariable)
-        ) {
-          allVariables[variableName].references.push({ line: i, character: indexOfVariable });
-        }
-      });
-    }
-  });
+  // Step 1: determine where the curly braces are, note down line number and column number
+	lines.forEach((line, i) => {
+		const quoteRanges = getQuoteRanges(line);
+		line.split('').forEach(char => {
+      
+    });
+	});
+
+//   lines.forEach((line, i) => {
+//     const quoteRanges = getQuoteRanges(line);
+//     const lineVariables = line.match(/(integer|float|key|string|vector|rotation|quarternion|list) ([a-zA-Z_][a-zA-Z0-9_]*)(?=.*?[;,)])/gm);
+//     if (lineVariables) {
+//       lineVariables.forEach(match => {
+//         const colNumber = line.indexOf(match);
+//         if (
+//           isInCommentedOutSection(i, colNumber) ||
+//           quoteRanges.some(range => range.start <= colNumber && range.end >= colNumber)
+//         ) return;
+//         const [type, name] = match.split(' ');
+//         if (!allVariables[name]) {
+//           allVariables[name] = { name, type, line: i, column: colNumber, references: [] };
+//         }
+//       });
+
+//       Object.keys(allVariables).forEach(variableName => {
+//         const indexOfVariable = line.indexOf(variableName);
+//         if (
+//           allVariables[variableName] &&
+//           !isInCommentedOutSection(i, indexOfVariable) &&
+//           !quoteRanges.some(range => range.start <= indexOfVariable && range.end >= indexOfVariable)
+//         ) {
+//           allVariables[variableName].references.push({ line: i, character: indexOfVariable });
+//         }
+//       });
+//     }
+//   });
 };
 
 // const determineDefinedVariables = (lines: string[], lineNumber: number): LSLVariable[] => {
