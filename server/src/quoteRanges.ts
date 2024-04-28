@@ -1,6 +1,21 @@
+type QuoteRange = {
+  start: number;
+  end: number;
+};
+
 type QuoteRanges = {
-  ranges: { start: number, end: number }[];
+  ranges: QuoteRange[];
   isInRange: (colNumber: number) => boolean;
+};
+
+const isInQuoteRange = (ranges: QuoteRange[]) => (colNumber: number) => {
+  let isInQuote = false;
+  ranges.forEach(range => {
+    if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
+      isInQuote = true;
+    }
+  });
+  return isInQuote;
 };
 
 const getQuoteRanges = (line: string): QuoteRanges => {
@@ -19,15 +34,7 @@ const getQuoteRanges = (line: string): QuoteRanges => {
 
   return {
     ranges,
-    isInRange: (colNumber: number) => {
-      let isInQuote = false;
-      ranges.forEach(range => {
-        if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
-          isInQuote = true;
-        }
-      });
-      return isInQuote;
-    }
+    isInRange: isInQuoteRange(ranges)
   };
 };
 
