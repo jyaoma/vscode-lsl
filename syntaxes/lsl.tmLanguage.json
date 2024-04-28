@@ -13,6 +13,9 @@
 		},
 		{
 			"include": "#script-top-level"
+		},
+		{
+			"include": "#type"
 		}
 	],
 	"repository": {
@@ -58,9 +61,6 @@
 			"end": "(?<=\\})",
 			"patterns": [
 				{
-					"include": "#comment"
-				},
-				{
 					"begin": "\\{",
 					"beginCaptures": {
 						"0": {
@@ -74,6 +74,9 @@
 						}
 					},
 					"patterns": [
+						{
+							"include": "#comment"
+						},
 						{
 							"include": "#event-declaration"
 						}
@@ -722,7 +725,7 @@
 		},
 		"identifier": {
 			"name": "variable.other.readwrite.lsl",
-			"match": "[_[:alpha:]][_[:alnum:]]*"
+			"match": "\\b(?!(\\bfloat\\b|\\binteger\\b|\\bkey\\b|\\blist\\b|\\bquaternion\\b|\\brotation\\b|\\bstring\\b|\\bvector\\b))[_[:alpha:]][_[:alnum:]]*\\b"
 		},
 		"type": {
 			"match": "\\b(float|integer|key|list|quaternion|rotation|string|vector)\\b",
@@ -750,7 +753,7 @@
 					}
 				},
 				{
-					"begin": "(^[ \\t]+)?(?=//)",
+					"begin": "(^[ \\t]*)?(?=\\/\\/)",
 					"beginCaptures": {
 						"1": {
 							"name": "punctuation.whitespace.comment.leading.lsl"
@@ -760,7 +763,7 @@
 					"patterns": [
 						{
 							"name": "comment.line.double-slash.lsl",
-							"begin": "//",
+							"begin": "\\/\\/",
 							"beginCaptures": {
 								"0": {
 									"name": "punctuation.definition.comment.lsl"
