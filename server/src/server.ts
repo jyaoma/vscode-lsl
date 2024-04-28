@@ -20,10 +20,11 @@ import {
   SignatureHelpRequest,
   Hover,
 } from 'vscode-languageserver/node';
-import fs, { symlink } from 'fs';
-import type { LSLConstant, LSLEvent, LSLFunction } from './lslTypes';
+import fs from 'fs';
+import type { LSLConstant, LSLEvent, LSLFunction, LSLVariable } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
+import { getCommentedOutSections, getQuoteRanges } from './scanner';
 
 const allFunctions: { [key: string]: LSLFunction } = JSON.parse(fs.readFileSync(`${__dirname}/../../functions.json`, { encoding: 'utf8' }));
 const allConstants: { [key: string]: LSLConstant } = JSON.parse(fs.readFileSync(`${__dirname}/../../constants.json`, { encoding: 'utf8' }));
@@ -43,35 +44,23 @@ let hasDiagnosticRelatedInformationCapability = false;
 const findFunctionName = (_textDocumentPosition: TextDocumentPositionParams): { funcName: string, parenFound: boolean, numberOfCommas: number } | undefined => {
   const document = documents.get(_textDocumentPosition.textDocument.uri);
   const text = document?.getText();
-  
-  // console.log(_textDocumentPosition);
+
   if (!text) return undefined;
   const lines = text.split('\n');
   let lineNumber = _textDocumentPosition.position.line;
   if (lineNumber >= lines.length) return undefined;
   let line = lines[lineNumber];
-  let quoteRanges: { start: number; end: number }[] = [];
-  let start = -1;
-  let previousChar: string;
-  line.split('').forEach((char, index) => {
-    if (char === '"' && previousChar !== '\\' && start === -1) {
-      start = index;
-    } else if (char === '"' && previousChar !== '\\' && start !== -1) {
-      quoteRanges.push({ start, end: index });
-      start = -1;
-    }
-    previousChar = char;
-  });
+  let quoteRanges = getQuoteRanges(line);
   let colNumber = _textDocumentPosition.position.character - 1;
   // find the function name
   let numberOfCommas = 0;
   let funcName = '';
   let parenFound = false;
   const bracketMatch: string[] = [];
-  // console.log('---------');
+
   while (!(allFunctionNames.includes(funcName) && parenFound) && !'{};'.includes(line[colNumber])) {
     const char = line[colNumber--];
-    // console.log({ char, numberOfCommas, funcName, bracketMatch, colNumber, quoteRanges });
+
     let isInQuote = false;
     quoteRanges.forEach(range => {
       if (colNumber + 1 >= range.start && colNumber + 1 <= range.end) {
@@ -126,16 +115,7 @@ const findFunctionName = (_textDocumentPosition: TextDocumentPositionParams): { 
     if (colNumber < 0) {
       if (lineNumber === 0) return undefined;
       line = lines[--lineNumber];
-      quoteRanges = [];
-      start = -1;
-      line.split('').forEach((char, index) => {
-        if (char === '"' && start === -1) {
-          start = index;
-        } else if (char === '"' && start !== -1) {
-          quoteRanges.push({ start, end: index });
-          start = -1;
-        }
-      });
+      quoteRanges = getQuoteRanges(line);
       colNumber = line.length - 1;
     }
   }
@@ -281,7 +261,7 @@ connection.languages.diagnostics.on(async (params) => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
-  connection.console.log('We received a content change event');
+  getCommentedOutSections(change.document.getText());
 });
 
 connection.onDidChangeWatchedFiles((_change) => {
@@ -558,9 +538,7 @@ connection.onCompletion(
 
 connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => {
   const document = documents.get(textDocumentPosition.textDocument.uri);
-  if (document === undefined) {
-    return { contents: '' };
-  }
+  if (document === undefined) return { contents: '' };
   const lines = document.getText().split('\n');
   const line = lines[textDocumentPosition.position.line];
   let word = line[textDocumentPosition.position.character];
@@ -573,6 +551,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
   let pointer2 = textDocumentPosition.position.character + 1;
   while (!leftDone || !rightDone) {
     const leftChar = line[pointer1--];
+    if (!leftChar) leftDone = true;
     if (!leftDone) {
       if (leftChar.match(/[a-zA-Z0-9_]/)) {
         word = leftChar + word;
@@ -581,6 +560,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
       }
     }
     const rightChar = line[pointer2++];
+    if (!rightChar) rightDone = true;
     if (!rightDone) {
       if (rightChar.match(/[a-zA-Z0-9_]/)) {
         word = word + rightChar;

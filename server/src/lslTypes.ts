@@ -1,3 +1,5 @@
+import { Position } from 'vscode-languageserver';
+
 export type LSLParam = {
 	name: string;
 	type: string;
@@ -35,4 +37,12 @@ export type LSLConstant = {
 	value: string;
 	meaning?: string | null;
 	wiki: string;
+}
+
+export type LSLVariable = {
+	name: string;
+	type: string;
+	line: number;
+	column: number;
+	references: Position[];
 }
