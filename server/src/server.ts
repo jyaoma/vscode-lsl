@@ -24,8 +24,9 @@ import fs from 'fs';
 import type { LSLConstant, LSLEvent, LSLFunction, LSLVariable } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { getCommentedOutSections, scanDocument } from './scanner';
+import { scanDocument } from './scanner';
 import getQuoteRanges from './quoteRanges';
+import getCommentedOutSections from './comments';
 
 const allFunctions: { [key: string]: LSLFunction } = JSON.parse(fs.readFileSync(`${__dirname}/../../functions.json`, { encoding: 'utf8' }));
 const allConstants: { [key: string]: LSLConstant } = JSON.parse(fs.readFileSync(`${__dirname}/../../constants.json`, { encoding: 'utf8' }));
