@@ -19,6 +19,7 @@ const isInCommentedOutSection = (commentedOutSections: CommentedOutSection[]) =>
   );
 };
 
+// line numbers are zero-based
 const getCommentedOutSections = (document: string): CommmentedOutSections => {
   const commentedOutSections: CommentedOutSection[] = [];
   const lines = document.split('\n');

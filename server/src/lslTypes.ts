@@ -39,9 +39,20 @@ export type LSLConstant = {
 	wiki: string;
 }
 
+export enum LSLType {
+	Integer,
+	Float,
+	String,
+	Key,
+	Vector,
+	Rotation,
+	List,
+	Unknown
+}
+
 export type LSLVariable = {
 	name: string;
-	type: string;
+	type: LSLType;
 	line: number;
 	column: number;
 	references: Position[];
