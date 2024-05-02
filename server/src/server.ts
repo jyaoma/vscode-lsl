@@ -146,10 +146,6 @@ connection.onInitialize((params: InitializeParams) => {
         resolveProvider: true,
         triggerCharacters: ['(', ',', ' ']
       },
-      diagnosticProvider: {
-        interFileDependencies: false,
-        workspaceDiagnostics: false,
-      },
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
       },
@@ -235,23 +231,6 @@ function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
 // Only keep settings for open documents
 documents.onDidClose((e) => {
   documentSettings.delete(e.document.uri);
-});
-
-connection.languages.diagnostics.on(async (params) => {
-  const document = documents.get(params.textDocument.uri);
-  // if (document !== undefined) {
-  //   return {
-  //     kind: DocumentDiagnosticReportKind.Full,
-  //     items: await validateTextDocument(document),
-  //   } satisfies DocumentDiagnosticReport;
-  // } else {
-    // We don't know the document. We can either try to read it from disk
-    // or we don't report problems for it.
-    return {
-      kind: DocumentDiagnosticReportKind.Full,
-      items: [],
-    } satisfies DocumentDiagnosticReport;
-  // }
 });
 
 let allVariables: Variables;
