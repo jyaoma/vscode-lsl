@@ -51,17 +51,18 @@ export const scanDocument = (document: string) => {
           for (let i = 0; i <= refNum; i++) {
             colNum = line.indexOf(variableName, colNum + 1);
           }
+					const variable = allVariables[variableName]; 
           if (
             !commentedOutSections.isInSection(lineNum, colNum) &&
             !quoteRanges.isInRange(colNum) &&
-            !(
-              lineNum === allVariables[variableName].line &&
-              colNum === allVariables[variableName].column
-            )
+            !(lineNum === variable.line && colNum === variable.column) &&
+						allScopes.isInScope(
+							{ line: lineNum, character: colNum }, 
+							{ line: variable.line, character: variable.column })
           ) {
             allVariables[variableName].references.push({
               line: lineNum,
-              character: colNum,
+              character: colNum
             });
           }
         });

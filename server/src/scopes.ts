@@ -22,17 +22,20 @@ type Scope = {
 const positionToScopeId =
   (scopes: Scope[]) =>
   ({ line, character }: Position): number => {
+		let result = -1;
     scopes.forEach(({ startLine, startCol, endLine, endCol }, index) => {
       if (
-        line >= startLine &&
-        line <= endLine! &&
-        character >= startCol &&
-        character < endCol!
+        line > startLine || (
+					line === startLine && character >= startCol
+				) &&
+        line < endLine! || (
+					line === endLine && character < endCol!
+				)
       )
-        return index;
+        result = index;
     });
 
-    return -1;
+    return result;
   };
 
 const isReferenceInScopeOfDefinition =
@@ -56,6 +59,8 @@ const getScopes = (document: string): Scopes => {
       parentIndex: -1,
       startLine: 0,
       startCol: 0,
+			endLine: document.split('\n').length + 1,
+			endCol: 0
     },
   ];
 
