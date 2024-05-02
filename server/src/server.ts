@@ -24,7 +24,7 @@ import fs from 'fs';
 import type { LSLConstant, LSLEvent, LSLFunction, LSLVariable } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { scanDocument } from './scanner';
+import scanDocument from './scanner';
 import getQuoteRanges from './quoteRanges';
 import getCommentedOutSections from './comments';
 

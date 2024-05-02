@@ -6,7 +6,7 @@ import getScopes from './scopes';
 
 let allVariables: { [key: string]: LSLVariable } = {};
 
-export const scanDocument = (document: string) => {
+const scanDocument = (document: string) => {
   allVariables = {};
   const commentedOutSections = getCommentedOutSections(document);
   const lines = document.split('\n');
@@ -70,5 +70,7 @@ export const scanDocument = (document: string) => {
     });
   });
 
-  console.log(allVariables);
+  return allVariables;
 };
+
+export default scanDocument;
