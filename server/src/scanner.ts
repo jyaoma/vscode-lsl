@@ -4,14 +4,14 @@ import getQuoteRanges from './quoteRanges';
 import { convertToType } from './types';
 import getScopes from './scopes';
 
-let allVariables: { [key: string]: LSLVariable } = {};
+type Variables = { [key: string]: LSLVariable };
 
-const scanDocument = (document: string) => {
-  allVariables = {};
+const scanDocument = (document: string): Variables => {
+  const allVariables: { [key: string]: LSLVariable } = {};
   const commentedOutSections = getCommentedOutSections(document);
   const lines = document.split('\n');
 
-	const allScopes = getScopes(document);
+  const allScopes = getScopes(document);
 
   lines.forEach((line, lineNum) => {
     const quoteRanges = getQuoteRanges(line);
@@ -51,18 +51,19 @@ const scanDocument = (document: string) => {
           for (let i = 0; i <= refNum; i++) {
             colNum = line.indexOf(variableName, colNum + 1);
           }
-					const variable = allVariables[variableName]; 
+          const variable = allVariables[variableName];
           if (
             !commentedOutSections.isInSection(lineNum, colNum) &&
             !quoteRanges.isInRange(colNum) &&
             !(lineNum === variable.line && colNum === variable.column) &&
-						allScopes.isInScope(
-							{ line: lineNum, character: colNum }, 
-							{ line: variable.line, character: variable.column })
+            allScopes.isInScope(
+              { line: lineNum, character: colNum },
+              { line: variable.line, character: variable.column }
+            )
           ) {
             allVariables[variableName].references.push({
               line: lineNum,
-              character: colNum
+              character: colNum,
             });
           }
         });
