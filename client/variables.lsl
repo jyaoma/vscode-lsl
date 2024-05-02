@@ -28,7 +28,7 @@ default
     touch_start(integer num_detected)
     {
         if (TRUE) {
-            llSay(num_detected, "oof");
+            llSay(num_detected, "oof"); 
         }
         global = 5;
     }

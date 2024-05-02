@@ -4,7 +4,7 @@ import getQuoteRanges from './quoteRanges';
 import { convertToType } from './types';
 import getScopes from './scopes';
 
-type Variables = { [key: string]: LSLVariable };
+export type Variables = { [key: string]: LSLVariable };
 
 const scanDocument = (document: string): Variables => {
   const allVariables: { [key: string]: LSLVariable } = {};
@@ -70,6 +70,8 @@ const scanDocument = (document: string): Variables => {
       }
     });
   });
+
+  console.log(allVariables);
 
   return allVariables;
 };

@@ -25,12 +25,12 @@ const positionToScopeId =
 		let result = -1;
     scopes.forEach(({ startLine, startCol, endLine, endCol }, index) => {
       if (
-        line > startLine || (
+        (line > startLine || (
 					line === startLine && character >= startCol
-				) &&
-        line < endLine! || (
+				)) &&
+        (line < endLine! || (
 					line === endLine && character < endCol!
-				)
+				))
       )
         result = index;
     });

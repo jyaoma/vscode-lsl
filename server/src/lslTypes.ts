@@ -40,14 +40,14 @@ export type LSLConstant = {
 }
 
 export enum LSLType {
-	Integer,
-	Float,
-	String,
-	Key,
-	Vector,
-	Rotation,
-	List,
-	Unknown
+	Integer = 'integer',
+	Float = 'float',
+	String = 'string',
+	Key = 'key',
+	Vector = 'vector',
+	Rotation = 'rotation',
+	List = 'list',
+	Unknown = ''
 }
 
 export type LSLVariable = {

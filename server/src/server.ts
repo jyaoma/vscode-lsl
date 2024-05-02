@@ -24,7 +24,7 @@ import fs from 'fs';
 import type { LSLConstant, LSLEvent, LSLFunction, LSLVariable } from './lslTypes';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import scanDocument from './scanner';
+import scanDocument, { Variables } from './scanner';
 import getQuoteRanges from './quoteRanges';
 import getCommentedOutSections from './comments';
 
@@ -254,11 +254,13 @@ connection.languages.diagnostics.on(async (params) => {
   // }
 });
 
+let allVariables: Variables;
+
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
   getCommentedOutSections(change.document.getText());
-  scanDocument(change.document.getText());
+  allVariables = scanDocument(change.document.getText());
 });
 
 connection.onDidChangeWatchedFiles((_change) => {
@@ -546,6 +548,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
   let rightDone = false;
   let pointer1 = textDocumentPosition.position.character - 1;
   let pointer2 = textDocumentPosition.position.character + 1;
+  let wordCol = -1;
   while (!leftDone || !rightDone) {
     const leftChar = line[pointer1--];
     if (!leftChar) leftDone = true;
@@ -554,6 +557,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
         word = leftChar + word;
       } else {
         leftDone = true;
+        wordCol = pointer1 + 1;
       }
     }
     const rightChar = line[pointer2++];
@@ -563,6 +567,7 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
         word = word + rightChar;
       } else {
         rightDone = true;
+        if (!wordCol) wordCol = pointer2 - word.length;
       }
     }
   }
@@ -613,6 +618,19 @@ connection.onHover((textDocumentPosition: TextDocumentPositionParams): Hover => 
         hoverContent.push(...lslEvent.description.split('\n'));
     }
     hoverContent.push(`@see - ${lslEvent.wiki}`);
+    return { contents: hoverContent };
+  }
+
+  const userVariable = allVariables[word];
+  if (
+    userVariable &&
+    userVariable.references.find(
+      (position) =>
+        position.line === textDocumentPosition.position.line &&
+        position.character === wordCol + 1
+    )
+  ) {
+    const hoverContent = [`\`\`\`lsl\n${userVariable.type} ${word}\n\`\`\``];
     return { contents: hoverContent };
   }
 
