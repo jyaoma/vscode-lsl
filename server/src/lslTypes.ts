@@ -51,9 +51,10 @@ export enum LSLType {
 }
 
 export type LSLVariable = {
-	name: string;
-	type: LSLType;
-	line: number;
-	column: number;
-	references: Position[];
-}
+  name: string;
+  type: LSLType;
+  line: number;
+  column: number;
+  columnWithType: number;
+  references: Position[];
+};

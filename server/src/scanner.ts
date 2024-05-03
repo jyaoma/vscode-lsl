@@ -35,6 +35,7 @@ const scanDocument = (document: string): Variables => {
             name,
             type: convertToType(type),
             line: lineNum,
+            columnWithType: colNum,
             column: line.indexOf(name, colNum),
             references: [],
           };
