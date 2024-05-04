@@ -742,6 +742,16 @@ connection.onDefinition((params): LocationLink[] | null => {
   const variable = allVariables[word];
   if (!variable) return null;
 
+  let referenceFound = false;
+  variable.references.forEach(position => {
+    referenceFound =
+      referenceFound ||
+      (position.line === params.position.line &&
+        params.position.character >= position.character &&
+        params.position.character < position.character + word.length);
+  });
+  if (!referenceFound) return null;
+
   return [
     LocationLink.create(
       params.textDocument.uri,
