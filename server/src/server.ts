@@ -747,6 +747,10 @@ connection.onDefinition((params): LocationLink[] | null => {
       params.position.character >= position.character &&
       params.position.character < position.character + word.length;
   });
+  referenceFound ||=
+    params.position.line === variable.line &&
+    params.position.character >= variable.column &&
+    params.position.character < variable.column + word.length;
   if (!referenceFound) return null;
 
   return [
