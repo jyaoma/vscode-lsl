@@ -171,7 +171,7 @@ const getWord = (document: string, position: Position): string | null => {
       }
     }
   }
-  
+
   return word;
 };
 
@@ -583,89 +583,87 @@ connection.onCompletion(
   }
 );
 
-connection.onHover(
-  (params: TextDocumentPositionParams): Hover => {
-    const document = documents.get(params.textDocument.uri);
-    if (document === undefined) return { contents: '' };
-    const word = getWord(document.getText(), params.position);
-    if (!word) return { contents: '' };
+connection.onHover((params: TextDocumentPositionParams): Hover => {
+  const document = documents.get(params.textDocument.uri);
+  if (document === undefined) return { contents: '' };
+  const word = getWord(document.getText(), params.position);
+  if (!word) return { contents: '' };
 
-    const lslConstant = allConstants[word];
-    if (lslConstant) {
-      const hoverContent = [`\`\`\`lsl\n${lslConstant.name}\n\`\`\``];
-      if (lslConstant.meaning) {
-        hoverContent.push(...lslConstant.meaning.split('\n'));
-      }
-      hoverContent.push(`@see - ${lslConstant.wiki}`);
-      return { contents: hoverContent };
+  const lslConstant = allConstants[word];
+  if (lslConstant) {
+    const hoverContent = [`\`\`\`lsl\n${lslConstant.name}\n\`\`\``];
+    if (lslConstant.meaning) {
+      hoverContent.push(...lslConstant.meaning.split('\n'));
     }
-
-    const lslFunction = allFunctions[word];
-    if (lslFunction) {
-      const hoverContent = [];
-      if (lslFunction.godMode) {
-        hoverContent.push(`This function requires god-mode.`);
-      }
-      if (lslFunction.deprecated) {
-        hoverContent.push(
-          `@deprecated${
-            lslFunction.deprecated !== 'none'
-              ? ` - Use ${lslFunction.deprecated} instead`
-              : ''
-          }`
-        );
-      }
-      if (lslFunction.broken) {
-        hoverContent.push(
-          `@deprecated - This function is either broken or does not do anything.`
-        );
-      }
-      if (lslFunction.experimental) {
-        hoverContent.push(
-          `This is an experimental function currently being tested on the beta-grid.`
-        );
-      }
-      if (lslFunction.experience) {
-        hoverContent.push(`This function requires an experience.`);
-      }
-      hoverContent.push(
-        `\`\`\`lsl\n${
-          lslFunction.returnType ? `(${lslFunction.returnType}) ` : ''
-        }${word}(${lslFunction.parameters
-          .map((p) => `${p.type} ${p.name}`)
-          .join(', ')})\n\`\`\``
-      );
-      if (lslFunction.description) {
-        hoverContent.push(...lslFunction.description.split('\n'));
-      }
-      lslFunction.parameters.forEach((p) => {
-        hoverContent.push(
-          `@param \`${p.type} ${p.name}\`${
-            p.description ? ` - ${p.description}` : ''
-          }`
-        );
-      });
-      hoverContent.push(`@see - ${lslFunction.wiki}`);
-      return { contents: hoverContent };
-    }
-
-    const lslEvent = allEvents[word];
-    if (lslEvent) {
-      const hoverContent = [
-        `\`\`\`lsl\n${word}(${lslEvent.parameters
-          .map((p) => `${p.type} ${p.name}`)
-          .join(', ')})\n\`\`\``,
-      ];
-      if (lslEvent.description) {
-        hoverContent.push(...lslEvent.description.split('\n'));
-      }
-      hoverContent.push(`@see - ${lslEvent.wiki}`);
-      return { contents: hoverContent };
-    }
-
-    return { contents: '' };
+    hoverContent.push(`@see - ${lslConstant.wiki}`);
+    return { contents: hoverContent };
   }
-);
+
+  const lslFunction = allFunctions[word];
+  if (lslFunction) {
+    const hoverContent = [];
+    if (lslFunction.godMode) {
+      hoverContent.push(`This function requires god-mode.`);
+    }
+    if (lslFunction.deprecated) {
+      hoverContent.push(
+        `@deprecated${
+          lslFunction.deprecated !== 'none'
+            ? ` - Use ${lslFunction.deprecated} instead`
+            : ''
+        }`
+      );
+    }
+    if (lslFunction.broken) {
+      hoverContent.push(
+        `@deprecated - This function is either broken or does not do anything.`
+      );
+    }
+    if (lslFunction.experimental) {
+      hoverContent.push(
+        `This is an experimental function currently being tested on the beta-grid.`
+      );
+    }
+    if (lslFunction.experience) {
+      hoverContent.push(`This function requires an experience.`);
+    }
+    hoverContent.push(
+      `\`\`\`lsl\n${
+        lslFunction.returnType ? `(${lslFunction.returnType}) ` : ''
+      }${word}(${lslFunction.parameters
+        .map((p) => `${p.type} ${p.name}`)
+        .join(', ')})\n\`\`\``
+    );
+    if (lslFunction.description) {
+      hoverContent.push(...lslFunction.description.split('\n'));
+    }
+    lslFunction.parameters.forEach((p) => {
+      hoverContent.push(
+        `@param \`${p.type} ${p.name}\`${
+          p.description ? ` - ${p.description}` : ''
+        }`
+      );
+    });
+    hoverContent.push(`@see - ${lslFunction.wiki}`);
+    return { contents: hoverContent };
+  }
+
+  const lslEvent = allEvents[word];
+  if (lslEvent) {
+    const hoverContent = [
+      `\`\`\`lsl\n${word}(${lslEvent.parameters
+        .map((p) => `${p.type} ${p.name}`)
+        .join(', ')})\n\`\`\``,
+    ];
+    if (lslEvent.description) {
+      hoverContent.push(...lslEvent.description.split('\n'));
+    }
+    hoverContent.push(`@see - ${lslEvent.wiki}`);
+    return { contents: hoverContent };
+  }
+
+  return { contents: '' };
+});
 
 // This handler resolves additional information for the item selected in
 // the completion list.
@@ -743,12 +741,11 @@ connection.onDefinition((params): LocationLink[] | null => {
   if (!variable) return null;
 
   let referenceFound = false;
-  variable.references.forEach(position => {
-    referenceFound =
-      referenceFound ||
-      (position.line === params.position.line &&
-        params.position.character >= position.character &&
-        params.position.character < position.character + word.length);
+  variable.references.forEach((position) => {
+    referenceFound ||=
+      position.line === params.position.line &&
+      params.position.character >= position.character &&
+      params.position.character < position.character + word.length;
   });
   if (!referenceFound) return null;
 
