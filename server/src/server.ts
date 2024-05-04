@@ -135,8 +135,6 @@ const findFunctionName = (
     }
   }
 
-  console.log({ numberOfCommas, funcName });
-
   return { funcName, parenFound, numberOfCommas };
 };
 

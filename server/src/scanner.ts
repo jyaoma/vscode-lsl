@@ -36,7 +36,9 @@ const scanDocument = (document: string): Variables => {
             type: convertToType(type),
             line: lineNum,
             columnWithType: colNum,
-            column: line.indexOf(name, colNum),
+            column:
+              line.slice(colNum).search(new RegExp(`\\b${name}\\b`, 'gm')) +
+              colNum,
             references: [],
           };
         }
@@ -50,7 +52,9 @@ const scanDocument = (document: string): Variables => {
         references.forEach((_, refNum) => {
           let colNum = -1;
           for (let i = 0; i <= refNum; i++) {
-            colNum = line.indexOf(variableName, colNum + 1);
+            colNum = line
+              .slice(colNum + 1)
+              .search(new RegExp(`\\b${variableName}\\b`, 'gm')) + colNum + 1;
           }
           const variable = allVariables[variableName];
           if (
