@@ -139,6 +139,42 @@ const findFunctionName = (
   return { funcName, parenFound, numberOfCommas };
 };
 
+const getWord = (document: string, position: Position): string | null => {
+  const lines = document.split('\n');
+  const line = lines[position.line];
+  let word = line[position.character];
+  if (!word || !word.match(/[a-zA-Z0-9_]/)) return null;
+  let leftDone = false;
+  let rightDone = false;
+  let pointer1 = position.character - 1;
+  let pointer2 = position.character + 1;
+  let wordCol = -1;
+  while (!leftDone || !rightDone) {
+    const leftChar = line[pointer1--];
+    if (!leftChar) leftDone = true;
+    if (!leftDone) {
+      if (leftChar.match(/[a-zA-Z0-9_]/)) {
+        word = leftChar + word;
+      } else {
+        leftDone = true;
+        wordCol = pointer1 + 1;
+      }
+    }
+    const rightChar = line[pointer2++];
+    if (!rightChar) rightDone = true;
+    if (!rightDone) {
+      if (rightChar.match(/[a-zA-Z0-9_]/)) {
+        word = word + rightChar;
+      } else {
+        rightDone = true;
+        if (!wordCol) wordCol = pointer2 - word.length;
+      }
+    }
+  }
+  
+  return word;
+};
+
 connection.onInitialize((params: InitializeParams) => {
   const capabilities = params.capabilities;
 
@@ -548,42 +584,11 @@ connection.onCompletion(
 );
 
 connection.onHover(
-  (textDocumentPosition: TextDocumentPositionParams): Hover => {
-    const document = documents.get(textDocumentPosition.textDocument.uri);
+  (params: TextDocumentPositionParams): Hover => {
+    const document = documents.get(params.textDocument.uri);
     if (document === undefined) return { contents: '' };
-    const lines = document.getText().split('\n');
-    const line = lines[textDocumentPosition.position.line];
-    let word = line[textDocumentPosition.position.character];
-    if (!word || !word.match(/[a-zA-Z0-9_]/)) {
-      return { contents: '' };
-    }
-    let leftDone = false;
-    let rightDone = false;
-    let pointer1 = textDocumentPosition.position.character - 1;
-    let pointer2 = textDocumentPosition.position.character + 1;
-    let wordCol = -1;
-    while (!leftDone || !rightDone) {
-      const leftChar = line[pointer1--];
-      if (!leftChar) leftDone = true;
-      if (!leftDone) {
-        if (leftChar.match(/[a-zA-Z0-9_]/)) {
-          word = leftChar + word;
-        } else {
-          leftDone = true;
-          wordCol = pointer1 + 1;
-        }
-      }
-      const rightChar = line[pointer2++];
-      if (!rightChar) rightDone = true;
-      if (!rightDone) {
-        if (rightChar.match(/[a-zA-Z0-9_]/)) {
-          word = word + rightChar;
-        } else {
-          rightDone = true;
-          if (!wordCol) wordCol = pointer2 - word.length;
-        }
-      }
-    }
+    const word = getWord(document.getText(), params.position);
+    if (!word) return { contents: '' };
 
     const lslConstant = allConstants[word];
     if (lslConstant) {
@@ -731,37 +736,8 @@ connection.onSignatureHelp(
 connection.onDefinition((params): LocationLink[] | null => {
   const document = documents.get(params.textDocument.uri);
   if (document === undefined) return null;
-  const lines = document.getText().split('\n');
-  const line = lines[params.position.line];
-  let word = line[params.position.character];
-  if (!word || !word.match(/[a-zA-Z0-9_]/)) return null;
-  let leftDone = false;
-  let rightDone = false;
-  let pointer1 = params.position.character - 1;
-  let pointer2 = params.position.character + 1;
-  let wordCol = -1;
-  while (!leftDone || !rightDone) {
-    const leftChar = line[pointer1--];
-    if (!leftChar) leftDone = true;
-    if (!leftDone) {
-      if (leftChar.match(/[a-zA-Z0-9_]/)) {
-        word = leftChar + word;
-      } else {
-        leftDone = true;
-        wordCol = pointer1 + 1;
-      }
-    }
-    const rightChar = line[pointer2++];
-    if (!rightChar) rightDone = true;
-    if (!rightDone) {
-      if (rightChar.match(/[a-zA-Z0-9_]/)) {
-        word = word + rightChar;
-      } else {
-        rightDone = true;
-        if (!wordCol) wordCol = pointer2 - word.length;
-      }
-    }
-  }
+  const word = getWord(document.getText(), params.position);
+  if (!word) return null;
 
   const variable = allVariables[word];
   if (!variable) return null;
@@ -784,37 +760,8 @@ connection.onDefinition((params): LocationLink[] | null => {
 connection.onReferences((params): Location[] | null => {
   const document = documents.get(params.textDocument.uri);
   if (document === undefined) return null;
-  const lines = document.getText().split('\n');
-  const line = lines[params.position.line];
-  let word = line[params.position.character];
-  if (!word || !word.match(/[a-zA-Z0-9_]/)) return null;
-  let leftDone = false;
-  let rightDone = false;
-  let pointer1 = params.position.character - 1;
-  let pointer2 = params.position.character + 1;
-  let wordCol = -1;
-  while (!leftDone || !rightDone) {
-    const leftChar = line[pointer1--];
-    if (!leftChar) leftDone = true;
-    if (!leftDone) {
-      if (leftChar.match(/[a-zA-Z0-9_]/)) {
-        word = leftChar + word;
-      } else {
-        leftDone = true;
-        wordCol = pointer1 + 1;
-      }
-    }
-    const rightChar = line[pointer2++];
-    if (!rightChar) rightDone = true;
-    if (!rightDone) {
-      if (rightChar.match(/[a-zA-Z0-9_]/)) {
-        word = word + rightChar;
-      } else {
-        rightDone = true;
-        if (!wordCol) wordCol = pointer2 - word.length;
-      }
-    }
-  }
+  const word = getWord(document.getText(), params.position);
+  if (!word) return null;
 
   const variable = allVariables[word];
   if (!variable) return null;
