@@ -20,6 +20,7 @@ import {
   SignatureHelpRequest,
   Hover,
   LocationLink,
+  Location,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type {
@@ -164,6 +165,7 @@ connection.onInitialize((params: InitializeParams) => {
         triggerCharacters: ['(', ',', ' '],
       },
       definitionProvider: true,
+      referencesProvider: true,
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
       },
@@ -777,6 +779,52 @@ connection.onDefinition((params): LocationLink[] | null => {
       }
     ),
   ];
+});
+
+connection.onReferences((params): Location[] | null => {
+  const document = documents.get(params.textDocument.uri);
+  if (document === undefined) return null;
+  const lines = document.getText().split('\n');
+  const line = lines[params.position.line];
+  let word = line[params.position.character];
+  if (!word || !word.match(/[a-zA-Z0-9_]/)) return null;
+  let leftDone = false;
+  let rightDone = false;
+  let pointer1 = params.position.character - 1;
+  let pointer2 = params.position.character + 1;
+  let wordCol = -1;
+  while (!leftDone || !rightDone) {
+    const leftChar = line[pointer1--];
+    if (!leftChar) leftDone = true;
+    if (!leftDone) {
+      if (leftChar.match(/[a-zA-Z0-9_]/)) {
+        word = leftChar + word;
+      } else {
+        leftDone = true;
+        wordCol = pointer1 + 1;
+      }
+    }
+    const rightChar = line[pointer2++];
+    if (!rightChar) rightDone = true;
+    if (!rightDone) {
+      if (rightChar.match(/[a-zA-Z0-9_]/)) {
+        word = word + rightChar;
+      } else {
+        rightDone = true;
+        if (!wordCol) wordCol = pointer2 - word.length;
+      }
+    }
+  }
+
+  const variable = allVariables[word];
+  if (!variable) return null;
+
+  return variable.references.map(({ line, character }) =>
+    Location.create(params.textDocument.uri, {
+      start: { line, character },
+      end: { line, character: character + word.length },
+    })
+  );
 });
 
 // Make the text document manager listen on the connection
