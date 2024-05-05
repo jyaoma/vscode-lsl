@@ -50,11 +50,15 @@ export enum LSLType {
 	Unknown = ''
 }
 
+export type LSLReference = Position & {
+	isWrite: boolean
+}
+
 export type LSLVariable = {
   name: string;
   type: LSLType;
   line: number;
   column: number;
   columnWithType: number;
-  references: Position[];
+  references: LSLReference[];
 };

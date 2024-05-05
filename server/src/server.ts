@@ -21,6 +21,8 @@ import {
   Hover,
   LocationLink,
   Location,
+  DocumentHighlight,
+  DocumentHighlightKind,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type {
@@ -202,6 +204,7 @@ connection.onInitialize((params: InitializeParams) => {
       },
       definitionProvider: true,
       referencesProvider: true,
+      documentHighlightProvider: true,
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
       },
@@ -782,6 +785,51 @@ connection.onReferences((params): Location[] | null => {
       start: { line, character },
       end: { line, character: character + word.length },
     })
+  );
+});
+
+connection.onDocumentHighlight((params): DocumentHighlight[] | null => {
+  const document = documents.get(params.textDocument.uri);
+  if (document === undefined) return null;
+  const word = getWord(document.getText(), params.position);
+  if (!word) return null;
+
+  const variable = allVariables[word];
+  if (!variable) return null;
+
+  let referenceFound = false;
+  variable.references.forEach((position) => {
+    referenceFound ||=
+      position.line === params.position.line &&
+      params.position.character >= position.character &&
+      params.position.character < position.character + word.length;
+  });
+  referenceFound ||=
+    params.position.line === variable.line &&
+    params.position.character >= variable.column &&
+    params.position.character < variable.column + word.length;
+  if (!referenceFound) return null;
+
+  return [
+    DocumentHighlight.create(
+      {
+        start: { line: variable.line, character: variable.column },
+        end: { line: variable.line, character: variable.column + word.length },
+      },
+      DocumentHighlightKind.Write
+    ),
+  ].concat(
+    variable.references.map((reference) =>
+      DocumentHighlight.create(
+        {
+          start: { ...reference },
+          end: { ...reference, character: reference.character + word.length },
+        },
+        reference.isWrite
+          ? DocumentHighlightKind.Write
+          : DocumentHighlightKind.Read
+      )
+    )
   );
 });
 

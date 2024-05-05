@@ -69,6 +69,19 @@ const scanDocument = (document: string): Variables => {
             allVariables[variableName].references.push({
               line: lineNum,
               character: colNum,
+              isWrite:
+                line
+                  .slice(colNum)
+                  .search(
+                    new RegExp(`(?<=(?:\\+\\+|\\-\\-)) *(${variableName})`)
+                  ) === 0 ||
+                line
+                  .slice(colNum)
+                  .search(
+                    new RegExp(
+                      `(${variableName})(?= *(?:[+\\-*\\/%]=|\\+\\+|\\-\\-|=[^=]))`
+                    )
+                  ) === 0,
             });
           }
         });
