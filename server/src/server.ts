@@ -23,6 +23,9 @@ import {
   Location,
   DocumentHighlight,
   DocumentHighlightKind,
+  WorkspaceEdit,
+  RenameParams,
+  TextEdit,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type {
@@ -205,6 +208,7 @@ connection.onInitialize((params: InitializeParams) => {
       definitionProvider: true,
       referencesProvider: true,
       documentHighlightProvider: true,
+      renameProvider: true,
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
       },
@@ -837,6 +841,61 @@ connection.onDocumentHighlight((params): DocumentHighlight[] | null => {
       )
     )
   );
+});
+
+connection.onRenameRequest((params: RenameParams): WorkspaceEdit | null => {
+  const document = documents.get(params.textDocument.uri);
+  if (document === undefined) return null;
+  const word = getWord(document.getText(), params.position);
+  if (!word) return null;
+
+  if (!allVariables[params.textDocument.uri])
+    allVariables[params.textDocument.uri] = scanDocument(document.getText());
+const variable = allVariables[params.textDocument.uri][word];
+  if (!variable) return null;
+
+  let referenceFound = false;
+  variable.references.forEach((position) => {
+    referenceFound ||=
+      position.line === params.position.line &&
+      params.position.character >= position.character &&
+      params.position.character < position.character + word.length;
+  });
+  referenceFound ||=
+    params.position.line === variable.line &&
+    params.position.character >= variable.column &&
+    params.position.character < variable.column + word.length;
+  if (!referenceFound) return null;
+
+  return {
+    changes: {
+      [params.textDocument.uri]: [
+        TextEdit.replace(
+          {
+            start: { line: variable.line, character: variable.column },
+            end: {
+              line: variable.line,
+              character: variable.column + word.length,
+            },
+          },
+          params.newName
+        ),
+      ].concat(
+        variable.references.map((reference) =>
+          TextEdit.replace(
+            {
+              start: reference,
+              end: {
+                line: reference.line,
+                character: reference.character + word.length,
+              },
+            },
+            params.newName
+          )
+        )
+      ),
+    },
+  };
 });
 
 // Make the text document manager listen on the connection
