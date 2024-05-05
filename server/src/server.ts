@@ -289,13 +289,13 @@ documents.onDidClose((e) => {
   documentSettings.delete(e.document.uri);
 });
 
-let allVariables: Variables;
+const allVariables: { [uri: string]: Variables } = {};
 
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
   getCommentedOutSections(change.document.getText());
-  allVariables = scanDocument(change.document.getText());
+  allVariables[change.document.uri] = scanDocument(change.document.getText());
 });
 
 connection.onDidChangeWatchedFiles((_change) => {
@@ -740,7 +740,9 @@ connection.onDefinition((params): LocationLink[] | null => {
   const word = getWord(document.getText(), params.position);
   if (!word) return null;
 
-  const variable = allVariables[word];
+  if (!allVariables[params.textDocument.uri])
+    allVariables[params.textDocument.uri] = scanDocument(document.getText());
+  const variable = allVariables[params.textDocument.uri][word];
   if (!variable) return null;
 
   let referenceFound = false;
@@ -777,7 +779,9 @@ connection.onReferences((params): Location[] | null => {
   const word = getWord(document.getText(), params.position);
   if (!word) return null;
 
-  const variable = allVariables[word];
+  if (!allVariables[params.textDocument.uri])
+    allVariables[params.textDocument.uri] = scanDocument(document.getText());
+  const variable = allVariables[params.textDocument.uri][word];
   if (!variable) return null;
 
   return variable.references.map(({ line, character }) =>
@@ -794,7 +798,9 @@ connection.onDocumentHighlight((params): DocumentHighlight[] | null => {
   const word = getWord(document.getText(), params.position);
   if (!word) return null;
 
-  const variable = allVariables[word];
+  if (!allVariables[params.textDocument.uri])
+    allVariables[params.textDocument.uri] = scanDocument(document.getText());
+  const variable = allVariables[params.textDocument.uri][word];
   if (!variable) return null;
 
   let referenceFound = false;
