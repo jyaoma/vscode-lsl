@@ -750,21 +750,24 @@ connection.onDefinition((params): LocationLink[] | null => {
 
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocument(document.getText());
-  const variable = allVariables[params.textDocument.uri][word];
-  if (!variable) return null;
+  const variable = Object.values(allVariables[params.textDocument.uri]).find(
+    (variable) => {
+      let referenceFound = false;
+      variable.references.forEach((position) => {
+        referenceFound ||=
+          position.line === params.position.line &&
+          params.position.character >= position.character &&
+          params.position.character < position.character + word.length;
+      });
+      referenceFound ||=
+        params.position.line === variable.line &&
+        params.position.character >= variable.column &&
+        params.position.character < variable.column + word.length;
 
-  let referenceFound = false;
-  variable.references.forEach((position) => {
-    referenceFound ||=
-      position.line === params.position.line &&
-      params.position.character >= position.character &&
-      params.position.character < position.character + word.length;
-  });
-  referenceFound ||=
-    params.position.line === variable.line &&
-    params.position.character >= variable.column &&
-    params.position.character < variable.column + word.length;
-  if (!referenceFound) return null;
+      return variable.name === word && referenceFound;
+    }
+  );
+  if (!variable) return null;
 
   return [
     LocationLink.create(
@@ -789,7 +792,9 @@ connection.onReferences((params): Location[] | null => {
 
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocument(document.getText());
-  const variable = allVariables[params.textDocument.uri][word];
+  const variable = Object.values(allVariables[params.textDocument.uri]).find(
+    (variable) => variable.name === word
+  );
   if (!variable) return null;
 
   return variable.references.map(({ line, character }) =>
@@ -808,21 +813,24 @@ connection.onDocumentHighlight((params): DocumentHighlight[] | null => {
 
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocument(document.getText());
-  const variable = allVariables[params.textDocument.uri][word];
-  if (!variable) return null;
+  const variable = Object.values(allVariables[params.textDocument.uri]).find(
+    (variable) => {
+      let referenceFound = false;
+      variable.references.forEach((position) => {
+        referenceFound ||=
+          position.line === params.position.line &&
+          params.position.character >= position.character &&
+          params.position.character < position.character + word.length;
+      });
+      referenceFound ||=
+        params.position.line === variable.line &&
+        params.position.character >= variable.column &&
+        params.position.character < variable.column + word.length;
 
-  let referenceFound = false;
-  variable.references.forEach((position) => {
-    referenceFound ||=
-      position.line === params.position.line &&
-      params.position.character >= position.character &&
-      params.position.character < position.character + word.length;
-  });
-  referenceFound ||=
-    params.position.line === variable.line &&
-    params.position.character >= variable.column &&
-    params.position.character < variable.column + word.length;
-  if (!referenceFound) return null;
+      return variable.name === word && referenceFound;
+    }
+  );
+  if (!variable) return null;
 
   return [
     DocumentHighlight.create(
@@ -855,21 +863,24 @@ connection.onRenameRequest((params: RenameParams): WorkspaceEdit | null => {
 
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocument(document.getText());
-  const variable = allVariables[params.textDocument.uri][word];
-  if (!variable) return null;
+  const variable = Object.values(allVariables[params.textDocument.uri]).find(
+    (variable) => {
+      let referenceFound = false;
+      variable.references.forEach((position) => {
+        referenceFound ||=
+          position.line === params.position.line &&
+          params.position.character >= position.character &&
+          params.position.character < position.character + word.length;
+      });
+      referenceFound ||=
+        params.position.line === variable.line &&
+        params.position.character >= variable.column &&
+        params.position.character < variable.column + word.length;
 
-  let referenceFound = false;
-  variable.references.forEach((position) => {
-    referenceFound ||=
-      position.line === params.position.line &&
-      params.position.character >= position.character &&
-      params.position.character < position.character + word.length;
-  });
-  referenceFound ||=
-    params.position.line === variable.line &&
-    params.position.character >= variable.column &&
-    params.position.character < variable.column + word.length;
-  if (!referenceFound) return null;
+      return variable.name === word && referenceFound;
+    }
+  );
+  if (!variable) return null;
 
   return {
     changes: {
@@ -973,14 +984,14 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
                 nonGlobalVariables.push(varName);
 
                 return DocumentSymbol.create(
-                  varName,
+                  variable.name,
                   undefined,
                   SymbolKind.Variable,
                   {
                     start: { line: variable.line, character: variable.column },
                     end: {
                       line: variable.line,
-                      character: variable.column + varName.length,
+                      character: variable.column + variable.name.length,
                     },
                   },
                   {
@@ -1023,14 +1034,14 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
                 nonGlobalVariables.push(varName);
 
                 return DocumentSymbol.create(
-                  varName,
+                  variable.name,
                   undefined,
                   SymbolKind.Variable,
                   {
                     start: { line: variable.line, character: variable.column },
                     end: {
                       line: variable.line,
-                      character: variable.column + varName.length,
+                      character: variable.column + variable.name.length,
                     },
                   },
                   {
@@ -1051,14 +1062,14 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
       const variable = allVariables[params.textDocument.uri][varName];
       result.push(
         DocumentSymbol.create(
-          varName,
+          variable.name,
           undefined,
           SymbolKind.Variable,
           {
             start: { line: variable.line, character: variable.column },
             end: {
               line: variable.line,
-              character: variable.column + varName.length,
+              character: variable.column + variable.name.length,
             },
           },
           {

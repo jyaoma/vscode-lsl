@@ -30,8 +30,8 @@ const scanDocument = (document: string): Variables => {
           return;
 
         const [type, name] = match.split(' ');
-        if (!allVariables[name]) {
-          allVariables[name] = {
+        // if (!allVariables[name]) {
+          allVariables[`${name}:${lineNum}`] = {
             name,
             type: convertToType(type),
             line: lineNum,
@@ -41,22 +41,22 @@ const scanDocument = (document: string): Variables => {
               colNum,
             references: [],
           };
-        }
+        // }
       });
     }
 
     // look for references of existing variables
-    Object.keys(allVariables).forEach((variableName) => {
-      const references = line.match(new RegExp(`\\b${variableName}\\b`, 'gm'));
+    Object.keys(allVariables).forEach((variableKey) => {
+      const variable = allVariables[variableKey];
+      const references = line.match(new RegExp(`\\b${variable.name}\\b`, 'gm'));
       if (references?.length) {
         references.forEach((_, refNum) => {
           let colNum = -1;
           for (let i = 0; i <= refNum; i++) {
             colNum = line
               .slice(colNum + 1)
-              .search(new RegExp(`\\b${variableName}\\b`, 'gm')) + colNum + 1;
+              .search(new RegExp(`\\b${variable.name}\\b`, 'gm')) + colNum + 1;
           }
-          const variable = allVariables[variableName];
           if (
             !commentedOutSections.isInSection(lineNum, colNum) &&
             !quoteRanges.isInRange(colNum) &&
@@ -66,20 +66,20 @@ const scanDocument = (document: string): Variables => {
               { line: variable.line, character: variable.column }
             )
           ) {
-            allVariables[variableName].references.push({
+            allVariables[variableKey].references.push({
               line: lineNum,
               character: colNum,
               isWrite:
                 line
                   .slice(colNum)
                   .search(
-                    new RegExp(`(?<=(?:\\+\\+|\\-\\-)) *(${variableName})`)
+                    new RegExp(`(?<=(?:\\+\\+|\\-\\-)) *(${variable.name})`)
                   ) === 0 ||
                 line
                   .slice(colNum)
                   .search(
                     new RegExp(
-                      `(${variableName})(?= *(?:[+\\-*\\/%]=|\\+\\+|\\-\\-|=[^=]))`
+                      `(${variable.name})(?= *(?:[+\\-*\\/%]=|\\+\\+|\\-\\-|=[^=]))`
                     )
                   ) === 0,
             });
