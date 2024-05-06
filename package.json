@@ -1,10 +1,11 @@
 {
-  "name": "lsl-lsp",
-  "description": "LSL Language Server",
+  "name": "LSL Language Server",
+  "description": "Advanced support of LSL (Linden Scripting Language) in Visual Studio Code",
   "author": "jyaoma",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "./icons/lsl.png",
+  "publisher": "jyaoma",
   "repository": {
     "type": "git",
     "url": "https://github.com/jyaoma/vscode-lsl"
