@@ -4,16 +4,20 @@
   "description": "Advanced support of LSL (Linden Scripting Language) in Visual Studio Code",
   "author": "jyaoma",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "icon": "./icons/lsl.png",
   "publisher": "jyaoma",
   "repository": {
     "type": "git",
     "url": "https://github.com/jyaoma/vscode-lsl"
   },
-  "categories": [],
+  "categories": [
+    "Programming Languages"
+  ],
   "keywords": [
-    "multi-root ready"
+    "LSL",
+    "Second Life",
+    "Linden"
   ],
   "engines": {
     "vscode": "^1.75.0"
