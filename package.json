@@ -1,5 +1,6 @@
 {
-  "name": "LSL Language Server",
+  "name": "lsl-lsp",
+  "displayName": "LSL Language Server",
   "description": "Advanced support of LSL (Linden Scripting Language) in Visual Studio Code",
   "author": "jyaoma",
   "license": "MIT",
