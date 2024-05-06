@@ -1,9 +1,10 @@
 {
-  "name": "lsl-jyaoma",
+  "name": "lsl-lsp",
   "description": "LSL Language Server",
   "author": "jyaoma",
   "license": "MIT",
   "version": "1.0.0",
+  "icon": "./icons/lsl.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/jyaoma/vscode-lsl"

@@ -41,8 +41,6 @@ default
 {
     state_entry()
     {
-        llSay()
-
         menuToucher = NULL_KEY;
         menuOpen = FALSE;
 
