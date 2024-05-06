@@ -26,6 +26,8 @@ import {
   WorkspaceEdit,
   RenameParams,
   TextEdit,
+  DocumentSymbol,
+  SymbolKind,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type {
@@ -39,6 +41,7 @@ import { Position, TextDocument } from 'vscode-languageserver-textdocument';
 import scanDocument, { Variables } from './scanner';
 import getQuoteRanges from './quoteRanges';
 import getCommentedOutSections from './comments';
+import getScopes from './scopes';
 
 const allFunctions: { [key: string]: LSLFunction } = JSON.parse(
   fs.readFileSync(`${__dirname}/../../functions.json`, { encoding: 'utf8' })
@@ -209,6 +212,7 @@ connection.onInitialize((params: InitializeParams) => {
       referencesProvider: true,
       documentHighlightProvider: true,
       renameProvider: true,
+      documentSymbolProvider: true,
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
       },
@@ -851,7 +855,7 @@ connection.onRenameRequest((params: RenameParams): WorkspaceEdit | null => {
 
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocument(document.getText());
-const variable = allVariables[params.textDocument.uri][word];
+  const variable = allVariables[params.textDocument.uri][word];
   if (!variable) return null;
 
   let referenceFound = false;
@@ -896,6 +900,114 @@ const variable = allVariables[params.textDocument.uri][word];
       ),
     },
   };
+});
+
+connection.onDocumentSymbol((params): DocumentSymbol[] => {
+  const document = documents.get(params.textDocument.uri);
+  if (document === undefined) return [];
+  const allScopes = getScopes(document.getText());
+  const filteredScopes = allScopes.scopes.filter(
+    (scope) =>
+      !scope.name ||
+      !['if', 'else if', 'else', 'for', 'while', 'do'].includes(scope.name)
+  );
+
+  console.log({ filteredScopes });
+
+  const result: DocumentSymbol[] = [];
+
+  let globalScopeCount = -1;
+  let foundFirstState = false;
+  filteredScopes.forEach((scope) => {
+    if (scope.name) {
+      console.log(scope.name);
+      if (scope.name === 'default' || scope.name.startsWith('state ')) {
+        foundFirstState = true;
+        result.push(
+          DocumentSymbol.create(
+            scope.name,
+            undefined,
+            SymbolKind.Class,
+            {
+              start: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+              end: { line: scope.endLine!, character: scope.endCol! + 1 },
+            },
+            {
+              start: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+              end: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+            },
+            []
+          )
+        );
+        globalScopeCount++;
+      } else if (!foundFirstState) {
+        result.push(
+          DocumentSymbol.create(
+            scope.name,
+            undefined,
+            SymbolKind.Function,
+            {
+              start: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+              end: { line: scope.endLine!, character: scope.endCol! + 1 },
+            },
+            {
+              start: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+              end: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+            },
+            []
+          )
+        );
+        globalScopeCount++;
+      } else {
+        console.log(globalScopeCount);
+        result[globalScopeCount].children?.push(
+          DocumentSymbol.create(
+            scope.name,
+            undefined,
+            SymbolKind.Method,
+            {
+              start: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+              end: { line: scope.endLine!, character: scope.endCol! + 1 },
+            },
+            {
+              start: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+              end: {
+                line: scope.nameStartLine || scope.startLine,
+                character: scope.nameStartCol ?? scope.startCol + 1,
+              },
+            },
+            []
+          )
+        );
+      }
+    }
+  });
+
+  return result;
 });
 
 // Make the text document manager listen on the connection
