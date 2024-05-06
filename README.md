@@ -15,11 +15,11 @@ This extension adds support for LSL (Linden Scripting Language).
 #### Screenshots
 
 ![Screenshot of static auto-complete with definitions](https://raw.githubusercontent.com/jyaoma/vscode-lsl/lsp/screenshots/screenshot0.png)
-
+---
 ![Screenshot of hover](https://raw.githubusercontent.com/jyaoma/vscode-lsl/lsp/screenshots/screenshot1.png)
-
+---
 ![Screenshot of outline, type-aware auto-complete, signature help, and definitions](https://raw.githubusercontent.com/jyaoma/vscode-lsl/lsp/screenshots/screenshot2.png)
-
+---
 ![Screenshot of rename and symbol highlighting](https://raw.githubusercontent.com/jyaoma/vscode-lsl/lsp/screenshots/screenshot3.png)
 
 ## Disclaimers
