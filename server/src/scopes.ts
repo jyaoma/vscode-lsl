@@ -46,7 +46,13 @@ const isReferenceInScopeOfDefinition =
     let currentScopeId = referenceScopeId;
 
     while (currentScopeId !== -1) {
-      if (currentScopeId === definitionScopeId) return true;
+      if (
+        currentScopeId === definitionScopeId &&
+        (referencePosition.line > definitionPosition.line ||
+          (referencePosition.line === definitionPosition.line &&
+            referencePosition.character > definitionPosition.character))
+      )
+        return true;
       currentScopeId = scopes[currentScopeId].parentIndex;
     }
     return false;
@@ -88,7 +94,9 @@ const getScopes = (document: string): Scopes => {
             startCol: colNum,
             name: currentLine.trim() ? currentLine.trim() : lastLine.trim(),
             nameStartLine: currentLine.trim() ? lineNum : lineNum - 1,
-            nameStartCol: currentLine.trim() ? scopeNameStart : lastLineScopeNameStart
+            nameStartCol: currentLine.trim()
+              ? scopeNameStart
+              : lastLineScopeNameStart,
           });
           currentLine = '';
           scopeNameStart = colNum + 1;
