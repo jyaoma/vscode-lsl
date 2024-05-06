@@ -319,7 +319,7 @@ const getConstantCompletionItems = (array: string[]): CompletionItem[] =>
     data: name,
     detail: `${allConstants[name].type} ${allConstants[name].name} = ${allConstants[name].value}`,
     documentation: allConstants[name].meaning ?? undefined,
-    sortText: `***${name}`,
+    sortText: `**${name}`,
   }));
 
 // This handler provides the initial list of the completion items.
@@ -341,7 +341,7 @@ connection.onCompletion(
       const { parameters } = currentFunction;
       const currentParam = parameters[numberOfCommas];
       if (!currentParam) return [];
-      const { type, subtype } = currentParam;
+      const { type, subtype, name } = currentParam;
       const smartCompletionItems: CompletionItem[] = [];
       switch (subtype) {
         case 'attach_point':
@@ -615,7 +615,13 @@ connection.onCompletion(
             label: variable.name,
             kind: CompletionItemKind.Variable,
             data: variable.name,
-            sortText: `**${variable.name}`
+            sortText: `${
+              subtype &&
+              variable.name.toLowerCase().includes(subtype.toLowerCase()) ||
+              variable.name.toLowerCase().includes(name.toLowerCase())
+                ? '**'
+                : ''
+            }*${variable.name}`,
           }))
       );
 
