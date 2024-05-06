@@ -28,6 +28,7 @@ import {
   TextEdit,
   DocumentSymbol,
   SymbolKind,
+  Range,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type {
@@ -212,7 +213,9 @@ connection.onInitialize((params: InitializeParams) => {
       definitionProvider: true,
       referencesProvider: true,
       documentHighlightProvider: true,
-      renameProvider: true,
+      renameProvider: {
+        prepareProvider: true
+      },
       documentSymbolProvider: true,
       signatureHelpProvider: {
         triggerCharacters: ['(', ','],
@@ -952,6 +955,38 @@ connection.onDocumentHighlight((params): DocumentHighlight[] | null => {
       )
     )
   );
+});
+
+connection.onPrepareRename((params): { defaultBehavior: boolean } | null => {
+  const document = documents.get(params.textDocument.uri);
+  if (document === undefined) return null;
+  const word = getWord(document.getText(), params.position);
+  if (!word) return null;
+
+  if (!allVariables[params.textDocument.uri])
+    allVariables[params.textDocument.uri] = scanDocument(document.getText());
+  let reference: Position | null = null;
+  Object.values(allVariables[params.textDocument.uri]).forEach(
+    (variable) => {
+      variable.references.forEach((position) => {
+        if (
+          position.line === params.position.line &&
+          params.position.character >= position.character &&
+          params.position.character < position.character + word.length
+        ) reference = position;
+      });
+      if (params.position.line === variable.line &&
+        params.position.character >= variable.column &&
+        params.position.character < variable.column + word.length)
+      reference = {
+        line: variable.line,
+        character: variable.column
+      };
+    }
+  );
+  if (!reference) return null;
+
+  return { defaultBehavior: true };
 });
 
 connection.onRenameRequest((params: RenameParams): WorkspaceEdit | null => {
