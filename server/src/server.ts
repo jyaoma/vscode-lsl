@@ -912,15 +912,17 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
       !['if', 'else if', 'else', 'for', 'while', 'do'].includes(scope.name)
   );
 
-  console.log({ filteredScopes });
-
   const result: DocumentSymbol[] = [];
 
   let globalScopeCount = -1;
   let foundFirstState = false;
+  const nonGlobalVariables: string[] = [];
   filteredScopes.forEach((scope) => {
     if (scope.name) {
-      console.log(scope.name);
+      const startLine = scope.nameStartLine || scope.startLine;
+      const startCol = scope.nameStartCol ?? scope.startCol + 1;
+      const endLine = scope.endLine!;
+      const endCol = scope.endCol! + 1;
       if (scope.name === 'default' || scope.name.startsWith('state ')) {
         foundFirstState = true;
         result.push(
@@ -929,21 +931,12 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
             undefined,
             SymbolKind.Class,
             {
-              start: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
-              end: { line: scope.endLine!, character: scope.endCol! + 1 },
+              start: { line: startLine, character: startCol },
+              end: { line: endLine, character: endCol },
             },
             {
-              start: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
-              end: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
+              start: { line: startLine, character: startCol },
+              end: { line: startLine, character: startCol },
             },
             []
           )
@@ -956,56 +949,125 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
             undefined,
             SymbolKind.Function,
             {
-              start: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
-              end: { line: scope.endLine!, character: scope.endCol! + 1 },
+              start: { line: startLine, character: startCol },
+              end: { line: endLine, character: endCol },
             },
             {
-              start: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
-              end: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
+              start: { line: startLine, character: startCol },
+              end: { line: startLine, character: startCol },
             },
-            []
+            Object.keys(allVariables[params.textDocument.uri])
+              .filter((varName) => {
+                const variable = allVariables[params.textDocument.uri][varName];
+                return (
+                  (variable.line > startLine ||
+                    (variable.line === startLine &&
+                      variable.columnWithType >= startCol)) &&
+                  (variable.line < endLine! ||
+                    (variable.line === endLine &&
+                      variable.columnWithType < endCol!))
+                );
+              })
+              .map((varName) => {
+                const variable = allVariables[params.textDocument.uri][varName];
+                nonGlobalVariables.push(varName);
+
+                return DocumentSymbol.create(
+                  varName,
+                  undefined,
+                  SymbolKind.Variable,
+                  {
+                    start: { line: variable.line, character: variable.column },
+                    end: {
+                      line: variable.line,
+                      character: variable.column + varName.length,
+                    },
+                  },
+                  {
+                    start: { line: variable.line, character: variable.column },
+                    end: { line: variable.line, character: variable.column },
+                  }
+                );
+              })
           )
         );
         globalScopeCount++;
       } else {
-        console.log(globalScopeCount);
         result[globalScopeCount].children?.push(
           DocumentSymbol.create(
             scope.name,
             undefined,
             SymbolKind.Method,
             {
-              start: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
-              end: { line: scope.endLine!, character: scope.endCol! + 1 },
+              start: { line: startLine, character: startCol },
+              end: { line: endLine, character: endCol },
             },
             {
-              start: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
-              end: {
-                line: scope.nameStartLine || scope.startLine,
-                character: scope.nameStartCol ?? scope.startCol + 1,
-              },
+              start: { line: startLine, character: startCol },
+              end: { line: startLine, character: startCol },
             },
-            []
+            Object.keys(allVariables[params.textDocument.uri])
+              .filter((varName) => {
+                const variable = allVariables[params.textDocument.uri][varName];
+                return (
+                  (variable.line > startLine ||
+                    (variable.line === startLine &&
+                      variable.columnWithType >= startCol)) &&
+                  (variable.line < endLine! ||
+                    (variable.line === endLine &&
+                      variable.columnWithType < endCol!))
+                );
+              })
+              .map((varName) => {
+                const variable = allVariables[params.textDocument.uri][varName];
+                nonGlobalVariables.push(varName);
+
+                return DocumentSymbol.create(
+                  varName,
+                  undefined,
+                  SymbolKind.Variable,
+                  {
+                    start: { line: variable.line, character: variable.column },
+                    end: {
+                      line: variable.line,
+                      character: variable.column + varName.length,
+                    },
+                  },
+                  {
+                    start: { line: variable.line, character: variable.column },
+                    end: { line: variable.line, character: variable.column },
+                  }
+                );
+              })
           )
         );
       }
     }
   });
+
+  Object.keys(allVariables[params.textDocument.uri])
+    .filter((varName) => !nonGlobalVariables.includes(varName))
+    .forEach((varName) => {
+      const variable = allVariables[params.textDocument.uri][varName];
+      result.push(
+        DocumentSymbol.create(
+          varName,
+          undefined,
+          SymbolKind.Variable,
+          {
+            start: { line: variable.line, character: variable.column },
+            end: {
+              line: variable.line,
+              character: variable.column + varName.length,
+            },
+          },
+          {
+            start: { line: variable.line, character: variable.column },
+            end: { line: variable.line, character: variable.column },
+          }
+        )
+      );
+    });
 
   return result;
 });
