@@ -151,6 +151,7 @@ const getWord = (document: string, position: Position): string | null => {
   const lines = document.split('\n');
   const line = lines[position.line];
   let word = line[position.character];
+  if (!word || !word.match(/[a-zA-Z0-9_]/)) word = line[position.character - 1];
   if (!word || !word.match(/[a-zA-Z0-9_]/)) return null;
   let leftDone = false;
   let rightDone = false;
