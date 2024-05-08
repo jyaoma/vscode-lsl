@@ -18,7 +18,7 @@ const scanDocument = (document: string): Variables => {
 
     // determine all defined variables
     const lineVariables = line.match(
-      /(integer|float|key|string|vector|rotation|quarternion|list)\s+([a-zA-Z_][a-zA-Z0-9_]*)(?=.*?[;,)])/gm
+      /(integer|float|key|string|vector|rotation|quarternion|list) +([a-zA-Z_][a-zA-Z0-9_]*)(?=.*?[;,)])/gm
     );
     if (lineVariables?.length) {
       lineVariables.forEach((match) => {
@@ -29,7 +29,9 @@ const scanDocument = (document: string): Variables => {
         )
           return;
 
-        const [type, name] = match.split(' ');
+        let trimmedMatch = match;
+        while (trimmedMatch.includes('  ')) trimmedMatch = trimmedMatch.replace('  ', ' ');
+        const [type, name] = trimmedMatch.split(' ');
         // if (!allVariables[name]) {
           allVariables[`${name}:${lineNum}`] = {
             name,
