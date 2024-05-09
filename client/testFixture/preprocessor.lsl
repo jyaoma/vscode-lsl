@@ -20,12 +20,12 @@ default
         #else
         llOwnerSay("oh no");
         #endif
-        // #warning "djdjdjd"
+        #warning "djdjdjd"
     }
 
     touch_start(integer total_number)
     {
-        // #error "dsadsadsa"
+        #error "dsadsadsa"
         #ifdef DEBUG_MODE
         if (llDetectedKey(0) != NULL_KEY) {
         #else

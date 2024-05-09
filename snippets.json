@@ -82,16 +82,14 @@
 	"Define Preprocessor": {
 		"prefix": "#define",
 		"body": [
-			"#define ${1:identifier}",
-			"$0"
+			"#define ${1:identifier}"
 		],
 		"description": "Define Preprocessor"
 	},
 	"Undef Preprocessor": {
 		"prefix": "#undef",
 		"body": [
-			"#undef ${1:identifier}",
-			"$0"
+			"#undef ${1:identifier}"
 		],
 		"description": "Undef Preprocessor"
 	},
