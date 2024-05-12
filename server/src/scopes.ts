@@ -79,7 +79,7 @@ const getScopes = (document: string): Scopes => {
   let lastLineScopeNameStart: number;
   lines.forEach((line, lineNum) => {
     let currentLine = '';
-    let inParen = false;
+    let parenLevel = 0;
     let scopeNameStart = 0;
     const quoteRanges = getQuoteRanges(line);
     line.split('').forEach((char, colNum) => {
@@ -108,8 +108,8 @@ const getScopes = (document: string): Scopes => {
           scopes[currentScopeIndex].endCol = colNum;
           currentScopeIndex = scopes[currentScopeIndex].parentIndex;
         } else if ('()'.includes(char)) {
-          inParen = char === '(';
-        } else if (char.match(/[A-Za-z0-9_ ]/) && !inParen) {
+          parenLevel += char === '(' ? 1 : -1;
+        } else if (char.match(/[A-Za-z0-9_ ]/) && parenLevel === 0) {
           currentLine += char;
 
           if (
