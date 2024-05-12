@@ -14,6 +14,9 @@
     },
     {
       "include": "#type"
+    },
+    {
+      "include": "#preprocessor-global"
     }
   ],
   "repository": {
@@ -549,6 +552,10 @@
         {
           "name": "keyword.operator.arithmetic.lsl",
           "match": "%|\\*|/|-|\\+"
+        },
+        {
+          "name": "keyword.operator.preprocessor.concat.lsl",
+          "match": "##"
         }
       ]
     },
@@ -780,6 +787,57 @@
     "punctuation-semicolon": {
       "name": "punctuation.terminator.statement.lsl",
       "match": ";"
+    },
+    "preprocessor-define-value": {
+      "match": "(#define) +([A-Za-z_][\\w]*)(?: +((?<!\")[^ ]*|\".*?\"))?$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.directive.define.lsl"
+        },
+        "2": {
+          "name": "entity.name.variable.lsl"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        }
+      }
+    },
+    "preprocessor-define-function": {
+      "begin": "(?m)(#define) +([a-zA-Z_][\\w]*)(?=\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.directive.define.lsl"
+        },
+        "2": {
+          "name": "entity.name.function.lsl"
+        }
+      },
+      "end": "(?<=\\}|;)(?!\\\\)",
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#parenthesized-parameter-list"
+        },
+        {
+          "include": "#statement"
+        }
+      ]
+    },
+    "preprocessor-global": {
+      "patterns": [
+        {
+          "include": "#preprocessor-define-value"
+        },
+        {
+          "include": "#preprocessor-define-function"
+        }
+      ]
     }
   }
 }
