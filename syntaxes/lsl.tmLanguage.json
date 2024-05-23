@@ -882,6 +882,14 @@
         }
       }
     },
+    "preprocessor-ifndef": {
+      "match": "(#ifndef)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.ifndef.lsl"
+        }
+      }
+    },
     "preprocessor-elif": {
       "match": "(#elif)",
       "captures": {
@@ -921,6 +929,9 @@
         },
         {
           "include": "#preprocessor-ifdef"
+        },
+        {
+          "include": "#preprocessor-ifndef"
         },
         {
           "include": "#preprocessor-elif"
