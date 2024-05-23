@@ -4,6 +4,12 @@
 #define DEBUG_MODE NULL_KEY
 #define shout(a) llShout(PUBLIC_CHANNEL, a);
 
+#define OS(a,b) if (a > 1) {\
+  llOwnerSay((string)a);\
+} else {\
+  llOwnerSay((string)b);\
+}
+
 // there is an issue when I try to write the list here
 list myList = ["a", "b"];
 

@@ -269,6 +269,9 @@
         },
         {
           "include": "#punctuation-semicolon"
+        },
+        {
+          "include": "#preprocessor-block"
         }
       ]
     },
@@ -829,6 +832,21 @@
         }
       ]
     },
+    "preprocessor-include": {
+      "match": "(#include) +(\".*?\")$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.directive.include.lsl"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#string-literal"
+            }
+          ]
+        }
+      }
+    },
     "preprocessor-global": {
       "patterns": [
         {
@@ -836,6 +854,85 @@
         },
         {
           "include": "#preprocessor-define-function"
+        },
+        {
+          "include": "#preprocessor-include"
+        }
+      ]
+    },
+    "preprocessor-if": {
+      "begin": "(#if) +",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.preprocessor.if.lsl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#expression"
+        }
+      ]
+    },
+    "preprocessor-ifdef": {
+      "match": "(#ifdef)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.ifdef.lsl"
+        }
+      }
+    },
+    "preprocessor-elif": {
+      "match": "(#elif)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.elif.lsl"
+        }
+      }
+    },
+    "preprocessor-else": {
+      "match": "(#else)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.else.lsl"
+        }
+      }
+    },
+    "preprocessor-endif": {
+      "match": "(#endif)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.endif.lsl"
+        }
+      }
+    },
+    "preprocessor-error": {
+      "match": "(#warning|#error)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.error.lsl"
+        }
+      }
+    },
+    "preprocessor-block": {
+      "patterns": [
+        {
+          "include": "#preprocessor-if"
+        },
+        {
+          "include": "#preprocessor-ifdef"
+        },
+        {
+          "include": "#preprocessor-elif"
+        },
+        {
+          "include": "#preprocessor-else"
+        },
+        {
+          "include": "#preprocessor-endif"
+        },
+        {
+          "include": "#preprocessor-error"
         }
       ]
     }
