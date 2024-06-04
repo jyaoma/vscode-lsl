@@ -76,6 +76,10 @@ default
                 }
             }
         }
+
+        list myList = ["a", "b", 1];
+        myList[2] = (string)4;
+        
         
     }
 }
