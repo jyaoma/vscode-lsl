@@ -32,19 +32,28 @@ default
     touch_start(integer total_number)
     {
         #error "dsadsadsa"
+        while (FALSE) {
+            if (TRUE) {
+                llSay(PUBLIC_CHANNEL, "oof");
+            }
+        }
         #ifdef DEBUG_MODE
         if (llDetectedKey(0) != NULL_KEY) {
         #else
-        if (llDetectedKey(0) == llGetOwner()) {
+        // if (llDetectedKey(0) == llGetOwner()) {
         #endif
             integer random = llFloor(llFrand(4)) + 1;
             switch (random)
             {
+                case 0:
                 case 1
                 {
                     debug("1 is the loneliest number");
                     break;
                 }
+
+
+
                 case 2
                 {
                     debug("2 and you have a friend");
@@ -55,6 +64,7 @@ default
                     debug("3's company");
                     break;
                 }
+                // this is a comment
                 case 4
                 {
                     debug("Too many cooks in the kitchen");
@@ -66,5 +76,6 @@ default
                 }
             }
         }
+        
     }
 }

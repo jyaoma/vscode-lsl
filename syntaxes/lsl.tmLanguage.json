@@ -247,10 +247,16 @@
           "include": "#else-part"
         },
         {
+          "include": "#switch"
+        },
+        {
           "include": "#jump-statement"
         },
         {
           "include": "#return-statement"
+        },
+        {
+          "include": "#break-statement"
         },
         {
           "include": "#state-statement"
@@ -283,6 +289,7 @@
         }
       },
       "end": "(?<=\\})|(?=;)",
+      "name": "block.conditional.if.lsl",
       "patterns": [
         {
           "begin": "\\(",
@@ -344,6 +351,7 @@
         }
       },
       "end": "(?<=\\})|(?=;)",
+      "name": "block.conditional.while.lsl",
       "patterns": [
         {
           "begin": "\\(",
@@ -921,6 +929,127 @@
           "name": "keyword.control.preprocessor.error.lsl"
         }
       }
+    },
+    "break-statement": {
+      "match": "(break)",
+      "captures": {
+        "1": {
+          "name": "keyword.control.preprocessor.break.lsl"
+        }
+      }
+    },
+    "case": {
+      "begin": "(?<!\\.)\\b(case)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.preprocessor.case.lsl"
+        },
+        "2": {
+          
+        }
+      },
+      "end": "(?<=})|(?=case|default)",
+      "name": "block.case.lsl",
+      "patterns": [
+        {
+          "start": " +",
+          "end": "(:|\\s)",
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        },
+        {
+          "include": "#statement"
+        }
+      ]
+    },
+    "case-default": {
+      "begin": "(?<!\\.)\\b(default)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.preprocessor.case.lsl"
+        },
+        "2": {
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        }
+      },
+      "end": "(?=\\})",
+      "name": "block.case.default.lsl",
+      "patterns": [
+        {
+          "include": "#block"
+        }
+      ]
+    },
+    "case-empty": {
+      "begin": "(?<!\\.)\\b(case)\\b(?!{)(?=case|default)",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.preprocessor.case.lsl"
+        }
+      },
+      "end": "(?<=\\:)",
+      "name": "block.case.empty.lsl",
+      "patterns": [
+        {
+          "begin": " +",
+          "end": ":",
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        }
+      ]
+    },
+    "switch": {
+      "begin": "(?<!\\.)\\b(switch)\\b *(?=\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.control.switch.lsl"
+        }
+      },
+      "end": "\\}",
+      "name": "block.switch.lsl",
+      "patterns": [
+        {
+          "begin": "\\(",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.parenthesis.open.lsl"
+            }
+          },
+          "end": "\\)",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.parenthesis.close.lsl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#expression"
+            }
+          ]
+        },
+        {
+          "include": "#case-empty"
+        },
+        {
+          "include": "#case"
+        },
+        {
+          "include": "#case-default"
+        },
+        {
+          "include": "#comment"
+        }
+      ]
     },
     "preprocessor-block": {
       "patterns": [

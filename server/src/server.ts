@@ -1054,7 +1054,10 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
   const filteredScopes = allScopes.scopes.filter(
     (scope) =>
       !scope.name ||
-      !['if', 'else if', 'else', 'for', 'while', 'do'].includes(scope.name)
+      !(
+        ['if', 'else if', 'else', 'for', 'while', 'do', 'switch'].includes(scope.name) ||
+        scope.name.startsWith('case ')
+      )
   );
 
   const result: DocumentSymbol[] = [];
