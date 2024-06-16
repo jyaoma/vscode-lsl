@@ -14,8 +14,8 @@ const isInCommentedOutSection = (commentedOutSections: CommentedOutSection[]) =>
   return commentedOutSections.some(section => 
     line > section.startLine && line < section.endLine ||
     line === section.startLine && line === section.endLine && col >= section.startCol && col < section.endCol ||
-    line === section.startLine && col >= section.startCol ||
-    line === section.endLine && col < section.endCol
+    line === section.startLine && line !== section.endLine && col >= section.startCol ||
+    line !== section.startLine && line === section.endLine && col < section.endCol
   );
 };
 
