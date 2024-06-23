@@ -1,3 +1,5 @@
+import getQuoteRanges from './quoteRanges';
+
 type CommentedOutSection = {
   startLine: number;
   startCol: number;
@@ -26,17 +28,48 @@ const getCommentedOutSections = (document: string): CommmentedOutSections => {
   let isInCommentBlock = false;
   let commentBlock: CommentedOutSection | null = null;
   lines.forEach((line, i) => {
-    if (line.includes('//')) {
-      commentedOutSections.push({ startLine: i, startCol: line.indexOf('//'), endLine: i, endCol: line.length });
-    } else if (line.includes('/*') && line.includes('*/')) {
-      commentedOutSections.push({ startLine: i, startCol: line.indexOf('/*'), endLine: i, endCol: line.indexOf('*/') + 2 });
-    } else if (line.includes('/*') && !isInCommentBlock) {
+    const quoteRanges = getQuoteRanges(line);
+    const noQuoteRanges = [];
+    const indexMap = [];
+    for (let j = line.length; j >= 0; j--) {
+      if (!quoteRanges.isInRange(j)) {
+        noQuoteRanges.push(line[j]);
+        indexMap.push(j);
+      }
+    }
+    const noQuoteLine = noQuoteRanges.reverse().join();
+    indexMap.reverse();
+    
+    if (noQuoteLine.includes('//')) {
+      commentedOutSections.push({
+        startLine: i,
+        startCol: indexMap[noQuoteLine.indexOf('//')],
+        endLine: i,
+        endCol: line.length,
+      });
+    } else if (noQuoteLine.includes('/*') && noQuoteLine.includes('*/')) {
+      commentedOutSections.push({
+        startLine: i,
+        startCol: indexMap[noQuoteLine.indexOf('/*')],
+        endLine: i,
+        endCol: indexMap[noQuoteLine.indexOf('*/')] + 2,
+      });
+    } else if (noQuoteLine.includes('/*') && !isInCommentBlock) {
       isInCommentBlock = true;
-      commentBlock = { startLine: i, startCol: line.indexOf('/*'), endLine: i, endCol: line.indexOf('*/') + 2 };
-    } else if (isInCommentBlock && commentBlock !== null && line.includes('*/')) {
+      commentBlock = {
+        startLine: i,
+        startCol: indexMap[noQuoteLine.indexOf('/*')],
+        endLine: i,
+        endCol: indexMap[noQuoteLine.indexOf('*/')] + 2,
+      };
+    } else if (
+      isInCommentBlock &&
+      commentBlock !== null &&
+      noQuoteLine.includes('*/')
+    ) {
       isInCommentBlock = false;
       commentBlock.endLine = i;
-      commentBlock.endCol = line.indexOf('*/') + 2;
+      commentBlock.endCol = indexMap[noQuoteLine.indexOf('*/')] + 2;
       commentedOutSections.push(commentBlock);
       commentBlock = null;
     }
