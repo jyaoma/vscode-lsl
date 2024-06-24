@@ -1,5 +1,5 @@
 import getCommentedOutSections from './comments';
-import { LSLVariable } from './lslTypes';
+import { LSLType, LSLVariable } from './lslTypes';
 import getQuoteRanges from './quoteRanges';
 import { convertToType } from './types';
 import getScopes from './scopes';
@@ -12,9 +12,40 @@ const scanDocument = (document: string): Variables => {
   const lines = document.split('\n');
 
   const allScopes = getScopes(document);
+  let isInPreprocessorDefine = false;
 
   lines.forEach((line, lineNum) => {
     const quoteRanges = getQuoteRanges(line);
+
+    let trimmedLine = line.trim();
+    while (trimmedLine.includes('  ')) {
+      trimmedLine = trimmedLine.replaceAll('  ', ' ');
+    }
+    if (isInPreprocessorDefine) {
+      if (!trimmedLine.endsWith('\\')) {
+        isInPreprocessorDefine = false;
+      }
+      return;
+    }
+    if (trimmedLine.startsWith('#define')) {
+      const words = trimmedLine.split(' ');
+      let name = words[1];
+      if (words[1].includes('(')) {
+        name = words[1].slice(0, words[1].indexOf('('));
+      }
+      allVariables[`${name}:${lineNum}`] = {
+        name,
+        type: LSLType.Unknown,
+        line: lineNum,
+        columnWithType: 0,
+        column: line.search(new RegExp(`\\b${name}\\b`, 'gm')),
+        references: [],
+      };
+      if (trimmedLine.endsWith('\\')) {
+        isInPreprocessorDefine = true;
+      }
+      return;
+    }
 
     // determine all defined variables
     const lineVariables = line.match(
@@ -32,18 +63,16 @@ const scanDocument = (document: string): Variables => {
         let trimmedMatch = match;
         while (trimmedMatch.includes('  ')) trimmedMatch = trimmedMatch.replace('  ', ' ');
         const [type, name] = trimmedMatch.split(' ');
-        // if (!allVariables[name]) {
-          allVariables[`${name}:${lineNum}`] = {
-            name,
-            type: convertToType(type),
-            line: lineNum,
-            columnWithType: colNum,
-            column:
-              line.slice(colNum).search(new RegExp(`\\b${name}\\b`, 'gm')) +
-              colNum,
-            references: [],
-          };
-        // }
+        allVariables[`${name}:${lineNum}`] = {
+          name,
+          type: convertToType(type),
+          line: lineNum,
+          columnWithType: colNum,
+          column:
+            line.slice(colNum).search(new RegExp(`\\b${name}\\b`, 'gm')) +
+            colNum,
+          references: [],
+        };
       });
     }
 
