@@ -13,6 +13,7 @@
 // there is an issue when I try to write the list here
 list myList = ["a", "b"];
 
+
 default
 {
     state_entry()

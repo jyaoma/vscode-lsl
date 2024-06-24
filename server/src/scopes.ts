@@ -109,7 +109,7 @@ const getScopes = (document: string): Scopes => {
           currentScopeIndex = scopes[currentScopeIndex].parentIndex;
         } else if ('()'.includes(char)) {
           parenLevel += char === '(' ? 1 : -1;
-        } else if (char.match(/[A-Za-z0-9_ ]/) && parenLevel === 0) {
+        } else if (char.match(/[A-Za-z0-9_ #]/) && parenLevel === 0) {
           currentLine += char;
 
           if (

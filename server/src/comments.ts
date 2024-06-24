@@ -37,7 +37,7 @@ const getCommentedOutSections = (document: string): CommmentedOutSections => {
         indexMap.push(j);
       }
     }
-    const noQuoteLine = noQuoteRanges.reverse().join();
+    const noQuoteLine = noQuoteRanges.reverse().join('');
     indexMap.reverse();
     
     if (noQuoteLine.includes('//')) {
@@ -45,7 +45,7 @@ const getCommentedOutSections = (document: string): CommmentedOutSections => {
         startLine: i,
         startCol: indexMap[noQuoteLine.indexOf('//')],
         endLine: i,
-        endCol: line.length,
+        endCol: line.length + 1,
       });
     } else if (noQuoteLine.includes('/*') && noQuoteLine.includes('*/')) {
       commentedOutSections.push({

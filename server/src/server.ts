@@ -13,8 +13,6 @@ import {
   TextDocumentPositionParams,
   TextDocumentSyncKind,
   InitializeResult,
-  DocumentDiagnosticReportKind,
-  type DocumentDiagnosticReport,
   CompletionItemTag,
   SignatureHelp,
   SignatureHelpRequest,
@@ -28,14 +26,12 @@ import {
   TextEdit,
   DocumentSymbol,
   SymbolKind,
-  Range,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type {
   LSLConstant,
   LSLEvent,
   LSLFunction,
-  LSLVariable,
 } from './lslTypes';
 
 import { Position, TextDocument } from 'vscode-languageserver-textdocument';
@@ -1056,7 +1052,8 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
       !scope.name ||
       !(
         ['if', 'else if', 'else', 'for', 'while', 'do', 'switch'].includes(scope.name) ||
-        scope.name.startsWith('case ')
+        scope.name.startsWith('case ') ||
+        scope.name.startsWith('#define ')
       )
   );
 
