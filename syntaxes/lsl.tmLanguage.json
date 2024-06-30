@@ -282,7 +282,7 @@
       ]
     },
     "if-statement": {
-      "begin": "(?<!\\.)\\b(if)\\b\\s*(?=\\()",
+      "begin": "(?<!\\.)\\b(if)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.control.conditional.if.lsl"
@@ -344,7 +344,7 @@
       ]
     },
     "while-statement": {
-      "begin": "(?<!\\.)\\b(while)\\b\\s*(?=\\()",
+      "begin": "(?<!\\.)\\b(while)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.control.loop.while.lsl"
@@ -378,7 +378,7 @@
       ]
     },
     "for-statement": {
-      "begin": "(?<!\\.)\\b(for)\\b\\s*(?=\\()",
+      "begin": "(?<!\\.)\\b(for)\\b",
       "beginCaptures": {
         "1": {
           "name": "keyword.control.loop.for.lsl"
