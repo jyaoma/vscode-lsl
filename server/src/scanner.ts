@@ -49,7 +49,7 @@ const scanDocument = (document: string): Variables => {
 
     // determine all defined variables
     const lineVariables = line.match(
-      /(integer|float|key|string|vector|rotation|quarternion|list) +([a-zA-Z_][a-zA-Z0-9_]*)(?=.*?[;,)])/gm
+      /(integer|float|key|string|vector|rotation|quarternion|list) +([a-zA-Z_][a-zA-Z0-9_]*)(?=[^(]*?[=;,)])/gm
     );
     if (lineVariables?.length) {
       lineVariables.forEach((match) => {

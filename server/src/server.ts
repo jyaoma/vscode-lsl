@@ -330,6 +330,8 @@ connection.onCompletion(
     const line = lines[params.position.line];
     if (!line) return [];
     const lastChar = line[params.position.character - 1];
+    const allScopes = getScopes(document.getText());
+
     if (' (,'.includes(lastChar)) {
       const functionNameInfo = findFunctionName(params);
       if (!functionNameInfo) return [];
@@ -596,8 +598,6 @@ connection.onCompletion(
         default:
       }
 
-      const allScopes = getScopes(document.getText());
-
       smartCompletionItems.push(
         ...Object.values(allVariables[params.textDocument.uri])
           .filter(
@@ -687,7 +687,21 @@ connection.onCompletion(
         })
       );
 
-      return [...functions, ...constants];
+      const userVariables = Object.values(allVariables[params.textDocument.uri])
+        .filter(
+          (variable) =>
+            allScopes.isInScope(params.position, {
+              line: variable.line,
+              character: variable.column,
+            })
+        )
+        .map((variable) => ({
+          label: variable.name,
+          kind: CompletionItemKind.Variable,
+          data: variable.name,
+        }));
+
+      return [...functions, ...constants, ...userVariables];
     }
   }
 );
