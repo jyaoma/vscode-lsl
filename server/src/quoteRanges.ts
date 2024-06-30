@@ -11,7 +11,7 @@ type QuoteRanges = {
 const isInQuoteRange = (ranges: QuoteRange[]) => (colNumber: number) => {
   let isInQuote = false;
   ranges.forEach(range => {
-    if (colNumber >= range.start && colNumber <= range.end) {
+    if (colNumber >= range.start && colNumber < range.end) {
       isInQuote = true;
     }
   });

@@ -6,6 +6,7 @@ default
     {
         llSetText("", ZERO_VECTOR, 0);
         llSensorRepeat("", NULL_KEY, AGENT, 3, PI, 0.5);
+        llListen(PUBLIC_CHANNEL,"",NULL_KEY,"");
     }
 
     sensor(integer num_detected)
