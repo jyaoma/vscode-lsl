@@ -28,11 +28,7 @@ import {
   SymbolKind,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
-import type {
-  LSLConstant,
-  LSLEvent,
-  LSLFunction,
-} from './lslTypes';
+import type { LSLConstant, LSLEvent, LSLFunction } from './lslTypes';
 
 import { Position, TextDocument } from 'vscode-languageserver-textdocument';
 import scanDocument, { Variables } from './scanner';
@@ -68,12 +64,13 @@ const findFunctionName = (
   | undefined => {
   const document = documents.get(_textDocumentPosition.textDocument.uri);
   const text = document?.getText();
-
   if (!text) return undefined;
   const lines = text.split('\n');
   let lineNumber = _textDocumentPosition.position.line;
   if (lineNumber >= lines.length) return undefined;
   let line = lines[lineNumber];
+  
+  const commentedOutSections = getCommentedOutSections(text);
   let quoteRanges = getQuoteRanges(line);
   let colNumber = _textDocumentPosition.position.character - 1;
   // find the function name
@@ -89,6 +86,7 @@ const findFunctionName = (
     const char = line[colNumber--];
 
     if (quoteRanges.isInRange(colNumber)) continue;
+    if (commentedOutSections.isInSection(lineNumber, colNumber)) continue;
 
     switch (char) {
       case ',':
@@ -210,7 +208,7 @@ connection.onInitialize((params: InitializeParams) => {
       referencesProvider: true,
       documentHighlightProvider: true,
       renameProvider: {
-        prepareProvider: true
+        prepareProvider: true,
       },
       documentSymbolProvider: true,
       signatureHelpProvider: {
@@ -332,7 +330,9 @@ connection.onCompletion(
     const lastChar = line[params.position.character - 1];
     const allScopes = getScopes(document.getText());
 
-    if (' (,'.includes(lastChar)) {
+    if (
+      ' (,'.includes(lastChar)
+    ) {
       const functionNameInfo = findFunctionName(params);
       if (!functionNameInfo) return [];
       const { funcName, parenFound, numberOfCommas } = functionNameInfo;
@@ -615,8 +615,8 @@ connection.onCompletion(
             kind: CompletionItemKind.Variable,
             data: variable.name,
             sortText: `${
-              subtype &&
-              variable.name.toLowerCase().includes(subtype.toLowerCase()) ||
+              (subtype &&
+                variable.name.toLowerCase().includes(subtype.toLowerCase())) ||
               variable.name.toLowerCase().includes(name.toLowerCase())
                 ? '**'
                 : ''
@@ -688,12 +688,11 @@ connection.onCompletion(
       );
 
       const userVariables = Object.values(allVariables[params.textDocument.uri])
-        .filter(
-          (variable) =>
-            allScopes.isInScope(params.position, {
-              line: variable.line,
-              character: variable.column,
-            })
+        .filter((variable) =>
+          allScopes.isInScope(params.position, {
+            line: variable.line,
+            character: variable.column,
+          })
         )
         .map((variable) => ({
           label: variable.name,
@@ -976,24 +975,25 @@ connection.onPrepareRename((params): { defaultBehavior: boolean } | null => {
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocument(document.getText());
   let reference: Position | null = null;
-  Object.values(allVariables[params.textDocument.uri]).forEach(
-    (variable) => {
-      variable.references.forEach((position) => {
-        if (
-          position.line === params.position.line &&
-          params.position.character >= position.character &&
-          params.position.character < position.character + word.length
-        ) reference = position;
-      });
-      if (params.position.line === variable.line &&
-        params.position.character >= variable.column &&
-        params.position.character < variable.column + word.length)
+  Object.values(allVariables[params.textDocument.uri]).forEach((variable) => {
+    variable.references.forEach((position) => {
+      if (
+        position.line === params.position.line &&
+        params.position.character >= position.character &&
+        params.position.character < position.character + word.length
+      )
+        reference = position;
+    });
+    if (
+      params.position.line === variable.line &&
+      params.position.character >= variable.column &&
+      params.position.character < variable.column + word.length
+    )
       reference = {
         line: variable.line,
-        character: variable.column
+        character: variable.column,
       };
-    }
-  );
+  });
   if (!reference) return null;
 
   return { defaultBehavior: true };
@@ -1065,7 +1065,9 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
     (scope) =>
       !scope.name ||
       !(
-        ['if', 'else if', 'else', 'for', 'while', 'do', 'switch'].includes(scope.name) ||
+        ['if', 'else if', 'else', 'for', 'while', 'do', 'switch'].includes(
+          scope.name
+        ) ||
         scope.name.startsWith('case ') ||
         scope.name.startsWith('#define ')
       )
