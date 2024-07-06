@@ -69,7 +69,7 @@ const findFunctionName = (
   let lineNumber = _textDocumentPosition.position.line;
   if (lineNumber >= lines.length) return undefined;
   let line = lines[lineNumber];
-  
+
   const commentedOutSections = getCommentedOutSections(text);
   let quoteRanges = getQuoteRanges(line);
   let colNumber = _textDocumentPosition.position.character - 1;
@@ -330,13 +330,17 @@ connection.onCompletion(
     const lastChar = line[params.position.character - 1];
     const allScopes = getScopes(document.getText());
 
-    if (
-      ' (,'.includes(lastChar)
-    ) {
+    if (' (,'.includes(lastChar)) {
       const functionNameInfo = findFunctionName(params);
       if (!functionNameInfo) return [];
       const { funcName, parenFound, numberOfCommas } = functionNameInfo;
-      if (!allFunctionNames.includes(funcName) || !parenFound) return [];
+      if (
+        !allFunctionNames.includes(funcName) ||
+        !parenFound ||
+        !funcName ||
+        ['if', 'for', 'while'].includes(funcName)
+      )
+        return [];
 
       const currentFunction = allFunctions[funcName];
       const { parameters } = currentFunction;
@@ -814,7 +818,8 @@ connection.onSignatureHelp(
     const functionNameInfo = findFunctionName(_textDocumentPosition);
     if (!functionNameInfo) return { signatures: [], activeSignature: 0 };
     const { funcName, parenFound, numberOfCommas } = functionNameInfo;
-    if (!funcName) return { signatures: [], activeSignature: 0 };
+    if (!funcName || ['if', 'for', 'while'].includes(funcName))
+      return { signatures: [], activeSignature: 0 };
 
     if (!allFunctionNames.includes(funcName) || !parenFound)
       return { signatures: [], activeSignature: 0 };
