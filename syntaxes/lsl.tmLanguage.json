@@ -738,7 +738,7 @@
       "patterns": [
         {
           "name": "variable.other.constant.lsl",
-          "match": "(?<!\\.)\\b([A-Z][A-Z_]+)\\b"
+          "match": "(?<!\\.)\\b([A-Z][A-Z0-9_]+)\\b"
         }
       ]
     },
