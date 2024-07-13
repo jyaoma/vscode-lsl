@@ -4,7 +4,7 @@
   "description": "Advanced support of LSL (Linden Scripting Language) in Visual Studio Code",
   "author": "jyaoma",
   "license": "MIT",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "icon": "./icons/lsl.png",
   "publisher": "jyaoma",
   "repository": {

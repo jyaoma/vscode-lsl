@@ -1083,6 +1083,7 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
   let globalScopeCount = -1;
   let foundFirstState = false;
   const nonGlobalVariables: string[] = [];
+  let hasMissingEndCurly = false;
   filteredScopes.forEach((scope) => {
     if (scope.name) {
       const startLine = scope.nameStartLine || scope.startLine;
@@ -1209,7 +1210,10 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
         );
       }
     }
+    if (!scope.endLine) hasMissingEndCurly = true;
   });
+
+  if (hasMissingEndCurly) return [];
 
   Object.keys(allVariables[params.textDocument.uri])
     .filter((varName) => !nonGlobalVariables.includes(varName))
