@@ -16,6 +16,7 @@ import {
   CompletionItemTag,
   SignatureHelp,
   SignatureHelpRequest,
+  InlayHintRequest,
   Hover,
   LocationLink,
   Location,
@@ -26,11 +27,15 @@ import {
   TextEdit,
   DocumentSymbol,
   SymbolKind,
+  InlayHint,
+  InlayHintLabelPart,
+  Position,
+  InlayHintKind,
 } from 'vscode-languageserver/node';
 import fs from 'fs';
 import type { LSLConstant, LSLEvent, LSLFunction } from './lslTypes';
 
-import { Position, TextDocument } from 'vscode-languageserver-textdocument';
+import { TextDocument } from 'vscode-languageserver-textdocument';
 import scanDocument, { Variables } from './scanner';
 import getQuoteRanges from './quoteRanges';
 import getCommentedOutSections from './comments';
@@ -215,6 +220,11 @@ connection.onInitialize((params: InitializeParams) => {
         triggerCharacters: ['(', ','],
       },
       hoverProvider: true,
+      inlayHintProvider: true,
+      // TODO: See if this could be used later
+      // inlayHintProvider: {
+      //   resolveProvider: true,
+      // },
     },
   };
   if (hasWorkspaceFolderCapability) {
@@ -242,6 +252,10 @@ connection.onInitialized(() => {
   }
   connection.client.register(SignatureHelpRequest.type, {
     triggerCharacters: ['(', ','],
+    documentSelector: [{ scheme: 'file', language: 'lsl' }],
+  });
+
+  connection.client.register(InlayHintRequest.type, {
     documentSelector: [{ scheme: 'file', language: 'lsl' }],
   });
 });
@@ -1241,6 +1255,25 @@ connection.onDocumentSymbol((params): DocumentSymbol[] => {
 
   return result;
 });
+
+connection.languages.inlayHint.on((a, b, c, d) => {
+  // console.log({ a, b, c, d });
+  // console.log(a.range);
+  // console.log(process.pid);
+  const one = InlayHint.create(
+    Position.create(47, 37),
+    'link: ',
+    InlayHintKind.Parameter
+  );
+  return [one];
+});
+
+// TODO: See if this could be used later
+// connection.languages.inlayHint.resolve((hint) => {
+//   (hint.label as InlayHintLabelPart[])[0].tooltip = 'tooltip';
+//   // hint.textEdits = [TextEdit.insert(Position.create(1, 1), 'number')];
+//   return hint;
+// });
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
