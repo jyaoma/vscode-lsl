@@ -111,62 +111,69 @@ const findFunctionName = (
 
   while (
     !(validFuncNames.includes(funcName) && parenFound) &&
-    !'{};'.includes(line[colNumber])
+    lineNumber >= 0
   ) {
-    const char = line[colNumber--];
-
-    if (quoteRanges.isInRange(colNumber)) continue;
-    if (commentedOutSections.isInSection(lineNumber, colNumber)) continue;
-
-    switch (char) {
-      case ',':
-        if (bracketMatch.length === 0) {
-          numberOfCommas++;
-        }
-        funcName = '';
-        break;
-      case '<':
-        if (bracketMatch[bracketMatch.length - 1] === '>') {
-          bracketMatch.pop();
-        } else {
-          numberOfCommas = 0;
-        }
-        funcName = '';
-        break;
-      case '[':
-        if (bracketMatch[bracketMatch.length - 1] === ']') {
-          bracketMatch.pop();
-        } else {
-          numberOfCommas = 0;
-        }
-        funcName = '';
-        break;
-      case '(':
-        if (bracketMatch.length === 0) {
-          parenFound = true;
-        }
-        if (bracketMatch[bracketMatch.length - 1] === ')') {
-          bracketMatch.pop();
-        }
-        funcName = '';
-        break;
-      case '>':
-      case ')':
-      case ']':
-        bracketMatch.push(char);
-        break;
-      default:
-        if (char && char.match(/[a-zA-Z0-9_]/)) {
-          funcName = char + funcName;
-        }
-        break;
-    }
     if (colNumber < 0) {
       if (lineNumber === 0) return undefined;
       line = lines[--lineNumber];
       quoteRanges = getQuoteRanges(line);
       colNumber = line.length - 1;
+      continue;
     }
+
+    if (
+      !quoteRanges.isInRange(colNumber) &&
+      !commentedOutSections.isInSection(lineNumber, colNumber)
+    ) {
+      const char = line[colNumber];
+      if (bracketMatch.length === 0 && (char === ';' || char === '{' || char === '}')) {
+        break;
+      }
+      switch (char) {
+        case ',':
+          if (bracketMatch.length === 0) {
+            numberOfCommas++;
+          }
+          funcName = '';
+          break;
+        case '<':
+          if (bracketMatch[bracketMatch.length - 1] === '>') {
+            bracketMatch.pop();
+          } else {
+            numberOfCommas = 0;
+          }
+          funcName = '';
+          break;
+        case '[':
+          if (bracketMatch[bracketMatch.length - 1] === ']') {
+            bracketMatch.pop();
+          } else {
+            numberOfCommas = 0;
+          }
+          funcName = '';
+          break;
+        case '(':
+          if (bracketMatch.length === 0) {
+            parenFound = true;
+          }
+          if (bracketMatch[bracketMatch.length - 1] === ')') {
+            bracketMatch.pop();
+          }
+          funcName = '';
+          break;
+        case '>':
+        case ')':
+        case ']':
+          bracketMatch.push(char);
+          break;
+        default:
+          if (char && char.match(/[a-zA-Z0-9_]/)) {
+            funcName = char + funcName;
+          }
+          break;
+      }
+    }
+    colNumber--;
   }
 
   return { funcName, parenFound, numberOfCommas };
@@ -182,58 +189,68 @@ const findFunctionCommaLocations = (
   let lineNumber = funcOpenParenPos.position.line;
   if (lineNumber >= lines.length) return [];
   let line = lines[lineNumber];
+  let colNumber = funcOpenParenPos.position.character;
+  while (colNumber < line.length && line[colNumber] !== '(') {
+    colNumber++;
+  }
+  if (colNumber >= line.length || line[colNumber] !== '(') {
+    return [];
+  }
   const commaPositions: TextDocumentPositionParams[] = [
     {
       textDocument: funcOpenParenPos.textDocument,
-      position: funcOpenParenPos.position,
+      position: { line: lineNumber, character: colNumber },
     },
   ];
   const commentedOutSections = getCommentedOutSections(text);
-  const quoteRanges = getQuoteRanges(line);
-  let colNumber = funcOpenParenPos.position.character + 1;
+  let quoteRanges = getQuoteRanges(line);
+  colNumber++;
 
   const bracketMatch: string[] = [];
-  while (!'};'.includes(line[colNumber])) {
-    const char = line[colNumber++];
-    if (quoteRanges.isInRange(colNumber)) continue;
-    if (commentedOutSections.isInSection(lineNumber, colNumber)) continue;
-    switch (char) {
-      case '>':
-        if (bracketMatch[bracketMatch.length - 1] === '<') {
-          bracketMatch.pop();
-        }
-        break;
-      case ')':
-        if (bracketMatch[bracketMatch.length - 1] === '(') {
-          bracketMatch.pop();
-        }
-        break;
-      case ']':
-        if (bracketMatch[bracketMatch.length - 1] === '[') {
-          bracketMatch.pop();
-        }
-        break;
-      case '<':
-      case '(':
-      case '[':
-        bracketMatch.push(char);
-        break;
-      case ',':
-        if (bracketMatch.length === 0) {
-          commaPositions.push({
-            textDocument: funcOpenParenPos.textDocument,
-            position: { line: lineNumber, character: colNumber - 1 },
-          });
-        }
-        break;
-      default:
-        break;
-    }
+  while (lineNumber < lines.length) {
     if (colNumber >= line.length) {
       if (lineNumber + 1 >= lines.length) return commaPositions;
       line = lines[++lineNumber];
+      quoteRanges = getQuoteRanges(line);
       colNumber = 0;
+      continue;
     }
+
+    if (
+      !quoteRanges.isInRange(colNumber) &&
+      !commentedOutSections.isInSection(lineNumber, colNumber)
+    ) {
+      const char = line[colNumber];
+      if (bracketMatch.length === 0 && (char === ';' || char === '}')) {
+        break;
+      }
+      if (char === ')') {
+        if (bracketMatch.length === 0) {
+          return commaPositions;
+        }
+        if (bracketMatch[bracketMatch.length - 1] === '(') {
+          bracketMatch.pop();
+        }
+      } else if (char === '>') {
+        if (bracketMatch[bracketMatch.length - 1] === '<') {
+          bracketMatch.pop();
+        }
+      } else if (char === ']') {
+        if (bracketMatch[bracketMatch.length - 1] === '[') {
+          bracketMatch.pop();
+        }
+      } else if (char === '<' || char === '(' || char === '[') {
+        bracketMatch.push(char);
+      } else if (char === ',') {
+        if (bracketMatch.length === 0) {
+          commaPositions.push({
+            textDocument: funcOpenParenPos.textDocument,
+            position: { line: lineNumber, character: colNumber },
+          });
+        }
+      }
+    }
+    colNumber++;
   }
   return commaPositions;
 };
