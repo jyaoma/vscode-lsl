@@ -1135,9 +1135,6 @@ connection.onHover((params: TextDocumentPositionParams): Hover => {
     //     `This is an experimental function currently being tested on the beta-grid.`
     //   );
     // }
-    if (lslFunction.experience) {
-      hoverContent.push(`This function requires an experience.`);
-    }
     hoverContent.push(
       `\`\`\`lsl\n${
         lslFunction.return && lslFunction.return !== 'void' ? `(${lslFunction.return}) ` : ''
@@ -1150,6 +1147,16 @@ connection.onHover((params: TextDocumentPositionParams): Hover => {
         })
         .join(', ')})\n\`\`\``
     );
+    
+    const permissionsRequired = lslFunction['requires-permission'] ?? [];
+    if (permissionsRequired.length) {
+      hoverContent.push(`Requires permission(s): ${permissionsRequired.join(', ')}`);
+    }
+
+    if (lslFunction.experience) {
+      hoverContent.push(`This function requires an experience.`);
+    }
+
     if (lslFunction.tooltip) {
       hoverContent.push(...lslFunction.tooltip.split('\n'));
     }
@@ -1158,15 +1165,16 @@ connection.onHover((params: TextDocumentPositionParams): Hover => {
       const argumentDetails = Object.values(a)[0];
       if (argumentDetails) {
         hoverContent.push(
-          `@param \`${argumentDetails.type} ${argumentName}\`${
+          `_@param_ \`${argumentDetails.type} ${argumentName}\`${
             argumentDetails.tooltip ? ` - ${argumentDetails.tooltip}` : ''
           }`
         );
       }
     });
     if (allFunctions[word]) {
+      hoverContent.push('---');
       hoverContent.push(`Energy: ${lslFunction.energy.toFixed(1)} - Forced delay: ${lslFunction.sleep.toFixed(1)}s`);
-      hoverContent.push(`@see - https://wiki.secondlife.com/wiki/${word}`);
+      hoverContent.push(`_@see_ - https://wiki.secondlife.com/wiki/${word}`);
     }
     return { contents: hoverContent };
   }

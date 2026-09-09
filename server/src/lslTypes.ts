@@ -25,6 +25,7 @@ export type LSLFunction = {
 	column?: number;
 	uri?: string;
 	isIncluded?: boolean;
+	'requires-permission'?: string[];
 }
 
 export type LSLDefinitionList<T> = {
