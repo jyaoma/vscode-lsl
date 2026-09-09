@@ -180,9 +180,11 @@ const findFunctionName = (
 };
 
 const findFunctionCommaLocations = (
-  funcOpenParenPos: TextDocumentPositionParams
+  funcOpenParenPos: TextDocumentPositionParams,
+  documentObj?: TextDocument,
+  precomputedCommentedOutSections?: ReturnType<typeof getCommentedOutSections>
 ): TextDocumentPositionParams[] => {
-  const document = documents.get(funcOpenParenPos.textDocument.uri);
+  const document = documentObj || documents.get(funcOpenParenPos.textDocument.uri);
   const text = document?.getText();
   if (!text) return [];
   const lines = text.split('\n');
@@ -202,7 +204,8 @@ const findFunctionCommaLocations = (
       position: { line: lineNumber, character: colNumber },
     },
   ];
-  const commentedOutSections = getCommentedOutSections(text);
+  const commentedOutSections =
+    precomputedCommentedOutSections || getCommentedOutSections(text);
   let quoteRanges = getQuoteRanges(line);
   colNumber++;
 
@@ -2115,18 +2118,23 @@ connection.languages.inlayHint.on((params) => {
   const userFuncs = allUserFunctions[params.textDocument.uri] || {};
 
   try {
+    const commentedOutSections = getCommentedOutSections(documentText);
     const functionCalls: LSLFunctionCall[] =
       scanDocumentForFunctionCalls(documentText);
     functionCalls.forEach((funcCall) => {
       const isUserFunc = userFuncs[funcCall.functionName];
       if (!allFunctions[funcCall.functionName] && !isUserFunc) return;
-      const funcCommaLocations = findFunctionCommaLocations({
-        textDocument: params.textDocument,
-        position: {
-          line: funcCall.line,
-          character: funcCall.character + funcCall.functionName.length,
+      const funcCommaLocations = findFunctionCommaLocations(
+        {
+          textDocument: params.textDocument,
+          position: {
+            line: funcCall.line,
+            character: funcCall.character + funcCall.functionName.length,
+          },
         },
-      });
+        document,
+        commentedOutSections
+      );
       const funcDef = allFunctions[funcCall.functionName] || isUserFunc;
       funcDef?.arguments.forEach(
         (param, index) => {

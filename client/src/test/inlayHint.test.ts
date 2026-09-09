@@ -39,4 +39,18 @@ suite('Should get correct inlay hints', () => {
 		assert.strictEqual(line5Hints[1].label, 'value:');
 		assert.strictEqual(line5Hints[1].position.character, 54);
 	});
+
+	test('Inlay hints for zero-arg function before comparison operator (issue19)', async () => {
+		const issue19Uri = vscode.Uri.file(path.resolve(__dirname, '../../testFixture', 'issue19.lsl'));
+		await activate(issue19Uri);
+
+		const hints = (await vscode.commands.executeCommand(
+			'vscode.executeInlayHintProvider',
+			issue19Uri,
+			new vscode.Range(new vscode.Position(0, 0), new vscode.Position(14, 0))
+		)) as vscode.InlayHint[];
+
+		// llGetTime() has 0 arguments, so no inlay hints should be generated
+		assert.strictEqual(hints.length, 0, `Expected 0 inlay hints, got ${hints.length}`);
+	});
 });
