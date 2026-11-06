@@ -20,7 +20,9 @@ string  sound_name;
 list    anims = [];
 list    times = [];
 
-fText(integer start, integer clear) {
+fText(integer start, integer clear) // This is a comment
+/* This is a comment*/
+{
     llSetText(
         llList2String(["Complete\nLoaded " + (string)anim_total + " Animations.", "Reading ..."], start), 
         llList2Vector([<0.5, 1.0, 0.5>, <1.0, 0.5, 0.5>], start), 1);
