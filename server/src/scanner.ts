@@ -28,15 +28,33 @@ export function filePathToUri(filePath: string): string {
   }
 }
 
-export function resolveIncludePath(baseUriOrPath: string, includePath: string): string | null {
+export function resolveIncludePath(
+  baseUriOrPath: string,
+  includePath: string,
+  extraSearchDirs: string[] = []
+): string | null {
   try {
     const basePath = uriToFilePath(baseUriOrPath);
     const baseDir = fs.existsSync(basePath) && fs.statSync(basePath).isDirectory()
       ? basePath
       : path.dirname(basePath);
+
+    // First, try relative to the script's own directory (original behaviour)
     const resolvedPath = path.resolve(baseDir, includePath);
     if (fs.existsSync(resolvedPath)) {
       return resolvedPath;
+    }
+
+    // Then search each user-configured include directory in order
+    for (const dir of extraSearchDirs) {
+      try {
+        const candidate = path.resolve(dir, includePath);
+        if (fs.existsSync(candidate)) {
+          return candidate;
+        }
+      } catch {
+        // ignore bad entries
+      }
     }
   } catch {
     // ignore
@@ -71,7 +89,8 @@ export const extractIncludes = (document: string): string[] => {
 export const scanDocumentForUserFunctions = (
   document: string,
   documentUri?: string,
-  visited = new Set<string>()
+  visited = new Set<string>(),
+  includePaths: string[] = []
 ): { [name: string]: LSLFunction } => {
   const userFunctions: { [name: string]: LSLFunction } = {};
   const scopes = getScopes(document);
@@ -183,13 +202,13 @@ export const scanDocumentForUserFunctions = (
     visited.add(normPath);
     const includes = extractIncludes(document);
     for (const inc of includes) {
-      const resolved = resolveIncludePath(documentUri, inc);
+      const resolved = resolveIncludePath(documentUri, inc, includePaths);
       if (resolved && !visited.has(resolved.toLowerCase())) {
         visited.add(resolved.toLowerCase());
         const incUri = filePathToUri(resolved);
         try {
           const content = fs.readFileSync(resolved, 'utf8');
-          const incFuncs = scanDocumentForUserFunctions(content, incUri, visited);
+          const incFuncs = scanDocumentForUserFunctions(content, incUri, visited, includePaths);
           for (const [name, func] of Object.entries(incFuncs)) {
             if (!userFunctions[name]) {
               userFunctions[name] = {
@@ -212,7 +231,8 @@ export const scanDocumentForUserFunctions = (
 export const scanDocumentForVariables = (
   document: string,
   documentUri?: string,
-  visited = new Set<string>()
+  visited = new Set<string>(),
+  includePaths: string[] = []
 ): Variables => {
   const allVariables: { [key: string]: LSLVariable } = {};
   const commentedOutSections = getCommentedOutSections(document);
@@ -442,13 +462,13 @@ export const scanDocumentForVariables = (
     visited.add(normPath);
     const includes = extractIncludes(document);
     for (const inc of includes) {
-      const resolved = resolveIncludePath(documentUri, inc);
+      const resolved = resolveIncludePath(documentUri, inc, includePaths);
       if (resolved && !visited.has(resolved.toLowerCase())) {
         visited.add(resolved.toLowerCase());
         const incUri = filePathToUri(resolved);
         try {
           const content = fs.readFileSync(resolved, 'utf8');
-          const incVars = scanDocumentForVariables(content, incUri, visited);
+          const incVars = scanDocumentForVariables(content, incUri, visited, includePaths);
           for (const incVar of Object.values(incVars)) {
             const key = `${incVar.uri || incUri}:${incVar.name}:${incVar.line}`;
             if (!allVariables[key]) {

@@ -28,6 +28,17 @@
     "configuration": {
       "type": "object",
       "title": "LSL Language Server",
+      "properties": {
+        "lslLanguageServer.includePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Additional absolute directory paths to search when resolving `#include` directives. Paths are searched in order after the directory of the current script.",
+          "scope": "resource"
+        }
+      },
       "languages": [
         {
           "id": "lsl",

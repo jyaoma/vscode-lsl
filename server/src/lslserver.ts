@@ -486,36 +486,31 @@ connection.onInitialized(() => {
   });
 });
 
-// The example settings
-interface ExampleSettings {
+// The extension settings
+interface LSLSettings {
   maxNumberOfProblems: number;
+  includePaths: string[];
 }
 
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
-let globalSettings: ExampleSettings = defaultSettings;
+const defaultSettings: LSLSettings = { maxNumberOfProblems: 1000, includePaths: [] };
+let globalSettings: LSLSettings = defaultSettings;
 
 // Cache the settings of all open documents
-const documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
+const documentSettings: Map<string, Thenable<LSLSettings>> = new Map();
 
-connection.onDidChangeConfiguration((change) => {
-  if (hasConfigurationCapability) {
-    // Reset all cached document settings
-    documentSettings.clear();
-  } else {
-    globalSettings = <ExampleSettings>(
-      (change.settings.lslLanguageServer || defaultSettings)
-    );
-  }
-  // Refresh the diagnostics since the `maxNumberOfProblems` could have changed.
-  // We could optimize things here and re-fetch the setting first can compare it
-  // to the existing setting, but this is out of scope for this example.
-  connection.languages.diagnostics.refresh();
-});
+// Resolved settings cache for synchronous access (e.g. in onDidChangeContent)
+const resolvedSettings: Map<string, LSLSettings> = new Map();
 
-function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
+/** Returns the include paths for a document URI, falling back to global settings. */
+function getIncludePaths(uri: string): string[] {
+  return resolvedSettings.get(uri)?.includePaths ?? globalSettings.includePaths ?? [];
+}
+
+/** Fetches settings for a URI, caches both the promise and the resolved value. */
+function fetchDocumentSettings(resource: string): Thenable<LSLSettings> {
   if (!hasConfigurationCapability) {
     return Promise.resolve(globalSettings);
   }
@@ -524,15 +519,33 @@ function getDocumentSettings(resource: string): Thenable<ExampleSettings> {
     result = connection.workspace.getConfiguration({
       scopeUri: resource,
       section: 'lslLanguageServer',
+    }).then((settings: LSLSettings) => {
+      resolvedSettings.set(resource, settings);
+      return settings;
     });
     documentSettings.set(resource, result);
   }
   return result;
 }
 
+connection.onDidChangeConfiguration((change) => {
+  if (hasConfigurationCapability) {
+    // Reset all cached document settings
+    documentSettings.clear();
+    resolvedSettings.clear();
+  } else {
+    globalSettings = <LSLSettings>(
+      (change.settings.lslLanguageServer || defaultSettings)
+    );
+  }
+  // Refresh the diagnostics since settings could have changed.
+  connection.languages.diagnostics.refresh();
+});
+
 // Only keep settings for open documents
 documents.onDidClose((e) => {
   documentSettings.delete(e.document.uri);
+  resolvedSettings.delete(e.document.uri);
 });
 
 const allVariables: { [uri: string]: Variables } = {};
@@ -542,23 +555,23 @@ const allJumpLabels: { [uri: string]: JumpLabelMap } = {};
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent((change) => {
-  try {
-    getCommentedOutSections(change.document.getText());
-    allVariables[change.document.uri] = scanDocumentForVariables(
-      change.document.getText(),
-      change.document.uri
-    );
-    allUserFunctions[change.document.uri] = scanDocumentForUserFunctions(
-      change.document.getText(),
-      change.document.uri
-    );
-    allJumpLabels[change.document.uri] = scanDocumentForJumpLabels(
-      change.document.getText(),
-      change.document.uri
-    );
-  } catch (e) {
-    console.error('Error processing document change:', e);
-  }
+  const uri = change.document.uri;
+  const text = change.document.getText();
+  // Fetch settings (and cache the resolved value) before scanning so that
+  // include path resolution picks up any user-configured includePaths.
+  Promise.resolve(fetchDocumentSettings(uri)).then((settings) => {
+    const includePaths = settings.includePaths ?? [];
+    try {
+      getCommentedOutSections(text);
+      allVariables[uri] = scanDocumentForVariables(text, uri, undefined, includePaths);
+      allUserFunctions[uri] = scanDocumentForUserFunctions(text, uri, undefined, includePaths);
+      allJumpLabels[uri] = scanDocumentForJumpLabels(text, uri);
+    } catch (e) {
+      console.error('Error processing document change:', e);
+    }
+  }, (e: unknown) => {
+    console.error('Error fetching document settings:', e);
+  });
 });
 
 connection.onDidChangeWatchedFiles((_change) => {
@@ -882,7 +895,9 @@ connection.onCompletion(
         if (!allVariables[params.textDocument.uri]) {
           allVariables[params.textDocument.uri] = scanDocumentForVariables(
             document.getText(),
-            params.textDocument.uri
+            params.textDocument.uri,
+            undefined,
+            getIncludePaths(params.textDocument.uri)
           );
         }
 
@@ -941,13 +956,17 @@ connection.onCompletion(
         if (!allUserFunctions[params.textDocument.uri]) {
           allUserFunctions[params.textDocument.uri] = scanDocumentForUserFunctions(
             document.getText(),
-            params.textDocument.uri
+            params.textDocument.uri,
+            undefined,
+            getIncludePaths(params.textDocument.uri)
           );
         }
         if (!allVariables[params.textDocument.uri]) {
           allVariables[params.textDocument.uri] = scanDocumentForVariables(
             document.getText(),
-            params.textDocument.uri
+            params.textDocument.uri,
+            undefined,
+            getIncludePaths(params.textDocument.uri)
           );
         }
 
@@ -1111,7 +1130,9 @@ connection.onHover((params: TextDocumentPositionParams): Hover => {
   if (!allUserFunctions[params.textDocument.uri])
     allUserFunctions[params.textDocument.uri] = scanDocumentForUserFunctions(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
 
   const lslFunction = allFunctions[word] || (allUserFunctions[params.textDocument.uri] && allUserFunctions[params.textDocument.uri][word]);
@@ -1200,7 +1221,9 @@ connection.onHover((params: TextDocumentPositionParams): Hover => {
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocumentForVariables(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
 
   const variablesInDoc = Object.values(allVariables[params.textDocument.uri] || {});
@@ -1409,7 +1432,9 @@ connection.onDefinition((params): LocationLink[] | null => {
   if (!allUserFunctions[params.textDocument.uri])
     allUserFunctions[params.textDocument.uri] = scanDocumentForUserFunctions(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
 
   const userFunc = allUserFunctions[params.textDocument.uri][word];
@@ -1433,7 +1458,9 @@ connection.onDefinition((params): LocationLink[] | null => {
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocumentForVariables(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
   const variable = Object.values(allVariables[params.textDocument.uri]).find(
     (variable) => {
@@ -1525,7 +1552,9 @@ connection.onReferences((params): Location[] | null => {
   if (!allUserFunctions[params.textDocument.uri])
     allUserFunctions[params.textDocument.uri] = scanDocumentForUserFunctions(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
 
   const userFunc = allUserFunctions[params.textDocument.uri][word];
@@ -1624,7 +1653,9 @@ connection.onDocumentHighlight((params): DocumentHighlight[] | null => {
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocumentForVariables(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
   const variable = Object.values(allVariables[params.textDocument.uri]).find(
     (variable) => {
@@ -1799,7 +1830,9 @@ connection.onRenameRequest((params: RenameParams): WorkspaceEdit | null => {
   if (!allVariables[params.textDocument.uri])
     allVariables[params.textDocument.uri] = scanDocumentForVariables(
       document.getText(),
-      params.textDocument.uri
+      params.textDocument.uri,
+      undefined,
+      getIncludePaths(params.textDocument.uri)
     );
   const variable = Object.values(allVariables[params.textDocument.uri]).find(
     (variable) => {
@@ -2392,15 +2425,15 @@ const checkMissingSemicolons = (documentText: string): Diagnostic[] => {
  * Scans a document for all potential identifier references that could be undeclared variables.
  * Returns positions where identifiers are used but not declared in scope.
  */
-const findUndeclaredVariableUsages = (documentText: string, documentUri?: string): Diagnostic[] => {
+const findUndeclaredVariableUsages = (documentText: string, documentUri?: string, includePaths: string[] = []): Diagnostic[] => {
   const diagnostics: Diagnostic[] = [];
   const lines = documentText.split('\n');
   const allScopes = getScopes(documentText);
   const commentedOutSections = getCommentedOutSections(documentText);
 
   // Always scan fresh for variables to ensure we have up-to-date data
-  const declaredVariables = scanDocumentForVariables(documentText, documentUri);
-  const userFuncs = scanDocumentForUserFunctions(documentText, documentUri);
+  const declaredVariables = scanDocumentForVariables(documentText, documentUri, undefined, includePaths);
+  const userFuncs = scanDocumentForUserFunctions(documentText, documentUri, undefined, includePaths);
 
   // Collect all known valid names (functions, events, constants, keywords)
   const knownNames = new Set<string>();
@@ -2525,9 +2558,9 @@ const findUndeclaredVariableUsages = (documentText: string, documentUri?: string
  * Returns diagnostics: Hint severity for variables with inline initialization only,
  * Warning severity for variables assigned in separate statements.
  */
-const checkUnusedVariables = (documentText: string, documentUri?: string): Diagnostic[] => {
+const checkUnusedVariables = (documentText: string, documentUri?: string, includePaths: string[] = []): Diagnostic[] => {
   const diagnostics: Diagnostic[] = [];
-  const declaredVariables = scanDocumentForVariables(documentText, documentUri);
+  const declaredVariables = scanDocumentForVariables(documentText, documentUri, undefined, includePaths);
   const lines = documentText.split('\n');
 
   Object.values(declaredVariables).forEach((variable) => {
@@ -2622,9 +2655,9 @@ const checkUnusedVariables = (documentText: string, documentUri?: string): Diagn
 /**
  * Checks for unused user-defined functions - functions that are defined but never called.
  */
-const checkUnusedUserFunctions = (documentText: string, documentUri?: string): Diagnostic[] => {
+const checkUnusedUserFunctions = (documentText: string, documentUri?: string, includePaths: string[] = []): Diagnostic[] => {
   const diagnostics: Diagnostic[] = [];
-  const userFuncs = scanDocumentForUserFunctions(documentText, documentUri);
+  const userFuncs = scanDocumentForUserFunctions(documentText, documentUri, undefined, includePaths);
   const functionCalls = scanDocumentForFunctionCalls(documentText);
 
   // Collect all called function names (excluding the definitions themselves)
@@ -2687,17 +2720,20 @@ connection.languages.diagnostics.on(async (params) => {
     return { kind: 'full', items: [] };
   }
 
+  const settings = await fetchDocumentSettings(params.textDocument.uri);
+  const includePaths = settings.includePaths ?? [];
+
   // Get errors from Tailslide parser
   const tailslideDiagnostics = await parseLSL(document.getText(), document.uri, builtinIdentifiers);
   
   // Check for undeclared variables
-  const undeclaredDiagnostics = findUndeclaredVariableUsages(document.getText(), document.uri);
+  const undeclaredDiagnostics = findUndeclaredVariableUsages(document.getText(), document.uri, includePaths);
   
   // Check for unused variables
-  const unusedDiagnostics = checkUnusedVariables(document.getText(), document.uri);
+  const unusedDiagnostics = checkUnusedVariables(document.getText(), document.uri, includePaths);
 
   // Check for unused functions
-  const unusedFunctionsDiagnostics = checkUnusedUserFunctions(document.getText(), document.uri);
+  const unusedFunctionsDiagnostics = checkUnusedUserFunctions(document.getText(), document.uri, includePaths);
 
   // Add missing semicolon diagnostics (custom check since Tailslide may not detect these)
   // const missingSemiDiagnostics = checkMissingSemicolons(document.getText());
